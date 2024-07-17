@@ -3,10 +3,98 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+
+<style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        .title {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        .form-group input {
+            border: none;
+            border-bottom: 1px solid black;
+            padding: 5px;
+            width: 200px;
+        }
+        .social-login {
+            margin: 20px 0;
+        }
+        .social-login img {
+            width: 40px;
+            height: 40px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+        .actions {
+            margin: 20px 0;
+        }
+        .actions button {
+            background: none;
+            border: none;
+            color: blue;
+            cursor: pointer;
+            font-size: 1em;
+        }
+    </style>
+
 </head>
 <body>
 	<h1>팀장 첫번째 커밋</h1>
 	<h1>팀원1 (자리비움)</h1>
 	<h1>팀원2 (자는중)</h1>
+	
+	<div class="container">
+        <div class="title">OOTB</div>
+        <form>
+            <div class="form-group">
+                <label for="id">ID</label>
+                <input type="text" id="id" name="id">
+            </div>
+            <div class="form-group">
+                <label for="pw">PW</label>
+                <input type="password" id="pw" name="pw">
+            </div>
+            <div class="social-login">
+                <img src="" alt="Kakao Login" title="Kakao Login">
+                <img src="" alt="Naver Login" title="Naver Login">
+                <img src="" alt="Google Login" title="Google Login">
+            </div>
+            <div class="actions">
+                <button type="button" onclick="login()">LOGIN</button>
+                <button type="button" onclick="join()">JOIN</button>
+                <button type="button" onclick="find()">FIND</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function login() {
+            // Add login functionality here
+            alert("Login clicked");
+        }
+
+        function join() {
+            // Add join functionality here
+            alert("Join clicked");
+        }
+
+        function find() {
+            // Add find functionality here
+            alert("Find clicked");
+        }
+    </script>
+	
 </body>
 </html>
