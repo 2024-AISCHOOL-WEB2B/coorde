@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coorde.myapp.mapper.StyleMapper">
+
+	<select id = "styleList" resultType="com.coorde.myapp.entity.Style">
+		select * from tb_style ORDER BY RAND()
+	</select>
+	
+	<select id = "myClosetList" parameterType="String" resultType="com.coorde.myapp.entity.Style">
+		select * 
+		from tb_style inner join tb_closet 
+		on tb_style.style_idx = tb_closet.style_idx 
+		where tb_closet.user_id = #{user_id}
+	</select>
+	
+	<select id = "likeStyleList" parameterType="String" resultType="com.coorde.myapp.entity.Style">
+		select * 
+		from tb_style inner join tb_style_favorite 
+		on tb_style.style_idx = tb_style_favorite.style_idx 
+		where tb_style_favorite.user_id = #{user_id}
+	</select>
+	
+	<insert id="insertStyleHeart" parameterType="com.coorde.myapp.entity.Style">
+		insert into tb_style_favorite(style_idx, user_id) values(#{style_idx}, #{user_id})
+	</insert>
+	
+	<delete id="deleteStyleHeart" parameterType="com.coorde.myapp.entity.Style">
+		delete from tb_style_favorite where style_idx = #{style_idx} and user_id = #{user_id}
+	</delete>
+	
+	<select id="checkStyleHeart" parameterType="com.coorde.myapp.entity.Style" resultType="int">
+		select count(*) from tb_style_favorite where style_idx = #{style_idx} and user_id = #{user_id}
+	</select>
+	
+	
+	<insert id="insertCloset" parameterType="com.coorde.myapp.entity.Style">
+		insert into tb_closet(style_idx, user_id) values(#{style_idx}, #{user_id})
+	</insert>
+	
+	<delete id="deleteCloset" parameterType="com.coorde.myapp.entity.Style">
+		delete from tb_closet where style_idx = #{style_idx} and user_id = #{user_id}
+	</delete>
+	
+	<select id="checkCloset" parameterType="com.coorde.myapp.entity.Style" resultType="int">
+		select count(*) from tb_closet where style_idx = #{style_idx} and user_id = #{user_id}
+	</select>
+	
+	
+	<select id="getTags" parameterType = "String" resultType="com.coorde.myapp.entity.Style">
+		select * from tb_style inner join tb_style_favorite on tb_style.style_idx = tb_style_favorite.style_idx where tb_style_favorite.user_id = #{user_id} ORDER BY RAND()
+	</select>
+
+	<delete id="deleteStyleReco" parameterType="String">
+		delete from tb_style_recommendation where user_id = #{user_id}
+	</delete>
+	
+	<insert id="insertStyleReco" parameterType="com.coorde.myapp.entity.Style">
+		insert into tb_style_recommendation(user_id, style_item, style_color, style_tag) values(#{user_id}, #{style_item}, #{style_color}, #{style_tag})
+	</insert>
+	
+	<select id = "recoList" parameterType = "String" resultType="com.coorde.myapp.entity.Style">
+		SELECT *
+		FROM tb_style
+		WHERE ( 
+		    style_item IN (SELECT style_item FROM tb_style_recommendation WHERE tb_style_recommendation.user_id = #{user_id}) 
+		    AND style_color IN (SELECT style_color FROM tb_style_recommendation WHERE tb_style_recommendation.user_id = #{user_id})
+		    AND style_tag IN (SELECT style_tag FROM tb_style_recommendation WHERE tb_style_recommendation.user_id = #{user_id})
+		)
+		ORDER BY RAND()
+	</select>
+	
+	
+	<select id="filterStyleCate" parameterType = "String" resultType="com.coorde.myapp.entity.Style">
+		select * from tb_style where style_cate = #{style_cate} ORDER BY RAND()
+	</select>
+	
+	<select id="filterStyleColor" parameterType = "String" resultType="com.coorde.myapp.entity.Style">
+		select * from tb_style where style_color = #{style_color} ORDER BY RAND()
+	</select>
+	
+	<select id="filterStyleTag" parameterType = "String" resultType="com.coorde.myapp.entity.Style">
+		select * from tb_style where style_tag = #{style_tag} ORDER BY RAND()
+	</select>
+
+</mapper>
