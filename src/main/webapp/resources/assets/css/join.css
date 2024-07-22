@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: white;
+    color: black;
+}
+.container {
+    text-align: center;
+}
+.logo {
+    font-size: 70px;
+    margin-bottom: 50px;
+    font-family: "Yellowtail", cursive;
+}
+form {
+    display: inline-block;
+    text-align: left;
+    margin-right: 100px;
+}
+.form-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+.form-group label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    margin-right: 10px;
+}
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 200px;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 5px;
+    background-color: white;
+}
+.form-group .search-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+.form-group input[type="submit"] {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.join-button {
+    margin-left: 195px;
+    margin-top: 30px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.join-button a{
+    text-decoration: none;
+    color: inherit;
+}
