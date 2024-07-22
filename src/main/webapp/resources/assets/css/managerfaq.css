@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wrap {
+    width: 100%;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    width: 1280px;
+    margin: 50px auto;
+    overflow: hidden;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 100px;
+}
+
+.header h1 {
+    font-size: 70px;
+    font-family: "Yellowtail", cursive;
+}
+
+.nav {
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.nav a:nth-child(2) {
+    margin-right: 180px;
+}
+
+
+.sidebar {
+    width: 20%;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+}
+
+.user {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user p {
+    margin: 5px 0;
+}
+
+.respond {
+    width: 80%;
+    padding: 20px;
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    width: 15%;
+}
+
+.chat .message {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.chat .message p {
+    margin: 0 0 10px;
+}
+
+.response-input {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.response-input textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.response-input button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    border-radius: 15px;
+    width: 15%;
+    margin-left: 320px;
+}
+
+
+.responseTextarea {
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+    margin-top: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
