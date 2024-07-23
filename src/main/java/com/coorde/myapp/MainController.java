@@ -45,7 +45,7 @@ public class MainController {
    
    @RequestMapping("/")
     public String main() {
-        return "mypage";
+        return "main";
     }
    @RequestMapping("/gologin")
    public String gologin() {
@@ -68,19 +68,29 @@ public class MainController {
         User loginUser = userMapper.userlogin(user);
         session.setAttribute("loginUser", loginUser);
         if (loginUser != null) {
-        	if (loginUser.getUser_cate().equals("a")) {
-        		System.out.println("Admin");
-        		System.out.println(loginUser.toString());
-        		return "manager";
-        	}else {
-        		System.out.println("Success");
-        		System.out.println(loginUser.toString());
-        		return "redirect:/";
-        	}
+           if (loginUser.getUser_cate().equals("a")) {
+              System.out.println("Admin");
+              System.out.println(loginUser.toString());
+              return "manager";
+           }else {
+              System.out.println("Success");
+              System.out.println(loginUser.toString());
+              return "redirect:/";
+           }
         } else {
-        	System.out.println("Fail");
+           System.out.println("Fail");
             return "redirect:/login";
         }
+    }
+    
+    @RequestMapping("/goJoin")
+    public String goJoin() {
+       return "signIn";
+    }
+
+    @RequestMapping("/goFind")
+    public String goFind() {
+       return "find";
     }
     
     @RequestMapping("/logoutUser")
@@ -121,8 +131,8 @@ public class MainController {
     }
     
     @RequestMapping("/test5")
-    public String manager_faq() {
-       return "manager_faq";
+    public String managerfaq() {
+       return "managerfaq";
     }
     
     @RequestMapping("/test6")
