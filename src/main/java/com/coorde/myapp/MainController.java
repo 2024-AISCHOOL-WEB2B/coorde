@@ -45,7 +45,7 @@ public class MainController {
 	
 	@RequestMapping("/")
     public String main() {
-        return "join";
+        return "managerfaq";
     }
 
     @RequestMapping("/signUp")
