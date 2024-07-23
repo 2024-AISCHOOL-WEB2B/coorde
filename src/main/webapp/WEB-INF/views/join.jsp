@@ -22,15 +22,15 @@
 <body>
 <div class="container">
       <div class="logo">OOTB</div>
-      <form>
+      <form action="signUp" method="post">
         <div class="form-group">
           <label for="id">ID</label>
-          <input type="text" id="id" name="id" />
+          <input type="text" id="id" name="user_id" />
           <span class="lnr lnr-magnifier"></span>
         </div>
         <div class="form-group">
           <label for="pw">PW</label>
-          <input type="password" id="pw" name="pw" />
+          <input type="password" id="pw" name="user_pw" />
         </div>
         <div class="form-group">
           <label for="verify-pw">VERIFY PW</label>
@@ -38,35 +38,35 @@
         </div>
         <div class="form-group">
           <label for="name">NAME</label>
-          <input type="text" id="name" name="name" />
+          <input type="text" id="name" name="user_name" />
         </div>
         <div class="form-group">
           <label for="birth">BIRTH</label>
-          <input type="text" id="birth" name="birth" />
+          <input type="text" id="birth" name="user_birth" />
         </div>
         <div class="form-group">
           <label for="phone">PHONE</label>
-          <input type="text" id="phone" name="phone" />
+          <input type="text" id="phone" name="user_phone" />
         </div>
         <div class="form-group">
           <label for="height">HEIGHT</label>
-          <input type="text" id="height" name="height" />
+          <input type="text" id="height" name="user_hei" />
         </div>
         <div class="form-group">
           <label for="weight">WEIGHT</label>
-          <input type="text" id="weight" name="weight" />
+          <input type="text" id="weight" name="user_wei" />
         </div>
         <div class="form-group">
           <label for="address">ADDRESS</label>
-          <input type="text" id="address" name="address" />
+          <input type="text" id="address" name="user_addr" />
           <span class="lnr lnr-magnifier"></span>
         </div>
         <div class="form-group">
           <label for="detail-address">DETAIL ADDRESS</label>
-          <input type="text" id="detail-address" name="detail-address" />
+          <input type="text" id="detail-address" name="user_detail_address" />
         </div>
         <div class="join-button">
-          <a href="/main.html">JOIN</a>
+          <button>Sign up</button>
         </div>
       </form>
     </div>
