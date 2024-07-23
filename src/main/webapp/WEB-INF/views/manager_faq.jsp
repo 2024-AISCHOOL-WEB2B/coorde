@@ -1,31 +1,37 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-    <title>Coordy</title>
-    <!-- Meta -->
-    <meta charset="EUC-KR">
+<title>Coordy</title>
+<!-- Meta -->
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
     <meta name="author" content="Phoenixcoded" />
-    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css" />
+
+   <link
+      rel="stylesheet"
+      href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"
+    />
+
     <!-- vendor css -->
     <link rel="stylesheet" href="resources/assets/css/managerfaq.css">
 </head>
 <body>
-     <div class="wrap">
+<div class="wrap">
         <div class="header">
             <h1>OOTB</h1>
         </div>
         <div class="nav">
-            <a href="#">CL</a>
-            <a href="#">USER</a>
+            <a href="goManagerClcart">CLOSET</a>
+            <a href="goManager">USER</a>
         </div>
         <form action="#">
         <div class="container">
             <div class="sidebar">
-                <h2>»ç¿ëÀÚº° ´ëÈ­³»¿ª</h2><br><br>
+                <h2>ì‚¬ìš©ìë³„ ëŒ€í™”ë‚´ì—­</h2><br><br>
                 <div class="user" onclick="showMessages('user1')">
                     <p>USER 1</p>
                     <p><strong>Q:</strong> <span id="recent-user1"></span></p>
@@ -46,16 +52,16 @@
 
             <div class="respond">
                 <div class="stats" id="stats">
-                    <div>ÃÑ ÀÀ´äÈ½¼ö: <span id="total-answered">0</span></div><br>
-                    <div>ÀÀ´ä ¿Ï·á: <span id="answered">0</span></div><br>
-                    <div>¹ÌÀÀ´ä: <span id="unanswered">0</span></div>
+                    <div>ì´ ì‘ë‹µíšŸìˆ˜: <span id="total-answered">0</span></div><br>
+                    <div>ì‘ë‹µ ì™„ë£Œ: <span id="answered">0</span></div><br>
+                    <div>ë¯¸ì‘ë‹µ: <span id="unanswered">0</span></div>
                 </div>
               
                 <div class="chat" id="chat">
-                    <!-- ¸Ş½ÃÁö°¡ ¿©±â¿¡ Ç¥½ÃµË´Ï´Ù -->
+                    <!-- ë©”ì‹œì§€ê°€ ì—¬ê¸°ì— í‘œì‹œë©ë‹ˆë‹¤ -->
                 </div>
                 <div class="response-input">
-                    <button onclick="submitResponse()">´äº¯ Á¦Ãâ</button>
+                    <button onclick="submitResponse()">ë‹µë³€ ì œì¶œ</button>
                 </div>
             </div>
         </div>
@@ -68,44 +74,45 @@
 
         const messages = {
             user1: [
-                { text: '»çÀÌÁî¸¦ ÃßÃµ¹Ş°í ½Í¾î¿ä', answered: false },
-                { text: '¾ÆÀÌµğ ºñ¹øÀ» ÀØ¾î¹ö·È¾î¿ä', answered: false },
-                { text: '»çÀÌÁî°¡ º¯°æµÇ¿ä.', answered: false }
+                { text: 'ì‚¬ì´ì¦ˆë¥¼ ì¶”ì²œë°›ê³  ì‹¶ì–´ìš”', answered: false },
+                { text: 'ì•„ì´ë”” ë¹„ë²ˆì„ ìŠì–´ë²„ë ¸ì–´ìš”', answered: false },
+                { text: 'ì‚¬ì´ì¦ˆê°€ ë³€ê²½ë˜ìš”.', answered: false }
             ],
             user2: [
-                { text: 'Å×½ºÆ® ÇÕ´Ï´Ù.', answered: false },
-                { text: 'Å×½ºÆ® ¹®ÀÇ µÎ ¹øÂ°.', answered: false },
-                { text: 'Å×½ºÆ® ¹®ÀÇ ¼¼ ¹øÂ°.', answered: false }
+                { text: 'í…ŒìŠ¤íŠ¸ í•©ë‹ˆë‹¤.', answered: false },
+                { text: 'í…ŒìŠ¤íŠ¸ ë¬¸ì˜ ë‘ ë²ˆì§¸.', answered: false },
+                { text: 'í…ŒìŠ¤íŠ¸ ë¬¸ì˜ ì„¸ ë²ˆì§¸.', answered: false }
             ],
             user3: [
-                { text: 'È¸¿øÀº ¾î¶»°Ô ÇÏ³ª¿ä?', answered: false },
-                { text: 'È¸¿ø°¡ÀÔÀÌ ¾î·Æ½À´Ï´Ù.', answered: false },
-                { text: 'È¸¿ø Á¤º¸ ¼öÁ¤ÀÌ ¾î·Æ½À´Ï´Ù.', answered: false }
+                { text: 'íšŒì›ì€ ì–´ë–»ê²Œ í•˜ë‚˜ìš”?', answered: false },
+                { text: 'íšŒì›ê°€ì…ì´ ì–´ë µìŠµë‹ˆë‹¤.', answered: false },
+                { text: 'íšŒì› ì •ë³´ ìˆ˜ì •ì´ ì–´ë µìŠµë‹ˆë‹¤.', answered: false }
             ],
             user4: [
-                { text: 'È¸¿ø Á¤º¸ ¼öÁ¤Àº ¾î¶»°Ô?', answered: false },
-                { text: '¼öÁ¤ÀÌ ¾ÈµË´Ï´Ù.', answered: false },
-                { text: 'Á¤º¸°¡ Àß¸øµË´Ï´Ù.', answered: false }
+                { text: 'íšŒì› ì •ë³´ ìˆ˜ì •ì€ ì–´ë–»ê²Œ?', answered: false },
+                { text: 'ìˆ˜ì •ì´ ì•ˆë©ë‹ˆë‹¤.', answered: false },
+                { text: 'ì •ë³´ê°€ ì˜ëª»ë©ë‹ˆë‹¤.', answered: false }
             ]
         };
 
         function showMessages(user) {
+           
             currentUser = user;
             const chat = document.getElementById('chat');
-            chat.innerHTML = ''; // ±âÁ¸ÀÇ ¸Ş¼¼Áö Áö¿ì±â
+            chat.innerHTML = ''; // ê¸°ì¡´ì˜ ë©”ì„¸ì§€ ì§€ìš°ê¸°
 
             messages[user].forEach((message, index) => {
                 const messageDiv = document.createElement('div');
                 messageDiv.classList.add('message');
-                messageDiv.innerHTML = `<p>${message.text}</p>`;
+                messageDiv.innerHTML = `<p>\${message.text}</p>`;
                 if (!message.answered) {
                     const responseTextarea = document.createElement('textarea');
-                    responseTextarea.setAttribute('placeholder', '´äº¯À» ÀÔ·ÂÇÏ¼¼¿ä');
+                    responseTextarea.setAttribute('placeholder', 'ë‹µë³€ì„ ì…ë ¥í•˜ì„¸ìš”');
                     responseTextarea.setAttribute('data-index', index);
                     responseTextarea.classList.add('responseTextarea');
                     messageDiv.appendChild(responseTextarea);
                 }
-                chat.appendChild(messageDiv); // »õ·Î¿î ¸Ş¼¼Áö Ãß°¡
+                chat.appendChild(messageDiv); // ìƒˆë¡œìš´ ë©”ì„¸ì§€ ì¶”ê°€
             });
         }
 
@@ -115,10 +122,10 @@
 
             textareas.forEach(textarea => {
                 const responseText = textarea.value.trim();
-                if (!responseText) return alert('´äº¯À» ÀÔ·ÂÇÏ¼¼¿ä.');
+                if (!responseText) return alert('ë‹µë³€ì„ ì…ë ¥í•˜ì„¸ìš”.');
 
                 const index = textarea.getAttribute('data-index');
-                messages[currentUser][index].text += ` ´äº¯: ${responseText}`;
+                messages[currentUser][index].text += ` ë‹µë³€: \${responseText}`;
                 messages[currentUser][index].answered = true;
             });
 
@@ -129,7 +136,8 @@
         function updateRecentMessages() {
             for (const user in messages) {
                 const recentMessage = messages[user][messages[user].length - 1].text;
-                document.getElementById(`recent-${user}`).textContent = recentMessage;
+                console.log(messages[user].length,user)
+                document.getElementById(`recent-\${user}`).textContent = recentMessage;
             }
         }
 
@@ -152,11 +160,12 @@
             document.getElementById('unanswered').textContent = totalUnanswered;
         }
 
-        // ÆäÀÌÁö°¡ ·ÎµåµÉ ¶§ ÃÖ±Ù ¸Ş½ÃÁö¿Í Åë°è ¾÷µ¥ÀÌÆ®
+        // í˜ì´ì§€ê°€ ë¡œë“œë  ë•Œ ìµœê·¼ ë©”ì‹œì§€ì™€ í†µê³„ ì—…ë°ì´íŠ¸
         document.addEventListener('DOMContentLoaded', () => {
             updateRecentMessages();
             updateStats();
         });
     </script>
+
 </body>
 </html>

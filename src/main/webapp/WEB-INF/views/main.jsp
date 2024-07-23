@@ -45,7 +45,7 @@
                 </div>
                 <% if(loginUser != null){ %>
                 <div class="right">
-                    <a href="goLogout">LOGOUT</a><br><br>
+                    <a href="logoutUser">LOGOUT</a><br><br>
                     <a href="gomyPage">MY PAGE</a>
                 </div>
                 <% } else { %>

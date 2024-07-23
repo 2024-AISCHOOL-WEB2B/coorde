@@ -30,6 +30,6 @@ public class User {
 	@NonNull private String user_detail_address;
 	
 	private Date joined_dt;
-	private String user_type;
+	private String user_cate;
 }
 

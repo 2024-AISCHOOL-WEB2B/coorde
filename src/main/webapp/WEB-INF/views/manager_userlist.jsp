@@ -17,13 +17,13 @@
     />
 
     <!-- vendor css -->
-    <link rel="stylesheet" href="resources/assets/css/manager-clcart.css">
+    <link rel="stylesheet" href="resources/assets/css/manager-userlist.css">
 </head>
 <body>
 <div class="wrap">
         <div class="container">
             <h1 class="title">OOTB</h1>
-            <div class="manager"><a href="manager.html">MANAGER</a></div>
+            <div class="manager"><a href="goManager">MANAGER</a></div>
             <form id="user-management-form">
                 <div class="search-container">
                     <input type="text" id="search" placeholder="검색">
@@ -32,14 +32,14 @@
                 <div class="add-button-container">
                     <button type="button" onclick="addRow()">ADD</button>
                 </div>
-                <div class="US">CL-CART</div>
+                <div class="US">USER-LIST</div>
                 <table>
                     <thead>
                         <tr>
-                            <th>CL_ID</th>
-                            <th>CL_NAME</th>
-                            <th>PRICE</th>
-                            <th>BRAND</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Address</th>
                             <th>Delete</th>
                         </tr>
                     </thead>

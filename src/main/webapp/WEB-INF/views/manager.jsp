@@ -34,9 +34,9 @@
                     <img src="resources/assets/images/browser/banner.png" alt="Main Banner">
                 </div>
                 <div class="right">
-                    <a href="#">CL</a><br><br>
-                    <a href="#">USER</a><br><br>
-                    <a href="/managerfaq.html">FAQ </a>
+                    <a href="goManagerClcart">CLOSET</a><br><br>
+                    <a href="goManagerUserList">USER</a><br><br>
+                    <a href="goManagerFaq">FAQ </a>
                 </div>
             </div>
 

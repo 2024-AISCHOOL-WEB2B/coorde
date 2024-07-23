@@ -53,8 +53,7 @@
             </div>
         </form>
         <div class="actions">
-            <a href="/main.html">LOGOUT</a><br><br>
-            <a href="/mypage.html">MY PAGE</a>
+            <a href="gomyPage">MY PAGE</a>
         </div>
     </div>
 

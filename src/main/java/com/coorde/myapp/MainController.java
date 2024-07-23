@@ -45,7 +45,7 @@ public class MainController {
    
    @RequestMapping("/")
     public String main() {
-        return "managerfaq";
+        return "main";
     }
    @RequestMapping("/gologin")
    public String gologin() {
@@ -68,34 +68,56 @@ public class MainController {
         User loginUser = userMapper.userlogin(user);
         session.setAttribute("loginUser", loginUser);
         if (loginUser != null) {
-        	System.out.println("Success");
-        	System.out.println(loginUser.toString());
-            return "redirect:/";
+        	if (loginUser.getUser_cate().equals("a")) {
+        		System.out.println("Admin");
+        		System.out.println(loginUser.toString());
+        		return "manager";
+        	}else {
+        		System.out.println("Success");
+        		System.out.println(loginUser.toString());
+        		return "redirect:/";
+        	}
         } else {
         	System.out.println("Fail");
-            return "redirect:/";
+            return "redirect:/login";
         }
     }
     
+    @RequestMapping("/logoutUser")
+    public String logoutUser(HttpSession session) {
+       session.invalidate();
+       return "redirect:/";
+    }
     
-    @RequestMapping("/test1")
-    public String edit() {
+    @RequestMapping("/gomyPage")
+    public String gomyPage() {
+        return "mypage";
+    }
+    
+    @RequestMapping("/goEdit")
+    public String goEdit() {
         return "edit";
     }
     
-    @RequestMapping("/test2")
-    public String loginafter() {
-        return "loginafter";
+    
+    @RequestMapping("/goManagerClcart")
+    public String goManagerClcart() {
+        return "manager_clcart";
     }
     
-    @RequestMapping("/test3")
-    public String manager() {
-        return "manager";
+    @RequestMapping("/goManagerUserList")
+    public String goManagerUserList() {
+        return "manager_userlist";
     }
     
-    @RequestMapping("/test4")
-    public String manager_clcart() {
-       return "manager_clcart";
+    @RequestMapping("/goManagerFaq")
+    public String goManagerFaq() {
+        return "manager_faq";
+    }
+    
+    @RequestMapping("/goManager")
+    public String goManager() {
+       return "manager";
     }
     
     @RequestMapping("/test5")
