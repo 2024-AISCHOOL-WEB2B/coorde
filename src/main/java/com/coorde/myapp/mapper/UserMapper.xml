@@ -7,7 +7,7 @@
         values(#{user_id},#{user_pw},#{user_name},#{user_birth},#{user_phone},#{user_hei},#{user_wei},#{user_addr}, 0, 0, 0, 0, 0, 0, 0)
     </insert>
 
-    <select id="userSelect" parameterType="com.coorde.myapp.entity.User" resultType="com.coorde.myapp.entity.User">
+    <select id="userlogin" parameterType="com.coorde.myapp.entity.User" resultType="com.coorde.myapp.entity.User">
         SELECT * FROM user_tb WHERE user_id = #{user_id} AND user_pw = #{user_pw}
     </select>
 

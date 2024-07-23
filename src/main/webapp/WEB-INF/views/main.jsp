@@ -1,9 +1,10 @@
+<%@page import="com.coorde.myapp.entity.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Coordy</title>
+<title>Coorde</title>
 <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -11,7 +12,7 @@
 
     <meta name="author" content="Phoenixcoded" />
 
-	<link
+   <link
       rel="stylesheet"
       href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"
     />
@@ -20,11 +21,14 @@
     <link rel="stylesheet" href="resources/assets/css/main.css">
 </head>
 <body>
+
+<% User loginUser = (User) session.getAttribute("loginUser"); %>
+
 <div class="wrap">
         <div class="contents">
             <header>
                 <div class="logo">
-                    <div class="brand">OTTB</div>
+                    <div class="brand">OOTB</div>
                     <div class="tagline">Out-fit on the body</div>
                 </div>
             </header>
@@ -39,10 +43,16 @@
                 <div class="main-banner">
                     <img src="resources/assets/images/browser/banner.png" alt="Main Banner">
                 </div>
+                <% if(loginUser != null){ %>
                 <div class="right">
-                    <a href="/loginafter.html">LOGIN</a><br>
-                 
+                    <a href="goLogout">LOGOUT</a><br><br>
+                    <a href="gomyPage">MY PAGE</a>
                 </div>
+                <% } else { %>
+                <div class="right">
+                    <a href="gologin">LOGIN</a><br>
+                </div>
+                <% } %>
             </div>
 
             <div class="categories">

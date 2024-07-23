@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,3 +32,4 @@ public class User {
 	private Date joined_dt;
 	private String user_type;
 }
+

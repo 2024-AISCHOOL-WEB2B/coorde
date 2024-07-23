@@ -22,19 +22,19 @@
 <body>
 <div class="container">
         <div class="title">OOTB</div>
-        <form action="/login" method="post">
+        <form action="userlogin" method="post">
             <div class="form-group">
                 <label for="id">ID</label>
-                <input type="text" id="id" name="id" required>
+                <input type="text" id="id" name="user_id">
             </div>
             <div class="form-group">
                 <label for="pw">PW</label>
-                <input type="password" id="pw" name="pw" required>
+                <input type="password" id="pw" name="user_pw">
             </div>
             <div class="social-login">
                 <div>
                     <img src="resources/assets/images/browser/kakao.png" alt="Kakao Login" title="Kakao Login"><br><br>
-                    <a class="action-button" href="/loginafter.html">LOGIN</a>
+                    <button>LOGIN</button>
                 </div>
                 <div>
                     <img src="resources/assets/images/browser/google.png" alt="Google Login" title="Google Login"><br><br>

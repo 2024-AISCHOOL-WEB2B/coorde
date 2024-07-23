@@ -40,13 +40,17 @@ import com.coorde.myapp.mapper.UserMapper;
 @Controller
 public class MainController {
 
-	@Autowired
-	private UserMapper userMapper;
-	
-	@RequestMapping("/")
+   @Autowired
+   private UserMapper userMapper;
+   
+   @RequestMapping("/")
     public String main() {
-        return "managerfaq";
+        return "main";
     }
+   @RequestMapping("/gologin")
+   public String gologin() {
+       return "login";
+   }
 
     @RequestMapping("/signUp")
     public String signUp(User user, Model model) {
@@ -59,140 +63,185 @@ public class MainController {
         }
     }
 
-    @PostMapping("/userSelect")
-    public String userSelect(User user, HttpSession session) {
-        User loginUser = userMapper.userSelect(user);
+    @RequestMapping("/userlogin")
+    public String userlogin(User user, HttpSession session) {
+        User loginUser = userMapper.userlogin(user);
         session.setAttribute("loginUser", loginUser);
         if (loginUser != null) {
+        	System.out.println("Success");
+        	System.out.println(loginUser.toString());
             return "redirect:/";
         } else {
-            return "signInFail";
+        	System.out.println("Fail");
+            return "redirect:/";
         }
     }
-	
+    
+    
+    @RequestMapping("/test1")
+    public String edit() {
+        return "edit";
+    }
+    
+    @RequestMapping("/test2")
+    public String loginafter() {
+        return "loginafter";
+    }
+    
+    @RequestMapping("/test3")
+    public String manager() {
+        return "manager";
+    }
+    
+    @RequestMapping("/test4")
+    public String manager_clcart() {
+       return "manager_clcart";
+    }
+    
+    @RequestMapping("/test5")
+    public String managerfaq() {
+       return "managerfaq";
+    }
+    
+    @RequestMapping("/test6")
+    public String manager_userlist() {
+       return "manager_userlist";
+    }
+    
+    @RequestMapping("/test7")
+    public String mypage() {
+       return "mypage";
+    }
+    
+    @RequestMapping("/test8")
+    public String userfaq() {
+       return "userfaq";
+    }
 
-//	@Autowired
-//	private UserMapper userMapper;
-//	
-//	@Autowired
-//	private CodyMapper codyMapper;
-//	
-//	@Autowired
-//	private GraphMapper graphMapper;
-//	
-//	@RequestMapping("/goMain")
-//	public String goMain() {
-//		
-//		return "redirect:/";
-//	}
-//	
-//	@PostMapping("/userSelect")
-//	public String userSelect(User user, HttpSession session) {
+   
+
+//   @Autowired
+//   private UserMapper userMapper;
+//   
+//   @Autowired
+//   private CodyMapper codyMapper;
+//   
+//   @Autowired
+//   private GraphMapper graphMapper;
+//   
+//   @RequestMapping("/goMain")
+//   public String goMain() {
+//      
+//      return "redirect:/";
+//   }
+//   
+//   @PostMapping("/userSelect")
+//   public String userSelect(User user, HttpSession session) {
 //
-//		User loginUser = userMapper.userSelect(user);
-//		session.setAttribute("loginUser", loginUser);
-//	
-//		if(loginUser != null) {
-//			return "redirect:/";
-//		}else {
-//			return "signInFail";
-//	}
-//	}
-//	
-//	@RequestMapping("/logoutUser")
-//	public String logoutUser(HttpSession session) {
-//		session.invalidate();
-//		return "redirect:/";
-//	}
-//	
-//	
-//	
-//	@RequestMapping("/signUp")
-//	public String signUp() {
-//		
-//		return "signUp";
-//	}
-//	
-//	@RequestMapping("/signIn")
-//	public String signIn() {
-//		
-//		return "signIn";
-//	}
-//	
-//	
-//	@RequestMapping("/goUpdateUser")
-//	public String goUpdateUser() {
-//		
-//		return "updateUser";
-//	}
-//	
-//	
-//	
-//	@RequestMapping("/updateSuccess")
-//	public String updateSuccess(User user, HttpSession session) {
-//		System.out.println(user.toString());
-//		
-//		int cnt = userMapper.updateUser(user);
+//      User loginUser = userMapper.userSelect(user);
+//      session.setAttribute("loginUser", loginUser);
+//   
+//      if(loginUser != null) {
+//         return "redirect:/";
+//      }else {
+//         return "signInFail";
+//   }
+//   }
+//   
+//   @RequestMapping("/logoutUser")
+//   public String logoutUser(HttpSession session) {
+//      session.invalidate();
+//      return "redirect:/";
+//   }
+//   
+//   
+//   
+//   @RequestMapping("/signUp")
+//   public String signUp() {
+//      
+//      return "signUp";
+//   }
+//   
+//   @RequestMapping("/signIn")
+//   public String signIn() {
+//      
+//      return "signIn";
+//   }
+//   
+//   
+//   @RequestMapping("/goUpdateUser")
+//   public String goUpdateUser() {
+//      
+//      return "updateUser";
+//   }
+//   
+//   
+//   
+//   @RequestMapping("/updateSuccess")
+//   public String updateSuccess(User user, HttpSession session) {
+//      System.out.println(user.toString());
+//      
+//      int cnt = userMapper.updateUser(user);
 //
-//		if (cnt > 0) {
-//			user = userMapper.userSelect(user);
-//			session.setAttribute("loginUser", user);
-//			
-//			return "updateSuccess";
-//		} else {
-//			System.out.println("실패");
-//			return "goMain";
-//		}
-//	}
+//      if (cnt > 0) {
+//         user = userMapper.userSelect(user);
+//         session.setAttribute("loginUser", user);
+//         
+//         return "updateSuccess";
+//      } else {
+//         System.out.println("실패");
+//         return "goMain";
+//      }
+//   }
 //
-//	
-//	
-//	@RequestMapping("/signUpSuccess")
-//	public String signUpSuccess(User user, Model model) {
-//		
-//		System.out.println(user.toString());
-//		int cnt = userMapper.signUpSuccess(user);
-//		
-//		if (cnt > 0) {
-//			System.out.println("데이터 입력 성공");
-//			model.addAttribute("user_id", user.getUser_id());
-//			return "signUpSuccess";
-//			
-//		} else {
-//			System.out.println("회원가입 실패");
-//			return "signUpFail";
-//		}
-//		
-//	}
-//	
-//	@RequestMapping("/ConfirmId")
-//	@ResponseBody
-//	public void confirmId(String user_id, HttpServletResponse response) {
+//   
+//   
+//   @RequestMapping("/signUpSuccess")
+//   public String signUpSuccess(User user, Model model) {
+//      
+//      System.out.println(user.toString());
+//      int cnt = userMapper.signUpSuccess(user);
+//      
+//      if (cnt > 0) {
+//         System.out.println("데이터 입력 성공");
+//         model.addAttribute("user_id", user.getUser_id());
+//         return "signUpSuccess";
+//         
+//      } else {
+//         System.out.println("회원가입 실패");
+//         return "signUpFail";
+//      }
+//      
+//   }
+//   
+//   @RequestMapping("/ConfirmId")
+//   @ResponseBody
+//   public void confirmId(String user_id, HttpServletResponse response) {
 //
-//		
-//		boolean result = true;		
-//		if(user_id.trim().isEmpty()) {
-//			result = false;
-//		} else {
-//			if (userMapper.selectId(user_id)) {
-//				result = false;
-//			} else {
-//				result = true;
-//			}
-//		}
-//		
-//		try {
-//			PrintWriter out = response.getWriter();
-//			out.print(result);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+//      
+//      boolean result = true;      
+//      if(user_id.trim().isEmpty()) {
+//         result = false;
+//      } else {
+//         if (userMapper.selectId(user_id)) {
+//            result = false;
+//         } else {
+//            result = true;
+//         }
+//      }
+//      
+//      try {
+//         PrintWriter out = response.getWriter();
+//         out.print(result);
+//      } catch (IOException e) {
+//         e.printStackTrace();
+//      }
 //
-//	}
+//   }
 //
 //private static String makeQuery(String data1, String data2, String data3, String data4, String date) {
-//		
-//		return String.format("{\"startDate\":\"%s\"," +
+//      
+//      return String.format("{\"startDate\":\"%s\"," +
 //                "\"endDate\":\"%s\"," + 
 //                "\"timeUnit\":\"date\"," +
 //                "\"keywordGroups\":[{\"groupName\":\"%s\"," + "\"keywords\":[\"%s\"]}," +
@@ -202,50 +251,50 @@ public class MainController {
 //                "\"device\":\"pc\"," +
 //                "\"ages\":[\"3\",\"4\",\"5\",\"6\"]," +
 //                "\"gender\":\"f\"}", date, date, data1, data1, data2, data2, data3, data3, 
-//                						data4, data4);
-//	}
-//	
-//	private static ArrayList<Double> makeMap(String responseBody, ArrayList<Double> rateList) {
-//		JSONParser parser = new JSONParser();
+//                                  data4, data4);
+//   }
+//   
+//   private static ArrayList<Double> makeMap(String responseBody, ArrayList<Double> rateList) {
+//      JSONParser parser = new JSONParser();
 //        try {
-//			Object obj = parser.parse(responseBody);
-//			JSONObject jsonObject = (JSONObject) obj;
-//			
-//			JSONArray resultsArray = (JSONArray) jsonObject.get("results");
-//			
-//			 for (int i = 0; i < resultsArray.size(); i++) {
-//		            JSONObject resultObject = (JSONObject) resultsArray.get(i);
-//		            String title = (String) resultObject.get("title");
+//         Object obj = parser.parse(responseBody);
+//         JSONObject jsonObject = (JSONObject) obj;
+//         
+//         JSONArray resultsArray = (JSONArray) jsonObject.get("results");
+//         
+//          for (int i = 0; i < resultsArray.size(); i++) {
+//                  JSONObject resultObject = (JSONObject) resultsArray.get(i);
+//                  String title = (String) resultObject.get("title");
 //
-//	                // "data" 배열에 접근
-//		            JSONArray dataArray = (JSONArray) resultObject.get("data");
-//	                
-//	                // 각 데이터에 대한 정보 출력a
-//		            if (i != 0) {
-//		                // 각 데이터에 대한 정보 출력
-//		                for (Object data : dataArray) {
-//		                    JSONObject dataObject = (JSONObject) data;
-//		                    Object ratio = dataObject.get("ratio");
+//                   // "data" 배열에 접근
+//                  JSONArray dataArray = (JSONArray) resultObject.get("data");
+//                   
+//                   // 각 데이터에 대한 정보 출력a
+//                  if (i != 0) {
+//                      // 각 데이터에 대한 정보 출력
+//                      for (Object data : dataArray) {
+//                          JSONObject dataObject = (JSONObject) data;
+//                          Object ratio = dataObject.get("ratio");
 //
-//		                    if (ratio instanceof Double) {
-//		                        // Number 타입인 경우 Double로 변환하여 리스트에 추가
-//		                    	rateList.add(((Number) ratio).doubleValue());
-//		                    }
-//		                }
-//		            }         
-//			}
-//			
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			
-//		}
+//                          if (ratio instanceof Double) {
+//                              // Number 타입인 경우 Double로 변환하여 리스트에 추가
+//                             rateList.add(((Number) ratio).doubleValue());
+//                          }
+//                      }
+//                  }         
+//         }
+//         
+//      } catch (ParseException e) {
+//         // TODO Auto-generated catch block
+//         e.printStackTrace();
+//         
+//      }
 //        
 //        
-//		return rateList;
+//      return rateList;
 //        
 //        
-//	}
+//   }
 //    private static String post(String apiUrl, Map<String, String> requestHeaders, String requestBody) {
 //        HttpURLConnection con = connect(apiUrl);
 //
@@ -301,7 +350,7 @@ public class MainController {
 //            throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
 //        }
 //    }
-//	
-//	
+//   
+//   
 
 }
