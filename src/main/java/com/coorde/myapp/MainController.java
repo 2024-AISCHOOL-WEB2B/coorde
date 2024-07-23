@@ -42,7 +42,7 @@ public class MainController {
 
 		
 
-		return "signIn";
+		return "managerfaq";
 	}
 
 //	@Autowired
