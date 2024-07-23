@@ -34,6 +34,7 @@
                     <img src="resources/assets/images/browser/banner.png" alt="Main Banner">
                 </div>
                 <div class="right">
+                    <a href="logoutUser">LOGOUT</a><br><br>
                     <a href="goManagerClcart">CLOSET</a><br><br>
                     <a href="goManagerUserList">USER</a><br><br>
                     <a href="goManagerFaq">FAQ </a>
