@@ -25,14 +25,14 @@
             <div class="title">OOTB</div>
             <div class="nav">
                 <div>
-                   <a href="goEdit">EDIT</a>
+                    <a href="/edit.html">EDIT</a>
                 </div>
                 <div>WISH LIST</div>  
                 <div>
-                    <a href="logoutUser">LOG OUT</a>
+                    <a href="/main.html">LOG OUT</a>
                 </div>
             </div>
-            
+            <form action="">
             <div class="products">
                 <div class="product">
                     <input type="checkbox" class="product-checkbox">
@@ -111,9 +111,23 @@
                     </div>
                 </div>
             </div>
+            <div class="faq">
+                <a href="#">FAQ</a>
+                <button id="delete-button">DELETE</button>
+            </div>
+        </form>
+            
+
+            <div class="usage-info">
+                <h2>이용안내</h2>
+                <p> - 체크 버튼을 클릭 후 DELETE 버튼을 누르면 목록에서 삭제됩니다.</p>
+                <p> - 회원가입시와 동일한 이용방법으로 제공되는 정보를 관리하실 수 있습니다.</p>
+                <p> - 정확한 회원 정보를 통해 정확한 안내와 주문처리를 위해 등록된 정보를 확인해 주십시오.</p>
+            </div>
         </div>
     </div>
-
+    
+    <form action="">
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -134,36 +148,38 @@
                 <tbody>
                     <tr>
                         <td>총장</td>
-                        <td><input type="radio" id="length-small" name="length" value="small"><label for="length-small"></label></td>
-                        <td><input type="radio" id="length-medium" name="length" value="medium"><label for="length-medium"></label></td>
-                        <td><input type="radio" id="length-large" name="length" value="large"><label for="length-large"></label></td>
+                        <td><input type="radio" id="length-small" name="cl_size" value="small"><label for="length-small"></label></td>
+                        <td><input type="radio" id="length-medium" name="cl_size" value="medium"><label for="length-medium"></label></td>
+                        <td><input type="radio" id="length-large" name="cl_size" value="large"><label for="length-large"></label></td>
                     </tr>
                     <tr>
                         <td>어깨</td>
-                        <td><input type="radio" id="shoulder-small" name="shoulder" value="small"><label for="shoulder-small"></label></td>
-                        <td><input type="radio" id="shoulder-medium" name="shoulder" value="medium"><label for="shoulder-medium"></label></td>
-                        <td><input type="radio" id="shoulder-large" name="shoulder" value="large"><label for="shoulder-large"></label></td>
+                        <td><input type="radio" id="shoulder-small" name="cl_sh" value="small"><label for="shoulder-small"></label></td>
+                        <td><input type="radio" id="shoulder-medium" name="cl_sh" value="medium"><label for="shoulder-medium"></label></td>
+                        <td><input type="radio" id="shoulder-large" name="cl_sh" value="large"><label for="shoulder-large"></label></td>
                     </tr>
                     <tr>
                         <td>가슴</td>
-                        <td><input type="radio" id="chest-small" name="chest" value="small"><label for="chest-small"></label></td>
-                        <td><input type="radio" id="chest-medium" name="chest" value="medium"><label for="chest-medium"></label></td>
-                        <td><input type="radio" id="chest-large" name="chest" value="large"><label for="chest-large"></label></td>
+                        <td><input type="radio" id="chest-small" name="cl_ch" value="small"><label for="chest-small"></label></td>
+                        <td><input type="radio" id="chest-medium" name="cl_ch" value="medium"><label for="chest-medium"></label></td>
+                        <td><input type="radio" id="chest-large" name="cl_ch" value="large"><label for="chest-large"></label></td>
                     </tr>
                     <tr>
                         <td>팔</td>
-                        <td><input type="radio" id="sleeve-small" name="sleeve" value="small"><label for="sleeve-small"></label></td>
-                        <td><input type="radio" id="sleeve-medium" name="sleeve" value="medium"><label for="sleeve-medium"></label></td>
-                        <td><input type="radio" id="sleeve-large" name="sleeve" value="large"><label for="sleeve-large"></label></td>
+                        <td><input type="radio" id="arm-small" name="cl_arm" value="small"><label for="arm-small"></label></td>
+                        <td><input type="radio" id="arm-medium" name="cl_arm" value="medium"><label for="arm-medium"></label></td>
+                        <td><input type="radio" id="arm-large" name="cl_arm" value="large"><label for="arm-large"></label></td>
                     </tr>
                 </tbody>
             </table>
             <button class="submit-button" onclick="submitModal()">저장</button>
         </div>
     </div>
+</form>
+
 
     <script>
-        function showModal(productName, productPrice, productImgSrc) {
+          function showModal(productName, productPrice, productImgSrc) {
             document.getElementById('modal-product-name').innerText = productName;
             document.getElementById('modal-product-price').innerText = productPrice;
             document.getElementById('modal-img').src = productImgSrc;
@@ -184,6 +200,21 @@
                 closeModal();
             }
         }
+
+        document.getElementById('delete-button').addEventListener('click', function() {
+            const deleteButton = document.getElementById('delete-button');
+            deleteButton.style.backgroundColor = 'blue';
+            setTimeout(() => {
+                deleteButton.style.backgroundColor = ''; 
+            }, 50);
+
+            const checkboxes = document.querySelectorAll('.product-checkbox');
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkbox.closest('.product').remove();
+                }
+            });
+        });
     </script>
 
 </body>
