@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+    
+}
+
+p{
+    margin-bottom: 70px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 1280px;
+    margin: 50px auto;
+    overflow: hidden;
+}
+
+.header {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    font-family: "Yellowtail", cursive;
+}
+
+.top-nav {
+    font-size: 18px;
+    margin-bottom: 50px;
+    margin-right: 40px;
+    text-align: right;
+    
+    
+}
+
+.top-nav a {
+    text-decoration: none;
+    color: black;
+    
+    
+}
+
+.forms-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.form-box {
+    width: 45%;
+    text-align: center;
+}
+
+.form-box h3 {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.form-box label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.form-box input {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-left: 25px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.submit-btn {
+    width: 100px;
+    padding: 10px;
+    background: none;
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 15px;
+    margin-left: 60px;
+    
+}
