@@ -45,7 +45,7 @@ public class MainController {
    
    @RequestMapping("/")
     public String main() {
-        return "main";
+        return "login";
     }
    @RequestMapping("/gologin")
    public String gologin() {

@@ -34,12 +34,15 @@
             </header>
 
             <div class="banner-wrapper">
+                <form action="#" method="post">
                 <div class="filters">
                     <label for="height">HEIGHT</label>
-                    <input type="text" id="height" name="height">
+                    <input type="text" id="height" name="user_hei">
                     <label for="weight">WEIGHT</label>
-                    <input type="text" id="weight" name="weight">
+                    <input type="text" id="weight" name="user_wei">
+                    <button>Submit</button>
                 </div>
+            </form>
                 <div class="main-banner">
                     <img src="resources/assets/images/browser/banner.png" alt="Main Banner">
                 </div>
