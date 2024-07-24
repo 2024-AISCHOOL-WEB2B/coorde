@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wrap {
+    width: 100%;
+    background-color: white;
+    margin: 20px;
+}
+
+.container {
+    width: 1280px;
+    margin: 50px auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    font-family: "Yellowtail", cursive;
+    position: relative;
+}
+
+.header h1 {
+    font-size: 80px;
+    margin-bottom: 70px;
+    text-align: center;
+    flex-grow: 1; /* 중앙 정렬을 위해 flex-grow 사용 */
+}
+
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    margin-right: 80px;
+    position: absolute;
+    right: 10px; /* 오른쪽 끝으로 배치 */
+    top: 90%; /* 수직 중앙 정렬 */
+    transform: translateY(-50%); /* 수직 중앙 정렬 */
+    z-index: 9999;
+
+}
+
+.header-buttons button {
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.header-buttons .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+    left: 50%; /* 중앙 정렬 */
+    transform: translateX(-50%); /* 중앙 정렬을 위한 변환 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    
+}
+
+.dropbtn {
+    background-color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 130px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    right: 0; /* 오른쪽 정렬 */
+}
+
+.dropdown-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.dropdown-content button:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.filter {
+    width: 150px;
+    margin-right: 20px;
+    flex-direction: column;
+    display: flex;
+}
+
+.filter label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.filter input[type="radio"] {
+    margin-right: 10px;
+}
+
+.filter label:nth-child(2) input[type="radio"] {
+    margin-left: 7.5px; /* 라디오 버튼을 오른쪽으로  이동 */
+    
+}
+
+
+.filter input[type="text"] {
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #000;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.submit-btn {
+    align-self: center; 
+    width: 70px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: white;
+    border-style: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.nav{
+    text-align: center;
+    margin-left: 35px;
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 70%;
+    margin-left: 30px;
+}
+
+.product {
+    width: calc(33.33% - 10px);
+    text-align: center;
+    position: relative;
+    z-index: 1; /* 낮은 z-index 값 설정 */
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    max-width: 250px;
+    z-index: 1;
+}
+
+.cart-icon {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 2; /* 이미지보다 높게 설정 */
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.right a {
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #000;
+}
+
+.pagination a:hover {
+    text-decoration: underline;
+}
