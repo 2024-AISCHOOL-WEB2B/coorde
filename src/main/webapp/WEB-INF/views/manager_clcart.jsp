@@ -23,11 +23,11 @@
 <div class="wrap">
         <div class="container">
             <h1 class="title">OOTB</h1>
-            <div class="manager"><a href="goManager">MANAGER</a></div>
+            <div class="manager"><a href="manager.html">MANAGER</a></div>
             <form id="user-management-form">
                 <div class="search-container">
                     <input type="text" id="search" placeholder="검색">
-                    <button type="button" onclick="searchUser()"><span class="lnr lnr-magnifier"></span></button>
+                    <button type="button" onclick="searchCL()"><span class="lnr lnr-magnifier"></span></button>
                 </div>
                 <div class="add-button-container">
                     <button type="button" onclick="addRow()">ADD</button>
@@ -43,34 +43,34 @@
                             <th>Delete</th>
                         </tr>
                     </thead>
-                    <tbody id="user-list">
+                    <tbody id="cl_cart">
                         <tr>
-                            <td><input type="text" name="email" value=""></td>
-                            <td><input type="text" name="name" value=""></td>
-                            <td><input type="text" name="phone" value=""></td>
-                            <td><input type="text" name="address" value=""></td>
-                            <td><button type="button" onclick="deleteUser(this)">Delete</button></td>
+                            <td><input type="text" name="cl_idx" value=""></td>
+                            <td><input type="text" name="cl_name" value=""></td>
+                            <td><input type="text" name="cl_price" value=""></td>
+                            <td><input type="text" name="brand" value=""></td>
+                            <td><button type="button" onclick="deleteCL(this)">Delete</button></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="email" value=""></td>
-                            <td><input type="text" name="name" value=""></td>
-                            <td><input type="text" name="phone" value=""></td>
-                            <td><input type="text" name="address" value=""></td>
-                            <td><button type="button" onclick="deleteUser(this)">Delete</button></td>
+                            <td><input type="text" name="cl_idx" value=""></td>
+                            <td><input type="text" name="cl_name" value=""></td>
+                            <td><input type="text" name="cl_price" value=""></td>
+                            <td><input type="text" name="brand" value=""></td>
+                            <td><button type="button" onclick="deleteCL(this)">Delete</button></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="email" value=""></td>
-                            <td><input type="text" name="name" value=""></td>
-                            <td><input type="text" name="phone" value=""></td>
-                            <td><input type="text" name="address" value=""></td>
-                            <td><button type="button" onclick="deleteUser(this)">Delete</button></td>
+                            <td><input type="text" name="cl_idx" value=""></td>
+                            <td><input type="text" name="cl_name" value=""></td>
+                            <td><input type="text" name="cl_price" value=""></td>
+                            <td><input type="text" name="brand" value=""></td>
+                            <td><button type="button" onclick="deleteCL(this)">Delete</button></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="email" value=""></td>
-                            <td><input type="text" name="name" value=""></td>
-                            <td><input type="text" name="phone" value=""></td>
-                            <td><input type="text" name="address" value=""></td>
-                            <td><button type="button" onclick="deleteUser(this)">Delete</button></td>
+                            <td><input type="text" name="cl_idx" value=""></td>
+                            <td><input type="text" name="cl_name" value=""></td>
+                            <td><input type="text" name="cl_price" value=""></td>
+                            <td><input type="text" name="brand" value=""></td>
+                            <td><button type="button" onclick="deleteCL(this)">Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -78,9 +78,9 @@
         </div>
     </div>
     <script>
-        function searchUser() {
+        function searchCL() {
             const searchValue = document.getElementById('search').value.toLowerCase();
-            const rows = document.querySelectorAll('#user-list tr');
+            const rows = document.querySelectorAll('#cl_cart tr');
             
             rows.forEach(row => {
                 const cells = row.getElementsByTagName('td');
@@ -100,21 +100,21 @@
             });
         }
 
-        function deleteUser(button) {
+        function deleteCL(button) {
             const row = button.parentNode.parentNode;
             row.parentNode.removeChild(row);
         }
 
         function addRow() {
-            const table = document.getElementById('user-list');
+            const table = document.getElementById('cl_cart');
             const newRow = document.createElement('tr');
 
             newRow.innerHTML = `
-                <td><input type="text" name="email" value=""></td>
-                <td><input type="text" name="name" value=""></td>
-                <td><input type="text" name="phone" value=""></td>
-                <td><input type="text" name="address" value=""></td>
-                <td><button type="button" onclick="deleteUser(this)">Delete</button></td>
+                <td><input type="text" name="cl_idx" value=""></td>
+                <td><input type="text" name="cl_name" value=""></td>
+                <td><input type="text" name="cl_price" value=""></td>
+                <td><input type="text" name="brand" value=""></td>
+                <td><button type="button" onclick="deleteCL(this)">Delete</button></td>
             `;
 
             table.appendChild(newRow);

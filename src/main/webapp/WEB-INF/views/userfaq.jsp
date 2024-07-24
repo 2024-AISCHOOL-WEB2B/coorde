@@ -48,6 +48,7 @@
                     <p>아이디 비밀번호가 기억나지 않아요.<br><br> <span>답변: FIND를 통해 찾으시면 됩니다. </span></p>
                 </div>
             </div>
+            <form action="">
             <div class="buttons">
                 <button class="btn" onclick="toggleButton(this, '회원정보')">회원정보</button>
                 <button class="btn" onclick="toggleButton(this, '상품확인')">상품확인</button>
@@ -58,6 +59,7 @@
                 <textarea id="inquiry-text" placeholder="문의 내용을 입력하세요"></textarea>
                 <button class="inquiry-btn" onclick="submitInquiry()">문의하기</button>
             </div>
+        </form>
         </div>
     </div>
 

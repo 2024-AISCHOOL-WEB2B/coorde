@@ -61,14 +61,16 @@ form {
     left: 50%;
     transform: translateX(-50%);
 }
-.join-button {
-    margin-left: 195px;
-    margin-top: 30px;
-    text-decoration: none;
-    color: inherit;
+.join-button button {
+    background-color: white;
+    color: black; /* 텍스트 색상은 검정으로 설정 */
+    border: none;
+    padding: 10px 20px; /* 버튼 여백 설정 (선택 사항) */
+    font-size: 16px; /* 버튼 텍스트 크기 설정 (선택 사항) */
+    cursor: pointer; /* 마우스를 올렸을 때 커서가 포인터로 변경 */
 }
 
-.join-button a{
-    text-decoration: none;
-    color: inherit;
+/* 버튼에 마우스를 올렸을 때 효과 (선택 사항) */
+.join-button button:hover {
+    background-color: #f0f0f0;
 }

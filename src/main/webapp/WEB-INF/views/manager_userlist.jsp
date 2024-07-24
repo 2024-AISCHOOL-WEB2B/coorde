@@ -23,7 +23,7 @@
 <div class="wrap">
         <div class="container">
             <h1 class="title">OOTB</h1>
-            <div class="manager"><a href="goManager">MANAGER</a></div>
+            <div class="manager"><a href="manager.html">MANAGER</a></div>
             <form id="user-management-form">
                 <div class="search-container">
                     <input type="text" id="search" placeholder="검색">
@@ -45,31 +45,31 @@
                     </thead>
                     <tbody id="user-list">
                         <tr>
-                            <td><input type="text" name="email" value=""></td>
-                            <td><input type="text" name="name" value=""></td>
-                            <td><input type="text" name="phone" value=""></td>
-                            <td><input type="text" name="address" value=""></td>
+                            <td><input type="text" name="user_id" value=""></td>
+                            <td><input type="text" name="user_name" value=""></td>
+                            <td><input type="text" name="user_phone" value=""></td>
+                            <td><input type="text" name="user_addr" value=""></td>
                             <td><button type="button" onclick="deleteUser(this)">Delete</button></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="email" value=""></td>
-                            <td><input type="text" name="name" value=""></td>
-                            <td><input type="text" name="phone" value=""></td>
-                            <td><input type="text" name="address" value=""></td>
+                            <td><input type="text" name="user_id" value=""></td>
+                            <td><input type="text" name="user_name" value=""></td>
+                            <td><input type="text" name="user_phone" value=""></td>
+                            <td><input type="text" name="user_addr" value=""></td>
                             <td><button type="button" onclick="deleteUser(this)">Delete</button></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="email" value=""></td>
-                            <td><input type="text" name="name" value=""></td>
-                            <td><input type="text" name="phone" value=""></td>
-                            <td><input type="text" name="address" value=""></td>
+                            <td><input type="text" name="user_id" value=""></td>
+                            <td><input type="text" name="user_name" value=""></td>
+                            <td><input type="text" name="user_phone" value=""></td>
+                            <td><input type="text" name="user_addr" value=""></td>
                             <td><button type="button" onclick="deleteUser(this)">Delete</button></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="email" value=""></td>
-                            <td><input type="text" name="name" value=""></td>
-                            <td><input type="text" name="phone" value=""></td>
-                            <td><input type="text" name="address" value=""></td>
+                            <td><input type="text" name="user_id" value=""></td>
+                            <td><input type="text" name="user_name" value=""></td>
+                            <td><input type="text" name="user_phone" value=""></td>
+                            <td><input type="text" name="user_addr" value=""></td>
                             <td><button type="button" onclick="deleteUser(this)">Delete</button></td>
                         </tr>
                     </tbody>
@@ -110,10 +110,10 @@
             const newRow = document.createElement('tr');
 
             newRow.innerHTML = `
-                <td><input type="text" name="email" value=""></td>
-                <td><input type="text" name="name" value=""></td>
-                <td><input type="text" name="phone" value=""></td>
-                <td><input type="text" name="address" value=""></td>
+                <td><input type="text" name="user_id" value=""></td>
+                <td><input type="text" name="user_name" value=""></td>
+                <td><input type="text" name="user_phone" value=""></td>
+                <td><input type="text" name="user_addr" value=""></td>
                 <td><button type="button" onclick="deleteUser(this)">Delete</button></td>
             `;
 

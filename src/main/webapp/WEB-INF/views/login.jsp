@@ -34,7 +34,7 @@
             <div class="social-login">
                 <div>
                     <img src="resources/assets/images/browser/kakao.png" alt="Kakao Login" title="Kakao Login"><br><br>
-                    <button>LOGIN</button>
+                     <button><a href="gologin">LOGIN</a></button>
                 </div>
                 <div>
                     <img src="resources/assets/images/browser/google.png" alt="Google Login" title="Google Login"><br><br>
