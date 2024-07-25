@@ -22,7 +22,7 @@
 <body>
  <div class="container">
         <div class="logo">
-            <img src="/images/LOGO.jpg" alt="logo">
+            <img src="resources/assets/images/browser/LOGO.jpg" alt="logo">
             <div class="FIND">FIND</div>
         </div>
 
@@ -58,14 +58,14 @@
             <span class="close" onclick="closeModal()">&times;</span>
             <div class="pass-auth-container">
                 <div class="pass-header">
-                    <img src="/images/pass.jpg" alt="PASS 로고" class="pass-logo">
+                    <img src="resources/assets/images/browser/pass.jpg" alt="PASS 로고" class="pass-logo">
                     <p>이용 중이신 통신사를 선택해 주세요.</p>
                 </div>
                 <div class="pass-operators">
-                    <div class="operator"><img src="/images/sktelecom.jpg" alt="SK telecom"></div>
-                    <div class="operator"><img src="/images/kt.png" alt="KT"></div>
-                    <div class="operator"><img src="/images/lg.png" alt="LG U+"></div>
-                    <div class="operator"><img src="/images/알뜰폰 1.png" alt="알뜰폰"></div>
+                    <div class="operator"><img src="resources/assets/images/browser/sktelecom.jpg" alt="SK telecom"></div>
+                    <div class="operator"><img src="resources/assets/images/browser/kt.png" alt="KT"></div>
+                    <div class="operator"><img src="resources/assets/images/browser/lg.png" alt="LG U+"></div>
+                    <div class="operator"><img src="resources/assets/images/browser/알뜰폰 1.png" alt="알뜰폰"></div>
                 </div>
                 <div class="pass-consents">
                     <label><input type="checkbox" id="all-consent"> 전체 동의</label>

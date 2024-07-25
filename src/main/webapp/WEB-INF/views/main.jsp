@@ -28,7 +28,7 @@
         <div class="contents">
            <header>
                 <div class="logo">
-                    <img src="/images/LOGO.jpg" alt="logo">
+                    <img src="resources/assets/images/browser/LOGO.jpg" alt="logo">
                 </div>
             </header>
 
