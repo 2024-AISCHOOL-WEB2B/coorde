@@ -71,7 +71,7 @@
 	
 	<script type="text/javascript">
 	
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
 
 		function signUpSuccess(user_wei, user_hei) {
 			$.ajax({
