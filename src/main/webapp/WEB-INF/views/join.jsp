@@ -89,8 +89,8 @@
 		
 		$(document).ready(function() {
             $('button').click(function() {
-                var userWeight = user_wei;
-                var userHeight = user_hei;
+            	var userWeight = $('#weight').val(); 
+                var userHeight = $('#height').val();
                 signUpSuccess(userWeight, userHeight);
             });
         });
