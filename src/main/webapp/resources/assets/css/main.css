@@ -38,29 +38,19 @@
             text-align: center;
         }
 
-        .brand {
-            font-size: 100px;
-            font-weight: bold;
-            font-family: "Yellowtail", cursive;
-        }
-
-        .tagline {
-            font-size: 20px;
-            font-style: italic;
-            font-family: "Dancing Script", cursive;
-        }
 
         .banner-wrapper {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-top: 20px;
         }
 
         .filters {
             display: flex;
             flex-direction: column;
             margin-bottom: 170px;
-            margin-left: 52px;
+            margin-left: 20px;
         }
 
         .filters label {
@@ -73,8 +63,8 @@
             margin-bottom: 10px;
             padding: 5px;
         }
-        
-          .filters button{
+
+        .filters button{
             background-color: white;
             color: black; /* 텍스트 색상은 검정으로 설정 */
             border: none;
@@ -82,6 +72,7 @@
             font-size: 16px; /* 버튼 텍스트 크기 설정 (선택 사항) */
             cursor: pointer; /* 마우스를 올렸을 때 커서가 포인터로 변경 */
         }
+
 
         .main-banner {
             flex-grow: 1;
@@ -97,8 +88,9 @@
 
         .right {
             font-size: 16px;
-            margin-right: 51px;
-            margin-bottom: 260px;
+            margin-left: 20px;
+            top: -150px;
+            position: relative;
         }
 
         .categories {
@@ -165,5 +157,3 @@
             max-width: 100%;
             height: auto;
         }
-
-        

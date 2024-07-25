@@ -26,10 +26,9 @@
 
 <div class="wrap">
         <div class="contents">
-            <header>
+           <header>
                 <div class="logo">
-                    <div class="brand">OOTB</div>
-                    <div class="tagline">Out-fit on the body</div>
+                    <img src="/images/LOGO.jpg" alt="logo">
                 </div>
             </header>
 

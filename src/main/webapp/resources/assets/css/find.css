@@ -11,8 +11,16 @@ a {
     
 }
 
-p{
-    margin-bottom: 70px;
+
+.logo{
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.FIND{
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 body {
@@ -28,27 +36,22 @@ body {
     overflow: hidden;
 }
 
-.header {
-    font-size: 48px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    font-family: "Yellowtail", cursive;
-}
-
 .top-nav {
-    font-size: 18px;
-    margin-bottom: 50px;
-    margin-right: 40px;
-    text-align: right;
-    
-    
+    display: flex;
+    font-size: 20px;
+    margin-right: 20px;
+    flex-direction: column; /* 수직 정렬 */
+    align-items: flex-end; /* 오른쪽 정렬 */
+    gap: 15px;
+}
+/* 마지막 링크의 아래쪽 여백을 제거 */
+.top-nav a:last-child {
+    margin-bottom: 0;
 }
 
 .top-nav a {
     text-decoration: none;
     color: black;
-    
-    
 }
 
 .forms-container {
@@ -62,9 +65,8 @@ body {
     text-align: center;
 }
 
-.form-box h3 {
-    margin-bottom: 20px;
-    font-size: 18px;
+.form-box:nth-child(1){
+    margin-top: 5%;
 }
 
 .form-box label {
@@ -92,4 +94,107 @@ body {
     border-radius: 15px;
     margin-left: 60px;
     
+}
+button{
+    border: none;
+    background-color: white;
+}
+
+.lnr.lnr-magnifier  {
+    font-size: 20px;
+    background: none; /* 배경 제거 */
+    border: none; /* 테두리 제거 */
+    color: black; /* 색상 설정 */
+    background-color: white;
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.pass-auth-container {
+    text-align: center;
+}
+
+.pass-header {
+    margin-bottom: 20px;
+}
+
+.pass-logo {
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+.pass-operators {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.operator img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+}
+
+.pass-consents {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.pass-consents label {
+    display: block;
+    margin: 5px 0;
+}
+
+.pass-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.pass-btn {
+    width: 45%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    cursor: pointer;
+}
+
+.pass-btn:hover {
+    background-color: #ddd;
 }
