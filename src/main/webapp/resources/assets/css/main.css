@@ -73,6 +73,15 @@
             margin-bottom: 10px;
             padding: 5px;
         }
+        
+          .filters button{
+            background-color: white;
+            color: black; /* 텍스트 색상은 검정으로 설정 */
+            border: none;
+            padding: 10px 20px; /* 버튼 여백 설정 (선택 사항) */
+            font-size: 16px; /* 버튼 텍스트 크기 설정 (선택 사항) */
+            cursor: pointer; /* 마우스를 올렸을 때 커서가 포인터로 변경 */
+        }
 
         .main-banner {
             flex-grow: 1;

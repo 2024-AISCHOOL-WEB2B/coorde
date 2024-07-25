@@ -25,11 +25,11 @@
             <div class="title">OOTB</div>
             <div class="nav">
                 <div>
-                    <a href="/edit.html">EDIT</a>
+                    <a href="goEdit">EDIT</a>
                 </div>
                 <div>WISH LIST</div>  
                 <div>
-                    <a href="/main.html">LOG OUT</a>
+                    <a href="logoutUser">LOG OUT</a>
                 </div>
             </div>
             <form action="">

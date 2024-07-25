@@ -11,7 +11,7 @@
 
     <meta name="author" content="Phoenixcoded" />
 
-	<link
+   <link
       rel="stylesheet"
       href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"
     />
@@ -34,15 +34,15 @@
             <div class="social-login">
                 <div>
                     <img src="resources/assets/images/browser/kakao.png" alt="Kakao Login" title="Kakao Login"><br><br>
-                    <button>LOGIN</button>
+                     <button><a href="gologin">LOGIN</a></button>
                 </div>
                 <div>
                     <img src="resources/assets/images/browser/google.png" alt="Google Login" title="Google Login"><br><br>
-                    <a class="action-button" href="/join.html">JOIN</a>
+                    <a class="action-button" href="goJoin">JOIN</a>
                 </div>
                 <div>
                     <img src="resources/assets/images/browser/naver.png" alt="Naver Login" title="Naver Login"><br><br>
-                    <a class="action-button" href="javascript:find()">FIND</a>
+                    <a class="action-button" href="goFind">FIND</a>
                 </div>
             </div>
         </form>

@@ -11,7 +11,7 @@
 
     <meta name="author" content="Phoenixcoded" />
 
-	<link
+   <link
       rel="stylesheet"
       href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"
     />
@@ -23,7 +23,7 @@
 <div class="container">
         <div class="header">OOTB</div>
         <div class="top-nav">
-            <a href="/login.html">LOGIN</a>
+            <a href="gologin">LOGIN</a>
         </div>
         <p>FIND</p>
         <div class="forms-container">
@@ -62,7 +62,7 @@
             return birth;
         }
 
-        function formatPhoneNumber(phone) {
+        function formatPhoneNumber(콜) {
             // 01050903484-> 010-5090-3484
             if (phone.length === 11) {
                 return phone.slice(0, 3) + '-' + phone.slice(3, 7) + '-' + phone.slice(7);
