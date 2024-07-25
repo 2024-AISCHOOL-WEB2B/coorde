@@ -45,7 +45,7 @@ public class MainController {
    
    @RequestMapping("/")
     public String main() {
-        return "login";
+        return "main";
     }
    @RequestMapping("/gologin")
    public String gologin() {
@@ -83,15 +83,30 @@ public class MainController {
         }
     }
     
+    @RequestMapping("/idFind")
+    public String idFind(User user, Model model) {
+    	String findId = userMapper.idFind(user);
+    	model.addAttribute("findId", findId);
+    	return "find";
+    }
+    
+    @RequestMapping("/pwFind")
+    public String pwFind(User user, Model model) {
+    	String findPw = userMapper.pwFind(user);
+    	model.addAttribute("findPw", findPw);
+    	return "find";
+    }
+    
     @RequestMapping("/goJoin")
     public String goJoin() {
        return "signIn";
     }
-
+    
     @RequestMapping("/goFind")
     public String goFind() {
        return "find";
     }
+
     
     @RequestMapping("/logoutUser")
     public String logoutUser(HttpSession session) {
