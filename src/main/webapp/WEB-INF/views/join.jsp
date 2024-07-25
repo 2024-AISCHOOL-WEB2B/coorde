@@ -63,13 +63,16 @@
 					type="text" id="detail-address" name="user_detail_address" />
 			</div>
 			<div class="join-button">
-				<button>Sign up</button>
+				<button id="submitBtn">Sign up</button>
 			</div>
 		</form>
 	</div>
 	
 	
 	<script type="text/javascript">
+	
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+
 		function signUpSuccess(user_wei, user_hei) {
 			$.ajax({
 				url : '/predict',
@@ -87,11 +90,10 @@
 			});
 		}
 		
-		document.addEventListener('DOMContentLoaded', function() {
-		    const submitBtn = document.getElementById('submitBtn');
-		    submitBtn.addEventListener('click', function() {
-		        const userWeight = document.getElementById('weight').value;
-		        const userHeight = document.getElementById('height').value;
+		$(document).ready(function() {
+		    $('#submitBtn').click(function() {
+		        var userWeight = $('#weight').val();
+		        var userHeight = $('#height').val();
 		        signUpSuccess(userWeight, userHeight);
 		    });
 		});
