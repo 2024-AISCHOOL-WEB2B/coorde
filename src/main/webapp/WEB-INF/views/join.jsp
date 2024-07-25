@@ -72,9 +72,6 @@
 
     <script type="text/javascript">   
         $(document).ready(function() {        
-            $('#signupForm').submit(function(event) {
-                event.preventDefault(); 
-
                 var userWeight = $('#weight').val();
                 var userHeight = $('#height').val();
                 signUpSuccess(userWeight, userHeight); 
