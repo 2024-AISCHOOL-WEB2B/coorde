@@ -68,38 +68,36 @@
 		</form>
 	</div>
 	
-	
-	<script type="text/javascript">
-	
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-		function signUpSuccess(user_wei, user_hei) {
-			$.ajax({
-				url : '/predict',
-				type : 'POST',
-				data : {
-					weight : user_wei,
-					height : user_hei
-				},
-				success : function(response) {
-					console.log('서버 응답:', response);
-				},
-				error : function(xhr, status, error) {
-					console.error('에러 발생:', error);
-				}
-			});
-		}
-		
-		$(document).ready(function() {
-		    $('#submitBtn').click(function() {
-		        var userWeight = $('#weight').val();
-		        var userHeight = $('#height').val();
-		        signUpSuccess(userWeight, userHeight);
-		    });
-		});
+    <script type="text/javascript">   
+        $(document).ready(function() {        
+            $('#signupForm').submit(function(event) {
+                event.preventDefault(); 
 
-		
-	</script>
+                var userWeight = $('#weight').val();
+                var userHeight = $('#height').val();
+                signUpSuccess(userWeight, userHeight); 
+            });
+
+            function signUpSuccess(user_wei, user_hei) {
+                $.ajax({
+                    url : '/predict',
+                    type : 'POST',
+                    data : {
+                        weight : user_wei,
+                        height : user_hei
+                    },
+                    success : function(response) {
+                        console.log('서버 응답:', response);
+                    },
+                    error : function(xhr, status, error) {
+                        console.error('에러 발생:', error);
+                    }
+                });
+            }
+        });
+    </script>
 
 
 </body>
