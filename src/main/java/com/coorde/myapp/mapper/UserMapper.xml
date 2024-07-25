@@ -10,5 +10,13 @@
     <select id="userlogin" parameterType="com.coorde.myapp.entity.User" resultType="com.coorde.myapp.entity.User">
         SELECT * FROM user_tb WHERE user_id = #{user_id} AND user_pw = #{user_pw}
     </select>
+    
+    <select id="idFind" parameterType="com.coorde.myapp.entity.User" resultType="String">
+        SELECT user_id FROM user_tb WHERE user_name = #{user_name} AND user_birth = #{user_birth} AND user_phone = #{user_phone}
+    </select>
+    
+    <select id="pwFind" parameterType="com.coorde.myapp.entity.User" resultType="String">
+        SELECT user_pw FROM user_tb WHERE user_id = #{user_id} AND user_name = #{user_name} AND user_birth = #{user_birth} AND user_phone = #{user_phone}
+    </select>
 
 </mapper>

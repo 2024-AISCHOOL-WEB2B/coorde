@@ -28,6 +28,13 @@ public class User {
 	@NonNull private String user_wei;
 	@NonNull private String user_addr;
 	@NonNull private String user_detail_address;
+	@NonNull private String user_ch;
+	@NonNull private String user_arm;
+	@NonNull private String user_waist;
+	@NonNull private String user_top;
+	@NonNull private String user_bot;
+	@NonNull private String user_sh;
+	@NonNull private String user_thighs;
 	
 	private Date joined_dt;
 	private String user_cate;

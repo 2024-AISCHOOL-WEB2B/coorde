@@ -11,7 +11,7 @@
 
     <meta name="author" content="Phoenixcoded" />
 
-   <link
+	<link
       rel="stylesheet"
       href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"
     />
@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="resources/assets/css/find.css">
 </head>
 <body>
-<div class="container">
+ <div class="container">
         <div class="logo">
             <img src="/images/LOGO.jpg" alt="logo">
             <div class="FIND">FIND</div>
