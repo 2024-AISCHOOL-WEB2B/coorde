@@ -87,13 +87,15 @@
 			});
 		}
 		
-		$(document).ready(function() {
-            $('button').click(function() {
-            	var userWeight = $('#weight').val(); 
-                var userHeight = $('#height').val();
-                signUpSuccess(userWeight, userHeight);
-            });
-        });
+		document.addEventListener('DOMContentLoaded', function() {
+		    const submitBtn = document.getElementById('submitBtn');
+		    submitBtn.addEventListener('click', function() {
+		        const userWeight = document.getElementById('weight').value;
+		        const userHeight = document.getElementById('height').value;
+		        signUpSuccess(userWeight, userHeight);
+		    });
+		});
+
 		
 	</script>
 
