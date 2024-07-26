@@ -30,8 +30,10 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coorde.myapp.entity.User;
@@ -83,23 +85,27 @@ public class MainController {
         }
     }
     
-    @RequestMapping("/idFind")
-    public String idFind(User user, Model model) {
-    	String findId = userMapper.idFind(user);
-    	model.addAttribute("findId", findId);
-    	return "find";
+    @RequestMapping(value = "/idFind", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> idFind(@ModelAttribute User user) {
+        String findId = userMapper.idFind(user);
+        Map<String, String> response = new HashMap<>();
+        response.put("findId", findId);
+        return response;
     }
     
-    @RequestMapping("/pwFind")
-    public String pwFind(User user, Model model) {
-    	String findPw = userMapper.pwFind(user);
-    	model.addAttribute("findPw", findPw);
-    	return "find";
+    @RequestMapping(value = "/pwFind", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> pwFind(@ModelAttribute User user) {
+        String findPw = userMapper.pwFind(user);
+        Map<String, String> response = new HashMap<>();
+        response.put("findPw", findPw);
+        return response;
     }
     
     @RequestMapping("/goJoin")
     public String goJoin() {
-       return "signIn";
+       return "join";
     }
     
     @RequestMapping("/goFind")
