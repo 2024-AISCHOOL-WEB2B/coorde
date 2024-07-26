@@ -1,145 +1,99 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
+a { align-items: center; /* 가로 중앙 정렬 */
+    text-decoration: none;
+    color: inherit;
+    
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-            
-        }
+.wrap {
+    width: 100%;
+    overflow: hidden;
+}
+.contents {
+    width: 1280px;
+    margin: 50px auto;
+    overflow: hidden;
+}
 
-        .wrap {
-            width: 100%;
-            overflow: hidden;
-        }
-        .contents {
-            width: 1280px;
-            margin: 50px auto;
-            overflow: hidden;
-        }
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-        }
+.banner-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 
-        header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background-color: #fff;
-            border-bottom: 1px solid #ddd;
-        }
+}
 
-        .logo {
-            text-align: center;
-        }
+.main-banner {
+    flex-grow: 1;
+    text-align: center;
+    box-sizing: border-box;
+}
 
-        .brand {
-            font-size: 100px;
-            font-weight: bold;
-            font-family: "Yellowtail", cursive;
-        }
+.main-banner img {
+    max-width: 100%;
+    height: auto;
+    margin-left: 66px;
+    margin-top: 10px;
+ 
+}
 
-        .tagline {
-            font-size: 20px;
-            font-style: italic;
-            font-family: "Dancing Script", cursive;
-        }
+.right {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 배치 */
+    align-items: center; /* 가로 중앙 정렬 */
+    text-align: center;
+    
+}
 
-        .banner-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+.right a {
+    display: block; /* 링크를 블록 요소로 변경하여 각 줄에 배치 */
+    margin-bottom: 10px; /* 각 링크 사이의 간격 설정 */
+    line-height: 1.5; /* 줄 간격 설정 */
+}
 
-      
+.logout {
+    border: none;
+    background-color: white;
+    font-size: 16PX;
+    cursor: pointer;
+}
 
-        .main-banner {
-            flex-grow: 1;
-            text-align: center;
-            box-sizing: border-box;
-        }
+.categories {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    margin-bottom: 20px;
 
-        .main-banner img {
-            max-width: 100%;
-            height: auto;
-            margin-left: 63px;
-        }
+}
 
-        .right {
-            font-size: 19px;
-            margin-right: 20px;
-            margin-bottom: 220px;
-            font-weight: bold;
-        }
+.category {
+    text-align: center;
+    margin: 5px;
+    padding: 0;
+}
 
-        .categories {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff;
-            margin-bottom: 20px;
-        }
+.category img {
+    max-width: 100%;
+    height: auto;
+}
 
-        .category {
-            text-align: center;
-            margin: 0 5px;
-            padding: 0;
-        }
+.category span {
+    display: block;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
 
-        .category img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .category span {
-            display: block;
-            margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .product img {
-            width: 100%;
-            height: auto;
-        }
-
-        .product-info {
-            padding: 10px 0;
-        }
-
-        .product-info span {
-            display: block;
-            font-size: 14px;
-        }
-
-        .price {
-            color: red;
-            font-weight: bold;
-        }
-
-        .product-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        .product-item {
-            flex: 0 1 calc(16.6667% - 10px);
-            box-sizing: border-box;
-            margin: 5px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-
-        .product-item img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        
