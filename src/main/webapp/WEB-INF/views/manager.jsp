@@ -20,26 +20,25 @@
     <link rel="stylesheet" href="resources/assets/css/manager.css">
 </head>
 <body>
-   <div class="wrap">
+    <div class="wrap">
         <div class="contents">
             <header>
                 <div class="logo">
-                    <img src="/images/LOGO.jpg" alt="logo">
+                    <img src="resources/assets/images/browser/LOGO.jpg" alt="logo">
                 </div>
             </header>
 
             <div class="banner-wrapper">
                 <div class="main-banner">
-                    <img src="/images/banner.png" alt="Main Banner">
-                </div>
+                    <img src="resources/assets/images/browser/banner.png" alt="Main Banner">
                 </div>
                 <div class="right">
-                    <a href="logoutUser">LOGOUT</a><br><br>
-                    <a href="goManagerClcart">CLOSET</a><br><br>
-                    <a href="goManagerUserList">USER</a><br><br>
-                    <a href="goManagerFaq">FAQ </a>
+                    <a href="/main.html"><button class="logout">LOGOUT</button></a>
+                    <a href="#">CLOSET</a>
+                    <a href="#">USER</a>
+                    <a href="/managerfaq.html">FAQ </a>
                 </div>
-            
+            </div>
 
             <div class="categories">
                 <div class="category top">
@@ -49,6 +48,8 @@
                     <img src="resources/assets/images/browser/bottom.png" alt="Bottom">
                 </div>
             </div>
-           </div>
+
+        </div>
+    </div>
 </body>
 </html>
