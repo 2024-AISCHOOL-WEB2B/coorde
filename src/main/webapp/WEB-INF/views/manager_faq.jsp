@@ -21,15 +21,13 @@
 </head>
 <body>
 <div class="wrap">
-        <div class="header">
-            <h1>OOTB</h1>
+        <div class="logo">
+            <img src="resources/assets/images/browser/LOGO.jpg" alt="">
+            <div class="FAQ">FAQ</div>
         </div>
-        <div class="nav">
-            <a href="goManagerClcart">CLOSET</a>
-            <a href="goManager">USER</a>
-        </div>
-        <form action="#">
+                <form action="#">
         <div class="container">
+        
             <div class="sidebar">
                 <h2>사용자별 대화내역</h2><br><br>
                 <div class="user" onclick="showMessages('user1')">
@@ -48,6 +46,7 @@
                     <p>USER 4</p>
                     <p><strong>Q:</strong> <span id="recent-user4"></span></p>
                 </div>
+               
             </div>
 
             <div class="respond">
@@ -55,21 +54,23 @@
                     <div>총 응답횟수: <span id="total-answered">0</span></div><br>
                     <div>응답 완료: <span id="answered">0</span></div><br>
                     <div>미응답: <span id="unanswered">0</span></div>
+                    
                 </div>
-              
+                
                 <div class="chat" id="chat">
                     <!-- 메시지가 여기에 표시됩니다 -->
                 </div>
-                <div class="response-input">
-                    <button onclick="submitResponse()">답변 제출</button>
-                </div>
             </div>
+            <div class="right">
+                <a href="/main.html"><button class="logout button">LOGOUT</button></a>
+                <a href="#">CLOSET</a>
+                <a href="#">USER</a>
+            </div> 
         </div>
     </form>
     </div>
 
     <script>
-        
         let currentUser = '';
 
         const messages = {
@@ -96,7 +97,6 @@
         };
 
         function showMessages(user) {
-           
             currentUser = user;
             const chat = document.getElementById('chat');
             chat.innerHTML = ''; // 기존의 메세지 지우기
@@ -110,24 +110,27 @@
                     responseTextarea.setAttribute('placeholder', '답변을 입력하세요');
                     responseTextarea.setAttribute('data-index', index);
                     responseTextarea.classList.add('responseTextarea');
+                    
+                    const responseButton = document.createElement('button');
+                    responseButton.textContent = '답변 제출';
+                    responseButton.setAttribute('onclick', `submitResponse(\${index})`);
+                    responseButton.classList.add('responseButton');
+
                     messageDiv.appendChild(responseTextarea);
+                    messageDiv.appendChild(responseButton);
                 }
                 chat.appendChild(messageDiv); // 새로운 메세지 추가
             });
         }
 
-        function submitResponse() {
+        function submitResponse(index) {
             const chat = document.getElementById('chat');
-            const textareas = chat.querySelectorAll('.responseTextarea');
+            const textarea = chat.querySelector(`.responseTextarea[data-index='\${index}']`);
+            const responseText = textarea.value.trim();
+            if (!responseText) return alert('답변을 입력하세요.');
 
-            textareas.forEach(textarea => {
-                const responseText = textarea.value.trim();
-                if (!responseText) return alert('답변을 입력하세요.');
-
-                const index = textarea.getAttribute('data-index');
-                messages[currentUser][index].text += ` 답변: \${responseText}`;
-                messages[currentUser][index].answered = true;
-            });
+            messages[currentUser][index].text += ` 답변: \${responseText}`;
+            messages[currentUser][index].answered = true;
 
             showMessages(currentUser);
             updateStats();
@@ -166,6 +169,5 @@
             updateStats();
         });
     </script>
-
 </body>
 </html>

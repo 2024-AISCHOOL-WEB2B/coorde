@@ -140,7 +140,6 @@ button {
 .fit {
     margin-bottom: 30px;
     margin-left: 15px;
-    font-size: 20px;
 }
 
 .filter input[type="text"] {
@@ -208,7 +207,7 @@ button {
 .size-display {
     display: none;
     position: absolute;
-    bottom: 420px;
+    bottom: 300px;
     left: 90%;
     transform: translateX(-50%);
     color: red;
