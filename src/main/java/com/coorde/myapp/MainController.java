@@ -139,6 +139,31 @@ public class MainController {
         return "edit";
     }
     
+    // 회원 정보 수정에서 탈퇴
+    @PostMapping("/deleteUser")
+    @ResponseBody
+    public String deleteUser(@RequestParam String password, HttpSession session) {
+        // 세션에서 로그인한 사용자 정보 가져오기
+        User loginUser = (User) session.getAttribute("loginUser");
+        System.out.println("Session User ID: " + (loginUser != null ? loginUser.getUser_id() : "null"));
+        System.out.println("Password: " + password);
+
+        if (loginUser != null) {
+            String userId = loginUser.getUser_id();
+            System.out.println("Deleting user with ID: " + userId + " and password: " + password);
+
+            // 사용자 삭제
+            int result = userMapper.deleteUser(userId, password);
+            if (result > 0) {
+                session.invalidate(); // 세션 무효화
+                return "success";
+            } else {
+                return "fail";
+            }
+        }
+        return "fail";
+    }
+    
     
     @RequestMapping("/goManagerUserList")
     public String goManagerUserList(Model model) {
@@ -166,6 +191,7 @@ public class MainController {
         return "manager_userlist"; // 'manager_userlist' 뷰를 반환합니다.
     }
     
+    // 매니저 유저리스트에서 삭제
     @PostMapping("/deleteUsers")
     public String deleteUsers(@RequestParam(value="selectedUsers", required=false) List<String> userIds, RedirectAttributes redirectAttributes) {
         // userIds가 null이 아니고 비어 있지 않으면 실행

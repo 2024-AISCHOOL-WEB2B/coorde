@@ -20,9 +20,14 @@ public interface UserMapper {  // xml에 기재된 sql을 호출하는 인터페
 
 	String pwFind(User user);
 	
+	// 매니저 유저리스트에서 유저정보 가져오기
 	List<User> getAllUsers();
-
+	
+	// 매니저 유저리스트에서 매니저가 삭제
 	int deleteUsers(List<String> userIds);
 	
 	int checkDuplicate(@Param("field") String field, @Param("value") String value);
+
+	// 회원 정보 수정 화면에서 탈퇴
+	int deleteUser(@Param("userId") String userId, @Param("password") String password);
 }
