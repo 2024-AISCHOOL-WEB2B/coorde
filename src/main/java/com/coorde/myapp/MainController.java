@@ -57,6 +57,13 @@ public class MainController {
    public String gologin() {
        return "login";
    }
+   
+   @PostMapping("/checkUserId")
+   @ResponseBody
+   public String checkUserId(@RequestParam("userId") String userId) {
+       int count = userMapper.checkDuplicate("user_id", userId);
+       return count > 0 ? "unavailable" : "available";
+   }
 
     @RequestMapping("/signUp")
     public String signUp(User user, Model model) {
@@ -67,6 +74,19 @@ public class MainController {
         } else {
             return "signUpFail";
         }
+    }
+    
+    @PostMapping("/checkPhone")
+    @ResponseBody
+    public Map<String, String> checkPhone(@RequestParam("userPhone") String userPhone) {
+        Map<String, String> response = new HashMap<>();
+        int count = userMapper.checkDuplicate("user_phone", userPhone);
+        if (count > 0) {
+            response.put("status", "unavailable");
+        } else {
+            response.put("status", "available");
+        }
+        return response;
     }
 
     @RequestMapping("/userlogin")
@@ -222,16 +242,28 @@ public class MainController {
     @RequestMapping("/goManagerUserList")
     public String goManagerUserList(Model model) {
         List<User> userList = userMapper.getAllUsers();
+        for (User user : userList) {
+            System.out.println("User birth: " + user.getUser_birth());
+            int age = calculateAge(user.getUser_birth());
+            System.out.println("Calculated age: " + age);
+            user.setUserAge(age);
+        }
         model.addAttribute("userList", userList);
         return "manager_userlist";
     }
     
     // 생년월일을 나이로 변환하는 메서드
     private int calculateAge(String birthDateString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 날짜 형식을 지정합니다.
-        LocalDate birthDate = LocalDate.parse(birthDateString, formatter); // 문자열을 LocalDate 객체로 변환합니다.
-        LocalDate currentDate = LocalDate.now(); // 현재 날짜를 가져옵니다.
-        return Period.between(birthDate, currentDate).getYears(); // 생년월일과 현재 날짜의 차이로 나이를 계산합니다.
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+            LocalDate birthDate = LocalDate.parse(birthDateString, formatter);
+            LocalDate currentDate = LocalDate.now();
+            return Period.between(birthDate, currentDate).getYears();
+        } catch (Exception e) {
+            System.out.println("Error calculating age for birth date: " + birthDateString);
+            e.printStackTrace();
+            return 0; // 오류 발생 시 기본값 반환
+        }
     }
 
     @GetMapping("/userList") // 이 메서드는 '/userList' 경로로 GET 요청이 들어오면 호출됩니다.

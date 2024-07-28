@@ -23,6 +23,19 @@
         .container {
             text-align: center;
         }
+        
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            text-align: center;
+        }
 
         .title {
             font-size: 70px;
