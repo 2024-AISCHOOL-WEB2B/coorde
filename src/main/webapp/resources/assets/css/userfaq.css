@@ -18,6 +18,10 @@ body {
     
 }
 
+.logo img {
+    margin-bottom: 20px;
+}
+
 .container {
     
     width: 1280px;
@@ -33,17 +37,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: 580px;
+    margin-left: 450px;
     font-family: "Yellowtail", cursive;
     
 }
 
-.header h1 {
-    font-size: 60px;
-    margin: 0;
-    
-
-}
 
 .nav {
     display: flex;

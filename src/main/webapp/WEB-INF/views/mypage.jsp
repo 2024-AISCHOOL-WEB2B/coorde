@@ -23,7 +23,7 @@
    <div class="wrap">
         <div class="container">
             <div class="logo">
-                <img src="resources/assets/images/browser/LOGO.jpg" alt="OOTB 로고">
+                <a href="/myapp"><img src="resources/assets/images/browser/LOGO.jpg" alt="OOTB 로고"></a>
             </div>
             <div class="nav">
                 WISH LIST
@@ -80,8 +80,8 @@
                     </div>
                     
                     <div class="right">
-                        <a href="/main.html">LOGOUT</a>
-                        <a href="/edit.html">EDIT</a>
+                        <a href="logoutUser">LOGOUT</a>
+                        <a href="goEdit">EDIT</a>
                     </div>
                 </div>
             </div>
@@ -147,7 +147,7 @@
                     <!-- 동일한 구조의 제품 추가 -->
                 </div>
                 <div class="faq">
-                    <a href="#">FAQ</a>
+                    <a href="goFaq">FAQ</a>
                     <button id="delete-button" type="button">DELETE</button>
                 </div>
             </form>

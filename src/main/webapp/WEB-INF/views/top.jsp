@@ -1,3 +1,4 @@
+<%@page import="com.coorde.myapp.entity.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,13 +21,16 @@
     <link rel="stylesheet" href="resources/assets/css/top.css">
 </head>
 <body>
+
+<% User loginUser = (User) session.getAttribute("loginUser"); %>
+
     <div class="wrap">
         <div class="container">
             <div class="logo">
-                <img src="resources/assets/images/browser/LOGO.jpg" alt="">
+                <a href="/myapp"><img src="resources/assets/images/browser/LOGO.jpg" alt=""></a>
             </div>
             <div class="TorB">
-                <a href="/top.html">TOP</a> / <a href="/bottom.html">BOTTOM</a>
+                <a href="goTop">TOP</a> / <a href="goBot">BOTTOM</a>
                 <div class="header-buttons">
                     <div class="dropdown">
                         <button class="dropbtn" id="dropdownButton">정렬</button>
@@ -68,8 +72,16 @@
                         </div>
                     </div>
                     <div class="right">
-                        <a href="#" class="right">LOGOUT</a>
-                        <a href="#" class="right">MYPAGE</a>
+                       <% if(loginUser != null){ %>
+		                <div class="right">
+		                    <a href="logoutUser">LOGOUT</a>
+		                    <a href="gomyPage">MY PAGE</a>
+		                </div>
+		                <% } else { %>
+		                <div class="right">
+		                    <a href="gologin">LOGIN</a><br>
+		                </div>
+		                <% } %>
                     </div>
                 </div>
             </div>

@@ -28,7 +28,7 @@
         <div class="contents">
            <header>
                 <div class="logo">
-                    <img src="resources/assets/images/browser/LOGO.jpg" alt="logo">
+                    <a href="/myapp"><img src="resources/assets/images/browser/LOGO.jpg" alt="logo"></a>
                 </div>
             </header>
 
@@ -59,10 +59,10 @@
 
             <div class="categories">
                 <div class="category top">
-                    <img src="resources/assets/images/browser/top.png" alt="Top">
+                    <a href="goTop"><img src="resources/assets/images/browser/top.png" alt="Top"></a>
                 </div>
                 <div class="category bottom">
-                    <img src="resources/assets/images/browser/bottom.png" alt="Bottom">
+                   <a href="goBot"><img src="resources/assets/images/browser/bottom.png" alt="Bottom"></a>
                 </div>
             </div>
 

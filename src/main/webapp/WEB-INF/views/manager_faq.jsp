@@ -22,7 +22,7 @@
 <body>
 <div class="wrap">
         <div class="logo">
-            <img src="resources/assets/images/browser/LOGO.jpg" alt="">
+            <a href="goManaer"><img src="resources/assets/images/browser/LOGO.jpg" alt=""></a>
             <div class="FAQ">FAQ</div>
         </div>
                 <form action="#">
@@ -63,8 +63,8 @@
             </div>
             <div class="right">
                 <a href="/main.html"><button class="logout button">LOGOUT</button></a>
-                <a href="#">CLOSET</a>
-                <a href="#">USER</a>
+                <a href="goManagerClcart">CLOSET</a>
+                <a href="goManagerUserList">USER</a>
             </div> 
         </div>
     </form>

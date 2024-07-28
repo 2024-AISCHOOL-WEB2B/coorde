@@ -12,6 +12,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,11 +31,14 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.coorde.myapp.entity.User;
 import com.coorde.myapp.mapper.UserMapper;
@@ -47,7 +51,7 @@ public class MainController {
    
    @RequestMapping("/")
     public String main() {
-        return "bottom";
+        return "main";
     }
    @RequestMapping("/gologin")
    public String gologin() {
@@ -81,7 +85,7 @@ public class MainController {
            }
         } else {
            System.out.println("Fail");
-            return "redirect:/login";
+            return "login";
         }
     }
     
@@ -125,6 +129,11 @@ public class MainController {
         return "mypage";
     }
     
+    @RequestMapping("/goFaq")
+    public String goFaq() {
+       return "userfaq";
+    }
+    
     @RequestMapping("/goEdit")
     public String goEdit() {
         return "edit";
@@ -137,9 +146,44 @@ public class MainController {
     }
     
     @RequestMapping("/goManagerUserList")
-    public String goManagerUserList() {
+    public String goManagerUserList(Model model) {
+        List<User> userList = userMapper.getAllUsers();
+        model.addAttribute("userList", userList);
         return "manager_userlist";
     }
+    
+    // 생년월일을 나이로 변환하는 메서드
+    private int calculateAge(String birthDateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 날짜 형식을 지정합니다.
+        LocalDate birthDate = LocalDate.parse(birthDateString, formatter); // 문자열을 LocalDate 객체로 변환합니다.
+        LocalDate currentDate = LocalDate.now(); // 현재 날짜를 가져옵니다.
+        return Period.between(birthDate, currentDate).getYears(); // 생년월일과 현재 날짜의 차이로 나이를 계산합니다.
+    }
+
+    @GetMapping("/userList") // 이 메서드는 '/userList' 경로로 GET 요청이 들어오면 호출됩니다.
+    public String getUserList(Model model) {
+        List<User> users = userMapper.getAllUsers(); // 데이터베이스에서 사용자 목록을 가져옵니다.
+        for (User user : users) { // 각 사용자에 대해
+            int age = calculateAge(user.getUser_birth()); // 생년월일을 나이로 변환하고
+            user.setUserAge(age); // 사용자 객체에 나이를 설정합니다.
+        }
+        model.addAttribute("users", users); // 사용자 목록을 모델에 추가하여 뷰에 전달합니다.
+        return "manager_userlist"; // 'manager_userlist' 뷰를 반환합니다.
+    }
+    
+    @PostMapping("/deleteUsers")
+    public String deleteUsers(@RequestParam(value="selectedUsers", required=false) List<String> userIds, RedirectAttributes redirectAttributes) {
+        // userIds가 null이 아니고 비어 있지 않으면 실행
+        if (userIds != null && !userIds.isEmpty()) {
+            // userMapper를 사용하여 사용자를 삭제하고 삭제된 사용자 수를 반환
+            int deletedCount = userMapper.deleteUsers(userIds);
+            // 삭제된 사용자 수를 플래시 메시지로 설정
+            // redirectAttributes.addFlashAttribute("message", deletedCount + "개의 항목이 삭제되었습니다.");
+        } 
+        // 사용자 목록 페이지로 리디렉션
+        return "redirect:/goManagerUserList";
+    }
+    
     
     @RequestMapping("/goManagerFaq")
     public String goManagerFaq() {
@@ -151,20 +195,17 @@ public class MainController {
        return "manager";
     }
     
-    @RequestMapping("/test5")
-    public String managerfaq() {
-       return "managerfaq";
+    @RequestMapping("/goTop")
+    public String goTop() {
+       return "top";
     }
     
-    @RequestMapping("/test6")
-    public String manager_userlist() {
-       return "manager_userlist";
+    @RequestMapping("/goBot")
+    public String goBot() {
+       return "bottom";
     }
     
-    @RequestMapping("/test7")
-    public String mypage() {
-       return "mypage";
-    }
+    
     
     @RequestMapping("/test8")
     public String userfaq() {

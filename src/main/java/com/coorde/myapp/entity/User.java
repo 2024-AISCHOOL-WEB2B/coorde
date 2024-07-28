@@ -35,6 +35,7 @@ public class User {
 	@NonNull private String user_bot;
 	@NonNull private String user_sh;
 	@NonNull private String user_thighs;
+	private int userAge; // 사용자 나이 (추가된 필드)
 	
 	private Date joined_dt;
 	private String user_cate;

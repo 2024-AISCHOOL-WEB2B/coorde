@@ -21,14 +21,14 @@
 </head>
 <body>
 <div class="wrap">
-        <div class="logo"><img src="resources/assets/images/browser/LOGO.jpg" alt="">
+        <div class="logo"><a href="goManager"><img src="resources/assets/images/browser/LOGO.jpg" alt=""></a>
             <div class="CL-CART">CLOSET</div>
         </div>
        
         <div class="container">
             <div class="right">
-                <a href="/main.html"><button class="logout button">LOGOUT</button></a>
-                <a href="manager.html" class="button">MANAGER</a>
+                <a href="logoutUser"><button class="logout button">LOGOUT</button></a>
+                <a href="goManager" class="button">MANAGER</a>
             </div>
 
             <form id="user-management-form">
@@ -39,7 +39,6 @@
                     </div>
                     
                     <div class="button-container">
-                        <button type="button" onclick="addRow()" class="button">ADD</button>
                         <button type="button" onclick="deleteSelectedRows()" class="button">DELETE</button>
                     </div>
                 </div>
@@ -75,7 +74,6 @@
                     </tbody>
                 </table>
                 <div class="button-container-under">
-                    <button type="button" onclick="addRow()" class="button">ADD</button>
                     <button type="button" onclick="deleteSelectedRows()" class="button">DELETE</button>
                 </div>
             </form>
@@ -110,22 +108,6 @@
                     row.style.display = 'none';
                 }
             });
-        }
-
-        function addRow() {
-            const table = document.getElementById('cl_cart');
-            const newRow = document.createElement('tr');
-
-            newRow.innerHTML = `
-                <td class="col-index"><input type="text" name="cl_idx" value=""></td>
-                <td class="col-name"><input type="text" name="cl_name" value=""></td>
-                <td class="col-price"><input type="text" name="cl_price" value=""></td>
-                <td class="col-detail"><input type="text" name="cl_cate_detail" value=""></td>
-                <td class="col-select"><input type="checkbox" class="row-checkbox"></td>
-            `;
-
-            table.appendChild(newRow);
-            originalOrder.push(newRow);
         }
 
         function deleteSelectedRows() {

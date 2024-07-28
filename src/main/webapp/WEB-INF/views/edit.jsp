@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="container">
-        <div class="logo"><img src="resources/assets/images/browser/LOGO.jpg" alt=""></div>
+        <div class="logo"><a href="/myapp"><img src="resources/assets/images/browser/LOGO.jpg" alt=""></div></a>
         <form>
             <div class="form-group">
                 <label for="name">NAME</label>
@@ -53,8 +53,8 @@
             </div>
         </form>
         <div class="actions">
-            <a href="/main.html">LOGOUT</a>
-            <a href="/mypage.html">MYPAGE</a>
+            <a href="logoutUser">LOGOUT</a>
+            <a href="gomyPage">MYPAGE</a>
             <button type="button" onclick="openLeaveModal()">LEAVE</button>
         </div>
     </div>

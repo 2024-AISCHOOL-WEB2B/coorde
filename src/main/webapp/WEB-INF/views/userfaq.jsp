@@ -23,12 +23,12 @@
 <div class="wrap">
         <div class="container">
             <div class="header">
-                <h1>OOTB</h1>
+            <a href="/myapp"><img src="resources/assets/images/browser/LOGO.jpg" alt=""></a>
             </div>
             <div class="faq-section">
                 <div class="nav">    
-                    <a href="/main.html">LOGOUT</a><br>
-                    <a href="/mypage.html">MYPAGE</a>
+                    <a href="logoutUser">LOGOUT</a><br>
+                    <a href="gomyPage">MYPAGE</a>
                 </div>
                 <div class><h2><span class="lnr lnr-magnifier"></span>자주하는 질문</h2></div>
                 <div class="faq-item">

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,14 +21,14 @@
 </head>
 <body>
 <div class="wrap">
-        <div class="logo"><img src="resources/assets/images/browser/LOGO.jpg" alt="">
+        <a href="goManager"><div class="logo"><img src="resources/assets/images/browser/LOGO.jpg" alt=""></a>
             <div class="USERLIST">USER</div>
         </div>
        
         <div class="container">
             <div class="right">
-                <a href="/main.html"><button class="logout button">LOGOUT</button></a>
-                <a href="manager.html" class="button">MANAGER</a>
+                <a href="logoutUser"><button class="logout button">LOGOUT</button></a>
+                <a href="goManager" class="button">MANAGER</a>
             </div>
 
             <form id="user-management-form">
@@ -37,16 +37,17 @@
                         <input type="text" id="search" placeholder="검색">
                         <button type="button" onclick="searchCL()"><span class="lnr lnr-magnifier"></span></button>
                     </div>
-                    
-                    <div class="button-container">
-                        <button type="button" onclick="addRow()" class="button">ADD</button>
-                        <button type="button" onclick="deleteSelectedRows()" class="button">DELETE</button>
-                    </div>
+                     <!-- 삭제 버튼을 포함하는 div -->
+				    <div class="button-container-under">
+				        <!-- 클릭 시 confirmDelete 함수를 호출 -->
+				        <button type="submit" onclick="return confirmDelete()">DELETE</button>
+				    </div>
                 </div>
                 <table>
                     <thead>
                         <tr>
-                            <th class="col-index"></th>
+                            <th class="col-index">번호</th>
+                            <th class="col-id">ID</th>
                             <th class="col-name">이름</th>
                             <th class="col-age">
                                 <span onclick="resetTableOrder()" class="clickable">나이</span>
@@ -56,34 +57,58 @@
                             <th class="col-email">이메일</th>
                             <th class="col-phone">핸드폰</th>
                             <th class="col-detail">주소
-                                <select id="category-filter" onchange="filterByCategory()">
-                                    <option value="">All</option>
-                                    <option value="인천광역시">인천광역시</option>
-                                    <option value="광주광역시">광주광역시</option>
-                                    <option value="부산광역시">부산광역시</option>
-                                </select>
-                            </th>
-                            <th class="col-select">선택</th>
+                            	<!-- 필터링을 위한 드롭다운 메뉴 -->
+							    <select id="category-filter" onchange="filterByCategory()">
+							        <option value="">All</option>
+							        <option value="서울특별시">서울특별시</option>
+							        <option value="부산광역시">부산광역시</option>
+							        <option value="인천광역시">인천광역시</option>
+							        <option value="대구광역시">대구광역시</option>
+							        <option value="대전광역시">대전광역시</option>
+							        <option value="광주광역시">광주광역시</option>
+							        <option value="울산광역시">울산광역시</option>
+							        <option value="세종특별자치시">세종특별자치시</option>
+							        <option value="경기도">경기도</option>
+							        <option value="충청북도">충청북도</option>
+							        <option value="충청남도">충청남도</option>
+							        <option value="전라북도">전라북도</option>
+							        <option value="전라남도">전라남도</option>
+							        <option value="경상북도">경상북도</option>
+							        <option value="경상남도">경상남도</option>
+							        <option value="강원특별자치도">강원특별자치도</option>
+							        <option value="전북특별자치도">전북특별자치도</option>
+							        <option value="제주특별자치도">제주특별자치도</option>
+							    </select>
+							</th>
+							 <th class="col-select">선택</th>
                         </tr>
                     </thead>
                     <tbody id="USERLIST">
+                        <!-- 서버에서 받아온 사용자 리스트를 반복문으로 출력 -->
+                    <c:forEach var="user" items="${userList}" varStatus="status">
                         <tr>
-                            <td class="col-index"><input type="text" name="user_idx" value=""></td>
-                            <td class="col-name"><input type="text" name="user_name" value=""></td>
-                            <td class="col-age"><input type="text" name="user_age" value=""></td>
-                            <td class="col-email"><input type="text" name="user_email" value=""></td>
-                            <td class="col-phone"><input type="text" name="user_phone" value=""></td>
-                            <td class="col-detail"><input type="text" name="user_addr" value=""></td>
-                            <td class="col-select"><input type="checkbox" class="row-checkbox"></td>
+                            <td class="col-index"><input type="text" name="user_idx" value="${status.index + 1}" readonly></td>
+                            <td class="col-id"><input type="text" name="user_id" value="${user.user_id}" readonly></td>
+                            <td class="col-name"><input type="text" name="user_name" value="${user.user_name}" readonly></td>
+							<td class="col-age"><input type="text" name="user_age" value="${user.userAge}" readonly></td> <!-- 나이 출력 -->
+                            <td class="col-email"><input type="text" name="user_email" value="" readonly></td>
+                            <td class="col-phone"><input type="text" name="user_phone" value="${user.user_phone}" readonly></td>
+                            <td class="col-detail"><input type="text" name="user_addr" value="${user.user_addr}" readonly></td>
+                            <td class="col-select"><input type="checkbox" name="selectedUsers" value="${user.user_id}" readonly></td>
                         </tr>
+					</c:forEach>
                     </tbody>
                 </table>
-                <div class="button-container-under">
-                    <button type="button" onclick="addRow()" class="button">ADD</button>
-                    <button type="button" onclick="deleteSelectedRows()" class="button">DELETE</button>
-                </div>
+                <!-- 삭제 버튼을 포함하는 div -->
+			    <div class="button-container-under">
+			        <!-- 클릭 시 confirmDelete 함수를 호출 -->
+			        <button type="submit" onclick="return confirmDelete()">DELETE</button>
+			    </div>
             </form>
         </div>
+        <c:if test="${not empty message}">
+		    <div class="alert">${message}</div>
+		</c:if>
     </div>
     <script>
         let originalOrder = [];
@@ -116,36 +141,6 @@
             });
         }
 
-        function addRow() {
-            const table = document.getElementById('USERLIST');
-            const newRow = document.createElement('tr');
-
-            newRow.innerHTML = `
-                <td class="col-index"><input type="text" name="user_idx" value=""></td>
-                <td class="col-name"><input type="text" name="user_name" value=""></td>
-                <td class="col-age"><input type="text" name="user_age" value=""></td>
-                <td class="col-email"><input type="text" name="user_email" value=""></td>
-                <td class="col-phone"><input type="text" name="user_phone" value=""></td>
-                <td class="col-detail"><input type="text" name="user_addr" value=""></td>
-                <td class="col-select"><input type="checkbox" class="row-checkbox"></td>
-            `;
-
-            table.appendChild(newRow);
-            originalOrder.push(newRow);
-        }
-
-        function deleteSelectedRows() {
-            const checkboxes = document.querySelectorAll('.row-checkbox:checked');
-            checkboxes.forEach(checkbox => {
-                const row = checkbox.closest('tr');
-                const index = originalOrder.indexOf(row);
-                if (index > -1) {
-                    originalOrder.splice(index, 1);
-                }
-                row.remove();
-            });
-        }
-
         function sortTableByage(order) {
             const table = document.getElementById('USERLIST');
             const rows = Array.from(table.rows);
@@ -164,16 +159,55 @@
             originalOrder.forEach(row => table.appendChild(row));
         }
 
-        function filterByCategory() {
-            const filterValue = document.getElementById('category-filter').value.toLowerCase();
-            const rows = document.querySelectorAll('#USERLIST tr');
+     // 삭제 버튼을 눌렀을 때 호출되는 함수
+        function confirmDelete() {
+            // 선택된 체크박스들을 모두 선택
+            var selected = document.querySelectorAll("input[name='selectedUsers']:checked");
+            
+            // 선택된 체크박스가 없으면 경고 메시지를 표시하고 함수를 종료
+            if (selected.length === 0) {
+                alert('삭제할 항목을 선택해주세요.');
+                return false;
+            }
+            
+            // 선택된 체크박스가 있으면 삭제 확인 메시지를 표시
+            return confirm('선택한 항목을 삭제하시겠습니까?');
+        }
+    	 
+    	// 페이지가 로드된 후 실행되는 JavaScript 코드
+        document.addEventListener("DOMContentLoaded", function() {
+            // 서버에서 전달된 플래시 메시지를 가져옵니다.
+            var message = "${message}";
+            // 메시지가 존재하는 경우 경고창(alert)을 표시합니다.
+            if (message) {
+                alert(message);
+            }
+        });
 
-            rows.forEach(row => {
-                const category = row.querySelector('.col-detail input').value.toLowerCase();
-                if (filterValue === '' || category.includes(filterValue)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
+        
+     	// 필터링 기능을 구현하는 함수
+        function filterByCategory() {
+            // 드롭다운에서 선택된 값을 가져와 소문자로 변환하고 공백을 제거
+            var filter = document.getElementById("category-filter").value.toLowerCase().trim();
+            
+            // 사용자 리스트 테이블의 모든 행을 선택
+            var rows = document.querySelectorAll("#USERLIST tr");
+
+            // 각 행에 대해 반복 처리
+            rows.forEach(function(row) {
+                // 현재 행에서 'user_addr' 입력 요소를 찾음
+                var addressCell = row.querySelector("td.col-detail input[name='user_addr']");
+                if (addressCell) {
+                    // 입력 요소의 값을 소문자로 변환하고 공백을 제거
+                    var address = addressCell.value.toLowerCase().trim();
+                    
+                    // 필터 값이 없거나, 주소에 필터 값이 포함되어 있으면 행을 보여줌
+                    if (filter === "" || address.includes(filter)) {
+                        row.style.display = "";
+                    } else {
+                        // 필터 값이 주소에 포함되어 있지 않으면 행을 숨김
+                        row.style.display = "none";
+                    }
                 }
             });
         }

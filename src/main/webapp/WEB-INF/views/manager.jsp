@@ -24,7 +24,7 @@
         <div class="contents">
             <header>
                 <div class="logo">
-                    <img src="resources/assets/images/browser/LOGO.jpg" alt="logo">
+                    <a href="goManager"><img src="resources/assets/images/browser/LOGO.jpg" alt="logo"></a>
                 </div>
             </header>
 
@@ -33,19 +33,19 @@
                     <img src="resources/assets/images/browser/banner.png" alt="Main Banner">
                 </div>
                 <div class="right">
-                    <a href="/main.html"><button class="logout">LOGOUT</button></a>
-                    <a href="#">CLOSET</a>
-                    <a href="#">USER</a>
-                    <a href="/managerfaq.html">FAQ </a>
+                    <a href="logoutUser"><button class="logout">LOGOUT</button></a>
+                    <a href="goManagerClcart">CLOSET</a>
+                    <a href="goManagerUserList">USER</a>
+                    <a href="goManagerFaq">FAQ </a>
                 </div>
             </div>
 
             <div class="categories">
                 <div class="category top">
-                    <img src="resources/assets/images/browser/top.png" alt="Top">
+                    <a href="goTop"><img src="resources/assets/images/browser/top.png" alt="Top"></a>
                 </div>
                 <div class="category bottom">
-                    <img src="resources/assets/images/browser/bottom.png" alt="Bottom">
+                    <a href="goBot"><img src="resources/assets/images/browser/bottom.png" alt="Bottom"></a>
                 </div>
             </div>
 
