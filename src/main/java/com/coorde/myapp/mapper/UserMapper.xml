@@ -38,5 +38,21 @@
         WHERE user_id = #{userId} 
           AND user_pw = #{password}
     </delete>
+    
+    <!-- 회원 정보 수정 -->
+    <update id="updateUser" parameterType="com.coorde.myapp.entity.User">
+	    UPDATE user_tb
+	    SET user_name = #{user_name},
+	        user_phone = #{user_phone},
+	        user_hei = #{user_hei},
+	        user_wei = #{user_wei},
+	        user_addr = #{user_addr}
+	    WHERE user_id = #{user_id}
+	</update>
+	
+	<!-- 획인 -->
+	<select id="checkDuplicate" resultType="int">
+	    SELECT COUNT(*) FROM user_tb WHERE ${field} = #{value}
+	</select>
 
 </mapper>

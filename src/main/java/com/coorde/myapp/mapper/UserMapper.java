@@ -30,4 +30,7 @@ public interface UserMapper {  // xml에 기재된 sql을 호출하는 인터페
 
 	// 회원 정보 수정 화면에서 탈퇴
 	int deleteUser(@Param("userId") String userId, @Param("password") String password);
+
+	// 회원 정보 수정
+	int updateUser(User user);
 }

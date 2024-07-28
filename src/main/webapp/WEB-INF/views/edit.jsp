@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Coordy</title>
+<title>Coorde</title>
 <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -26,36 +26,43 @@
 
 <div class="container">
         <div class="logo"><a href="/myapp"><img src="resources/assets/images/browser/LOGO.jpg" alt=""></div></a>
-        <form>
-            <div class="form-group">
-                <label for="name">NAME</label>
-                <input type="text" id="name" name="user_name">
-            </div>
-            <div class="form-group">
-                <label for="phone">PHONE</label>
-                <input type="text" id="phone" name="user_phone">
-            </div>
-            <div class="form-group">
-                <label for="height">HEIGHT</label>
-                <input type="text" id="height" name="user_hei">
-            </div>  
-            <div class="form-group">
-                <label for="weight">WEIGHT</label>
-                <input type="text" id="weight" name="user_wei">
-            </div>
-            <div class="form-group">
-                <label for="address">ADDRESS</label>
-                <input type="text" id="address" name="user_addr">
-                <span class="search-icon" onclick="openModal()"><span class="lnr lnr-magnifier"></span></span>
-            </div>
-            <div class="form-group2">
-                <label for="detail-address">DETAIL ADDRESS</label>
-                <input type="text" id="detail-address" name="detail-address">
-            </div>
-            <div class="actions">
-                <button type="button"><a href="/">EDIT</a></button>
-            </div>
-        </form>
+        <form id="editForm" action="/myapp/updateUser" method="post">
+	        <div class="form-group">
+			    <label for="name">NAME</label>
+			    <input type="text" id="name" name="user_name" value="${loginUser.user_name}" 
+			           pattern="[A-Za-z ]+" title="문자와 공백만 입력 가능합니다" required>
+			</div>
+	        <div class="form-group">
+			    <label for="phone">PHONE</label>
+			    <input type="tel" id="phone" name="user_phone" value="${loginUser.user_phone}"
+			           pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" 
+			           title="전화번호는 000-0000-0000 형식으로 입력해주세요"
+			           required>
+			</div>
+	        <div class="form-group">
+			    <label for="height">HEIGHT</label>
+			    <input type="number" id="height" name="user_hei" value="${loginUser.user_hei}"
+			           step="1" min="1" max="300" required
+			           title="정수만 입력해주세요 (1-300)"
+			           placeholder="정수만 입력 (cm)">
+			</div>
+			<div class="form-group">
+			    <label for="weight">WEIGHT</label>
+			    <input type="number" id="weight" name="user_wei" value="${loginUser.user_wei}"
+			           step="1" min="1" max="500" required
+			           title="정수만 입력해주세요 (1-500)"
+			           placeholder="정수만 입력 (kg)">
+			</div>
+	        <div class="form-group">
+			    <label for="address">ADDRESS</label>
+			    <input type="text" id="address" name="user_addr" value="${loginUser.user_addr}">
+			    <span class="search-icon" onclick="openModal()"><span class="lnr lnr-magnifier"></span></span>
+			</div>
+	        <div class="actions">
+	            <input type="hidden" id="confirmPassword" name="confirmPassword">
+    			<button type="button" onclick="confirmAndSubmit()">EDIT</button>
+	        </div>
+	    </form>
         <div class="actions">
             <a href="logoutUser">LOGOUT</a>
             <a href="gomyPage">MYPAGE</a>
@@ -124,15 +131,16 @@
 
         // 카카오 주소 검색 API 호출
         function openDaumPostcode() {
-            new daum.Postcode({
-                oncomplete: function(data) {
-                    // 검색 결과 데이터 활용
-                    document.getElementById('address').value = data.address;
-                    closeModal('addressModal');
-                }
-            }).embed(document.getElementById('daumPostcode'));
-        }
-
+		    new daum.Postcode({
+		        oncomplete: function(data) {
+		            var addr = data.address;
+		            document.getElementById("address").value = addr;
+		            document.getElementById("address").focus();
+		            closeModal('addressModal');
+		        }
+		    }).embed(document.getElementById('daumPostcode'));
+		}
+        
         // 탈퇴 모달 열기
         function openLeaveModal() {
             document.getElementById('leaveModal').style.display = 'block';
@@ -183,9 +191,14 @@
 		        });
 		    }
 		}
-    
-	       
         
+       	function confirmAndSubmit() {
+       	    var password = prompt("비밀번호를 입력하세요:");
+       	    if (password != null && password != "") {
+       	        document.getElementById('confirmPassword').value = password;
+       	        document.getElementById('editForm').submit();
+       	    }
+       	}
     
     </script>
 </body>

@@ -24,8 +24,8 @@ public class User {
 	@NonNull private String user_name;
 	@NonNull private String user_birth;
 	@NonNull private String user_phone;
-	@NonNull private String user_hei;
-	@NonNull private String user_wei;
+	@NonNull private int user_hei;
+	@NonNull private int user_wei;
 	@NonNull private String user_addr;
 	@NonNull private String user_detail_address;
 	@NonNull private String user_ch;

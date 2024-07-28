@@ -139,6 +139,60 @@ public class MainController {
         return "edit";
     }
     
+    @PostMapping("/updateUser")
+    public String updateUser(User user, @RequestParam("confirmPassword") String confirmPassword,
+                             HttpSession session, RedirectAttributes redirectAttributes) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        
+        // 입력받은 비밀번호와 세션의 비밀번호 비교
+        if (!loginUser.getUser_pw().equals(confirmPassword)) {
+            redirectAttributes.addFlashAttribute("error", "비밀번호가 일치하지 않습니다.");
+            return "redirect:/goEdit";
+        }
+
+        // 이름에 특수문자나 숫자가 포함되어 있는지 확인
+        if (!user.getUser_name().matches("^[a-zA-Z\\s]+$")) {
+            redirectAttributes.addFlashAttribute("error", "이름에는 영문자와 공백만 입력 가능합니다.");
+            return "redirect:/goEdit";
+        }
+
+        // 전화번호 형식 검증
+        if (!user.getUser_phone().matches("\\d{3}-\\d{4}-\\d{4}")) {
+            redirectAttributes.addFlashAttribute("error", "전화번호는 000-0000-0000 형식으로 입력해주세요.");
+            return "redirect:/goEdit";
+        }
+        
+        // 전화번호 중복 검사
+        if (!user.getUser_phone().equals(loginUser.getUser_phone())) {
+            int count = userMapper.checkDuplicate("user_phone", user.getUser_phone());
+            if (count > 0) {
+                redirectAttributes.addFlashAttribute("error", "이미 사용 중인 전화번호입니다.");
+                return "redirect:/goEdit";
+            }
+        }
+
+        // 키와 몸무게 유효성 검사
+        if (user.getUser_hei() < 1 || user.getUser_hei() > 300) {
+            redirectAttributes.addFlashAttribute("error", "키는 1cm 이상 300cm 이하의 정수여야 합니다.");
+            return "redirect:/goEdit";
+        }
+        if (user.getUser_wei() < 1 || user.getUser_wei() > 500) {
+            redirectAttributes.addFlashAttribute("error", "몸무게는 1kg 이상 500kg 이하의 정수여야 합니다.");
+            return "redirect:/goEdit";
+        }
+
+        user.setUser_id(loginUser.getUser_id());
+
+        int result = userMapper.updateUser(user);
+        if (result > 0) {
+            session.setAttribute("loginUser", user);
+            redirectAttributes.addFlashAttribute("message", "프로필이 성공적으로 업데이트되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "프로필 업데이트에 실패했습니다.");
+        }
+        return "redirect:/goEdit";
+    }
+    
     // 회원 정보 수정에서 탈퇴
     @PostMapping("/deleteUser")
     @ResponseBody
