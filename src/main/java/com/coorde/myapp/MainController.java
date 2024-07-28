@@ -140,11 +140,6 @@ public class MainController {
     }
     
     
-    @RequestMapping("/goManagerClcart")
-    public String goManagerClcart() {
-        return "manager_clcart";
-    }
-    
     @RequestMapping("/goManagerUserList")
     public String goManagerUserList(Model model) {
         List<User> userList = userMapper.getAllUsers();

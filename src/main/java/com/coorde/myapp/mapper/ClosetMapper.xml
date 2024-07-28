@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coorde.myapp.mapper.ClosetMapper">
+
+	<select id="getAllCloset" resultType="com.coorde.myapp.entity.Closet">
+	    SELECT * FROM closet_tb
+	</select>
+	
+	<delete id="deleteCloset" parameterType="list">
+	    DELETE FROM closet_tb WHERE cl_idx IN
+	    <foreach collection="list" item="closetidx" open="(" separator="," close=")">
+	        #{closetIdx}
+	    </foreach>
+	</delete>
+	
+	<delete id="deleteClosetAndSize" parameterType="list">
+    DELETE c, s
+    FROM closet_tb c
+    LEFT JOIN cl_size_tb s ON c.cl_idx = s.cl_idx
+    WHERE c.cl_idx IN
+    <foreach collection="list" item="closetIdx" open="(" separator="," close=")">
+        #{closetIdx}
+    </foreach>
+</delete>
+
+</mapper>
