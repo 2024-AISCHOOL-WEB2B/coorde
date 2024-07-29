@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Coorde</title>
+<title>OOTB 문의사항</title>
 <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -11,19 +11,167 @@
 
     <meta name="author" content="Phoenixcoded" />
 
-	<link
+   <link
       rel="stylesheet"
       href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"
     />
 
     <!-- vendor css -->
-    <link rel="stylesheet" href="resources/assets/css/userfaq.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+*{margin: 0; padding: 0;}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
+
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    
+}
+
+.logo img {
+    margin-bottom: 20px;
+}
+
+.container {
+    
+    width: 1280px;
+    margin: 50px auto;
+    overflow: hidden;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 450px;
+    font-family: "Yellowtail", cursive;
+    
+}
+
+
+.nav {
+    display: flex;
+    flex-direction: column; /* 수직으로 정렬 */
+    align-items: flex-end; /* 아이템들을 오른쪽 정렬 (기본값) */
+    padding: 10px;
+  }
+  .nav a {
+    text-decoration: none;
+    color: black;
+  }
+.faq-section {
+    margin: 20px 0;
+}
+
+.faq-section h2 {
+    font-size: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    
+    
+}
+
+.faq-item {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.faq-item p {
+    margin: 0;
+}
+
+.faq-item span {
+    font-size: 12px;
+    color: #a8a2a2;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+ 
+}
+
+.btn {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: lightgray;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.btn.active {
+    background-color: gray;
+    color: white;
+}
+
+
+.btn:hover {
+    background-color: #ddd;
+}
+
+.inquiry {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.inquiry p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+}
+
+.inquiry-btn {
+    display: block;
+    width: 10%;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 20px;
+    cursor: pointer; /*마우스 포인터 변경*/
+    margin-left: 580px;
+    
+}
+
+.inquiry-btn:hover {
+    background-color: #333;
+}
+    
+    
+    </style>
 </head>
 <body>
 <div class="wrap">
         <div class="container">
             <div class="header">
-                <h1>OOTB</h1>
+                <img alt="" src="resources/assets/images/browser/LOGO.jpg">
             </div>
             <div class="faq-section">
                 <div class="nav">    
