@@ -46,33 +46,6 @@
             margin-top: 20px;
         }
 
-        .filters {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 170px;
-            margin-left: 20px;
-        }
-
-        .filters label {
-            margin-right: 10px;
-        }
-
-        .filters input {
-            border: none;
-            border-bottom: 1px solid #000;
-            margin-bottom: 10px;
-            padding: 5px;
-        }
-
-        .filters button{
-            background-color: white;
-            color: black; /* 텍스트 색상은 검정으로 설정 */
-            border: none;
-            padding: 10px 20px; /* 버튼 여백 설정 (선택 사항) */
-            font-size: 16px; /* 버튼 텍스트 크기 설정 (선택 사항) */
-            cursor: pointer; /* 마우스를 올렸을 때 커서가 포인터로 변경 */
-        }
-
 
         .main-banner {
             flex-grow: 1;
@@ -80,17 +53,18 @@
             box-sizing: border-box;
         }
 
-        .main-banner img {
+       .main-banner img {
             max-width: 100%;
             height: auto;
-            margin-right: 128px;
+            margin-right: -45px;
         }
 
-        .right {
+      .right {
             font-size: 16px;
             margin-left: 20px;
-            top: -150px;
+            top: -130px;
             position: relative;
+            margin-right: 20PX;
         }
 
         .categories {
@@ -145,7 +119,7 @@
         }
 
         .product-item {
-            flex: 0 1 calc(16.6667% - 10px);
+            flex: 0 1 calc(20% - 10px); /* 20%로 변경하여 한 줄에 5개 아이템이 나오도록 설정 */
             box-sizing: border-box;
             margin: 5px;
             padding: 10px;

@@ -162,9 +162,15 @@
         }
         
         .original_price{
+<<<<<<< HEAD
+    	color: grey;
+    	text-decoration: line-through;
+		}
+=======
        color: grey;
        text-decoration: line-through;
       }
+>>>>>>> branch 'master' of https://github.com/2024-AISCHOOL-WEB2B/coorde.git
         
     </style>
     
@@ -221,7 +227,9 @@
             </div>
 
             <div class="product-list">
+
                <c:forEach items="${clothList}" var="c" begin="0" end="9" varStatus="status">
+
                 <div class="product-item">
                     <img src="${c.cl_imgurl}" alt="${c.cl_name}">
                     <div class="product-info">
