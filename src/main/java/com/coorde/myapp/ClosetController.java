@@ -58,11 +58,35 @@ public class ClosetController {
 	
 	
 	@RequestMapping("/goCloset")
-	public String goCloset(@RequestParam("cl_cate") String cl_cate, Model model) {
-		List<Closet> clothList = closetMapper.getClosetList(cl_cate);
-		model.addAttribute("clothList", clothList);
-		
-		return "closet";
+	public String goCloset(@RequestParam("cl_cate") String cl_cate, @RequestParam(value = "user_id", required = false) String user_id, Model model) {
+
+		List<Closet> filteredclothList = new ArrayList<>();
+	    List<Closet> clothList = new ArrayList<>();
+
+	    System.out.println("test1");
+	    if (user_id != null && !user_id.isEmpty()) {
+	        List<String> topColors = closetMapper.getTopColors(user_id);
+	        List<String> topCategories = closetMapper.getTopCategories(user_id);
+	        System.out.println(topColors);
+	        System.out.println(topCategories);
+
+	        if (topColors.size() >= 2 && topCategories.size() >= 2) {
+	            Map<String, Object> params = new HashMap<>();
+	            params.put("topColors", topColors);
+	            params.put("topCategories", topCategories);
+	             
+	            filteredclothList = closetMapper.getFilteredClothes(params);
+	            System.out.println("wish 전송");
+	        }
+	    }
+
+	    clothList = closetMapper.getClosetList(cl_cate);
+
+	    model.addAttribute("filteredclothList", filteredclothList);
+	    model.addAttribute("clothList", clothList);
+	    System.out.println("test2");
+	    
+	    return "closet";
 	}
 	
 	 
@@ -81,6 +105,38 @@ public class ClosetController {
 	        redirectAttributes.addFlashAttribute("message", deletedCount + "개의 항목이 삭제되었습니다.");
 	    } 
 	    return "redirect:/goManagerClcart";
+	}
+	
+	@RequestMapping("/closetToWish")
+	@ResponseBody
+	public Map<String, Object> closetToWish(@RequestParam("cl_idx") int cl_idx, @RequestParam("user_id") String user_id) {
+
+		Map<String, Object> response = new HashMap<>();
+		
+		Map<String, Object> wishItem = new HashMap<>();
+		wishItem.put("cl_idx", cl_idx);
+		wishItem.put("user_id", user_id);
+		
+		int count = closetMapper.checkWish(wishItem);
+
+		if (count == 0) {
+			int cnt = closetMapper.insertToWish(wishItem);
+			if (cnt > 0) {
+				response.put("insert success", true);
+			} else {
+				response.put("insert fail", false);
+			}
+		} else {
+			int cnt = closetMapper.deleteToWish(wishItem);
+			if (cnt > 0) {
+				response.put("delete success", true);
+			} else {
+				response.put("delete fail", false);
+			}
+
+		}
+
+		return response;
 	}
 
 }

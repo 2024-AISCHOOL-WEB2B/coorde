@@ -275,10 +275,12 @@
 </head>
 <body>
 
-    <%
-    User loginUser = (User) session.getAttribute("loginUser");
+	<%
+	User loginUser = (User) session.getAttribute("loginUser");
+    List<Closet> filteredclothList = (List<Closet>) request.getAttribute("filteredclothList");
     List<Closet> clothList = (List<Closet>) request.getAttribute("clothList");
-    %>
+
+	%>
 
     <div class="wrap">
         <div class="container">
@@ -395,15 +397,15 @@
                         hem = loginUser.getUser_hem();
                     }%>
                     <% if(clothList.get(0).getCl_cate().equals("t")) { %>
-                        </label> <label> 상체 총장 <input type="text" name="user_top" placeholder="<%= top %>">
-                        </label> <label> 가슴 넓이 <input type="text" name="user_ch" placeholder="<%= ch %>">
-                        </label> <label> 어깨 넓이 <input type="text" name="user_sh" placeholder="<%= sh %>">
+                        </label> <label> 상의 총장 <input type="text" name="user_top" placeholder="<%= top %>">
+                        </label> <label> 가슴 단면 <input type="text" name="user_ch" placeholder="<%= ch %>">
+                        </label> <label> 어깨 너비 <input type="text" name="user_sh" placeholder="<%= sh %>">
                         </label> <label> 팔 길이 <input type="text" name="user_arm" placeholder="<%= arm %>">
                     <%}else{ %>
-                        </label> <label> 하체 총장 <input type="text" name="user_bot" placeholder="<%= bot %>">
-                        </label> <label> 허리 둘레 <input type="text" name="user_waist" placeholder="<%= waist %>">
-                        </label> <label> 허벅지 둘레 <input type="text" name="user_thighs" placeholder="<%= thighs %>">
-                        </label> <label> 종아리 둘레 <input type="text" name="user_hem" placeholder="<%= hem %>">
+                        </label> <label> 하의 총장 <input type="text" name="user_bot" placeholder="<%= bot %>">
+                        </label> <label> 허리 단면 <input type="text" name="user_waist" placeholder="<%= waist %>">
+                        </label> <label> 허벅지 단면 <input type="text" name="user_thighs" placeholder="<%= thighs %>">
+                        </label> <label> 밑단 단면 <input type="text" name="user_hem" placeholder="<%= hem %>">
                     <%} %>
                     
                     </label>
@@ -411,35 +413,62 @@
                 </div>
                 <div class="products" id="productContainer">
 
-                    <%  int index = 0;%>
-                    <c:forEach items="${clothList}" var="c" begin="0" end="29" varStatus="status">
-                        <div class="product" data-category="${c.cl_cate_detail}" data-color="${c.cl_color}" data-index="${index}">
-                            
-                            <div class="product-header">
-                            <div class="cart-icon">
-                                    <span class="lnr lnr-cart"></span>
-                                </div>
-                                <div class="size-display">듣고 있나요 내 이 모든 이야기를 그댈 향한 내 깊은 진심을 우리 다시 떠올리지 말기로 해요 띠바</div>
-                            </div>
-                            
-                            <a href="${c.cl_url}"> <img src="${c.cl_imgurl}" alt="${c.cl_name}" height="300">
-                            </a>
-                            <p class="name">${c.cl_name}</p>
-                            <p class="price">
-                            <%if(clothList.get(index).getCl_price() == 0) { %>
-                                <span class="discount_price">${c.cl_dc_price}원</span> <br>
-                                <span class="original_price">할인 없음</span> 
-                            <% }else { %>
-                                <span class="discount_price">${c.cl_dc_price}원</span><br> 
-                                <span class="original_price">${c.cl_price}원</span> 
-                                <span class="discount_percentage"> <fmt:formatNumber value="${(c.cl_price - c.cl_dc_price) / c.cl_price}" type="percent" /> SALE </span>
-                            <%} %>
-                            
-                            </p>
-                            
-                        </div>
-                        <% index++; %>
-                    </c:forEach>
+                    <c:choose>
+				        <c:when test="${filteredclothList != null and filteredclothList.size() > 0}">
+				            <c:forEach items="${filteredclothList}" var="c" begin="0" end="29" varStatus="status">
+				                <div class="product" data-category="${c.cl_cate_detail}" data-color="${c.cl_color}">
+				                    <a href="${c.cl_url}"> <img src="${c.cl_imgurl}" alt="${c.cl_name}"></a>
+				                    <p class="name">${c.cl_name}</p>
+				                    <p class="price">
+				                        <c:choose>
+				                            <c:when test="${c.cl_price == 0}">
+				                                <span class="discount_price">${c.cl_dc_price}원</span> <br>
+				                                <span class="original_price">할인 없음</span>
+				                            </c:when>
+				                            <c:otherwise>
+				                                <span class="discount_price">${c.cl_dc_price}원</span><br>
+				                                <span class="original_price">${c.cl_price}원</span>
+				                                <span class="discount_percentage">
+				                                    <fmt:formatNumber value="${(c.cl_price - c.cl_dc_price) / c.cl_price}" type="percent" /> SALE
+				                                </span>
+				                            </c:otherwise>
+				                        </c:choose>
+				                    </p>
+				                    <div class="cart-icon">
+				                        <button class="lnr lnr-cart" id="closetToWish" onclick="closetToWish('${c.cl_idx}', '${loginUser.user_id}')"></button>
+				                    </div>
+				                    <div class="size-display">S M L</div>
+				                </div>
+				            </c:forEach>
+				        </c:when>
+				        <c:otherwise>
+				            <c:forEach items="${clothList}" var="c" begin="0" end="29" varStatus="status">
+				                <div class="product" data-category="${c.cl_cate_detail}" data-color="${c.cl_color}">
+				                    <a href="${c.cl_url}"> <img src="${c.cl_imgurl}" alt="${c.cl_name}"></a>
+				                    <p class="name">${c.cl_name}</p>
+				                    <p class="price">
+				                        <c:choose>
+				                            <c:when test="${c.cl_price == 0}">
+				                                <span class="discount_price">${c.cl_dc_price}원</span> <br>
+				                                <span class="original_price">할인 없음</span>
+				                            </c:when>
+				                            <c:otherwise>
+				                                <span class="discount_price">${c.cl_dc_price}원</span><br>
+				                                <span class="original_price">${c.cl_price}원</span>
+				                                <span class="discount_percentage">
+				                                    <fmt:formatNumber value="${(c.cl_price - c.cl_dc_price) / c.cl_price}" type="percent" /> SALE
+				                                </span>
+				                            </c:otherwise>
+				                        </c:choose>
+				                    </p>
+				                    <div class="cart-icon">
+				                        <button class="lnr lnr-cart" id="closetToWish" onclick="closetToWish('${c.cl_idx}', '${loginUser.user_id}')"></button>
+				                    </div>
+				                    <div class="size-display">S M L</div>
+				                </div>
+				            </c:forEach>
+				        </c:otherwise>
+				    </c:choose>
 
 
                 </div>
