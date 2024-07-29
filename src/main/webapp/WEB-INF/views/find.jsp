@@ -23,13 +23,13 @@
 <body>
  <div class="container">
         <div class="logo">
-            <img src="resources/assets/images/browser/LOGO.jpg" href="redirect:/" alt="logo">
+            <a href="/myapp"><img src="resources/assets/images/browser/LOGO.jpg" alt="logo"></a>
             <div class="FIND">FIND</div>
         </div>
 
         <div class="top-nav">
-            <a href="goLogrin">LOGIN</a>
-            <a href="/goJoin">JOIN</a>
+            <a href="gologin">LOGIN</a>
+            <a href="goJoin">JOIN</a>
         </div>
 
         <div class="forms-container">

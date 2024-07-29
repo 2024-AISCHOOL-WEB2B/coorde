@@ -28,13 +28,14 @@ public class User {
 	@NonNull private int user_wei;
 	@NonNull private String user_addr;
 	@NonNull private String user_detail_address;
-	@NonNull private String user_ch;
-	@NonNull private String user_arm;
-	@NonNull private String user_waist;
-	@NonNull private String user_top;
-	@NonNull private String user_bot;
-	@NonNull private String user_sh;
-	@NonNull private String user_thighs;
+	@NonNull private int user_ch;
+	@NonNull private int user_arm;
+	@NonNull private int user_waist;
+	@NonNull private int user_top;
+	@NonNull private int user_bot;
+	@NonNull private int user_sh;
+	@NonNull private int user_thighs;
+	@NonNull private int user_hem;
 	private int userAge; // 사용자 나이 (추가된 필드)
 	
 	private Date joined_dt;

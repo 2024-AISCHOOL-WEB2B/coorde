@@ -1,6 +1,10 @@
+<%@page import="com.coorde.myapp.entity.Closet"%>
+<%@page import="java.util.List"%>
 <%@page import="com.coorde.myapp.entity.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +26,10 @@
 </head>
 <body>
 
-<% User loginUser = (User) session.getAttribute("loginUser"); %>
+<% User loginUser = (User) session.getAttribute("loginUser"); 
+	List<Closet> clothList = (List<Closet>) request.getAttribute("clothList");
+	int index = 0;
+%>
 
 <div class="wrap">
         <div class="contents">
@@ -59,98 +66,31 @@
 
             <div class="categories">
                 <div class="category top">
-                    <a href="goTop"><img src="resources/assets/images/browser/top.png" alt="Top"></a>
+                    <a href="goCloset?cl_cate=t"><img src="resources/assets/images/browser/top.png" alt="Top"></a>
                 </div>
                 <div class="category bottom">
-                   <a href="goBot"><img src="resources/assets/images/browser/bottom.png" alt="Bottom"></a>
+                   <a href="goCloset?cl_cate=b"><img src="resources/assets/images/browser/bottom.png" alt="Bottom"></a>
                 </div>
             </div>
 
             <div class="product-list">
+            	<c:forEach items="${clothList}" var="c" begin="0" end="11" varStatus="status">
                 <div class="product-item">
-                    <img src="images/product1.jpg" alt="Product 1">
+                    <img src="${c.cl_imgurl}" alt="${c.cl_name}">
                     <div class="product-info">
-                        <span>제품 1 설명</span>
-                        <span class="price">가격 정보</span>
+                        <span>${c.cl_name}</span>
+                        	<%if(clothList.get(index).getCl_price() == 0) { %>
+								<span class="discount_price">${c.cl_dc_price}원</span> <br>
+								<span class="original_price">할인 없음</span> 
+							<% }else { %>
+								<span class="discount_price">${c.cl_dc_price}원</span><br> 
+								<span class="original_price">${c.cl_price}원</span> 
+								<span class="discount_percentage"> <fmt:formatNumber value="${(c.cl_price - c.cl_dc_price) / c.cl_price}" type="percent" /> SALE </span>
+							<%} %>
                     </div>
                 </div>
-                <div class="product-item">
-                    <img src="images/product2.jpg" alt="Product 2">
-                    <div class="product-info">
-                        <span>제품 2 설명</span>
-                        <span class="price">가격 정보</span>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="images/product3.jpg" alt="Product 3">
-                    <div class="product-info">
-                        <span>제품 3 설명</span>
-                        <span class="price">가격 정보</span>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="images/product4.jpg" alt="Product 4">
-                    <div class="product-info">
-                        <span>제품 4 설명</span>
-                        <span class="price">가격 정보</span>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="images/product5.jpg" alt="Product 5">
-                    <div class="product-info">
-                        <span>제품 5 설명</span>
-                        <span class="price">가격 정보</span>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="images/product6.jpg" alt="Product 6">
-                    <div class="product-info">
-                        <span>제품 6 설명</span>
-                        <span class="price">가격 정보</span>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="images/product7.jpg" alt="Product 7">
-                    <div class="product-info">
-                        <span>제품 7 설명</span>
-                        <span class="price">가격 정보</span>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="images/product8.jpg" alt="Product 8">
-                    <div class="product-info">
-                        <span>제품 8 설명</span>
-                        <span class="price">가격 정보</span>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="images/product9.jpg" alt="Product 9">
-                    <div class="product-info">
-                        <span>제품 9 설명</span>
-                        <span class="price">가격 정보</span>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="images/product10.jpg" alt="Product 10">
-                    <div class="product-info">
-                        <span>제품 10 설명</span>
-                        <span class="price">가격 정보</span>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="images/product11.jpg" alt="Product 11">
-                    <div class="product-info">
-                        <span>제품 11 설명</span>
-                        <span class="price">가격 정보</span>
-                    </div>
-                </div>
-                <div class="product-item">
-                    <img src="images/product12.jpg" alt="Product 12">
-                    <div class="product-info">
-                        <span>제품 12 설명</span>
-                        <span class="price">가격 정보</span>
-                    </div>
-                </div>
+                <% index++; %>
+                </c:forEach>
             </div>
         </div>
     </div>

@@ -9,6 +9,8 @@ import com.coorde.myapp.entity.Closet;
 @Mapper
 public interface ClosetMapper {
 
+	List<Closet> getClosetList(String cl_cate);
+	
 	List<Closet> getAllCloset();
 
 	int deleteCloset(List<String> closetIdx);

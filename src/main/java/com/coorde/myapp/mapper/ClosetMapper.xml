@@ -3,8 +3,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.coorde.myapp.mapper.ClosetMapper">
 
+	<select id="getClosetList" parameterType="String" resultType="com.coorde.myapp.entity.Closet">
+	    SELECT * FROM closet_tb where cl_cate = #{cl_cate} ORDER BY RAND()
+	    
+	</select>
+	
 	<select id="getAllCloset" resultType="com.coorde.myapp.entity.Closet">
-	    SELECT * FROM closet_tb
+	    SELECT * FROM closet_tb ORDER BY RAND()
 	</select>
 	
 	<delete id="deleteCloset" parameterType="list">

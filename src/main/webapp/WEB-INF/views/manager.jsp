@@ -42,10 +42,10 @@
 
             <div class="categories">
                 <div class="category top">
-                    <a href="goTop"><img src="resources/assets/images/browser/top.png" alt="Top"></a>
+                    <a href="goCloset?cl_cate=t"><img src="resources/assets/images/browser/top.png" alt="Top"></a>
                 </div>
                 <div class="category bottom">
-                    <a href="goBot"><img src="resources/assets/images/browser/bottom.png" alt="Bottom"></a>
+                    <a href="goCloset?cl_cate=b"><img src="resources/assets/images/browser/bottom.png" alt="Bottom"></a>
                 </div>
             </div>
 

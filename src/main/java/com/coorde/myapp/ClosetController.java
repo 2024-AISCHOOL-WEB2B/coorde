@@ -55,13 +55,24 @@ public class ClosetController {
 	
 	@Autowired
 	private ClosetMapper closetMapper;
+	
+	
+	@RequestMapping("/goCloset")
+	public String goCloset(@RequestParam("cl_cate") String cl_cate, Model model) {
+		List<Closet> clothList = closetMapper.getClosetList(cl_cate);
+		model.addAttribute("clothList", clothList);
+		
+		return "closet";
+	}
+	
 	 
 	@RequestMapping("/goManagerClcart")
 	public String goManagerClcart(Model model) {
-		List<Closet> closetList = closetMapper.getAllCloset();
-		model.addAttribute("closetList", closetList);
+		List<Closet> clothList = closetMapper.getAllCloset();
+		model.addAttribute("closetList", clothList);
 	    return "manager_clcart";
 	}
+	
 	
 	@PostMapping("/deleteCloset")
 	public String deleteCloset(@RequestParam(value="selectedCloset", required=false) List<String> closetIdx, RedirectAttributes redirectAttributes) {

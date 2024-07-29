@@ -40,7 +40,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.coorde.myapp.entity.Closet;
 import com.coorde.myapp.entity.User;
+import com.coorde.myapp.mapper.ClosetMapper;
 import com.coorde.myapp.mapper.UserMapper;
 
 @Controller
@@ -49,10 +51,16 @@ public class MainController {
    @Autowired
    private UserMapper userMapper;
    
+   @Autowired
+   private ClosetMapper closetMapper;
+   
    @RequestMapping("/")
-    public String main() {
-        return "main";
-    }
+   public String main(Model model) {
+	   List<Closet> clothList = closetMapper.getAllCloset();
+	   model.addAttribute("clothList", clothList);
+      return "main";
+   }
+  
    @RequestMapping("/gologin")
    public String gologin() {
        return "login";
@@ -301,25 +309,7 @@ public class MainController {
     public String goManager() {
        return "manager";
     }
-    
-    @RequestMapping("/goTop")
-    public String goTop() {
-       return "top";
-    }
-    
-    @RequestMapping("/goBot")
-    public String goBot() {
-       return "bottom";
-    }
-    
-    
-    
-    @RequestMapping("/test8")
-    public String userfaq() {
-       return "userfaq";
-    }
 
-   
 
 //   @Autowired
 //   private UserMapper userMapper;
