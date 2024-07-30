@@ -178,7 +178,8 @@ input {
 			</div>
 			<div class="faq-section">
 				<div class="nav">
-					<a href="/main.html">LOGOUT</a><br> <a href="/mypage.html">MYPAGE</a>
+					<a href="logoutUser">LOGOUT</a><br> 
+					<a href="gomyPage">MYPAGE</a>
 				</div>
 				<div class>
 					<h2>
