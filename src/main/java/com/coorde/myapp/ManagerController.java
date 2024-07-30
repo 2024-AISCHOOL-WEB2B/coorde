@@ -53,7 +53,9 @@ import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 @Controller
 public class ManagerController {
-
+	
+	
+			
 	@Autowired
 	private ClosetMapper closetMapper;
 	@Autowired
@@ -68,17 +70,23 @@ public class ManagerController {
 
 	
 	@RequestMapping("/goManagerUserList")
-	public String goManagerUserList(Model model) {
-		List<User> userList = userMapper.getAllUsers();
-		for (User user : userList) {
-			System.out.println("User birth: " + user.getUser_birth());
-			int age = calculateAge(user.getUser_birth());
-			System.out.println("Calculated age: " + age);
-			user.setUserAge(age);
-		}
-		model.addAttribute("userList", userList);
-		return "manager_userlist";
-	}
+    public String goManagerUserList(Model model) {
+        List<User> userList = userMapper.getAllUsers();
+        for (User user : userList) {
+            System.out.println("User birth: " + user.getUser_birth());
+            int age = calculateAge(user.getUser_birth());
+            System.out.println("Original phone: " + user.getUser_phone());
+            user.setUserAge(age);
+            user.setUser_phone(maskPhoneNumber(user.getUser_phone()));
+            user.setUser_addr(maskAddress(user.getUser_addr()));
+            System.out.println("Masked phone: " + user.getUser_phone());
+            System.out.println("Masked address: " + user.getUser_addr());
+            System.out.println("Calculated age: " + age);
+        }
+        model.addAttribute("userList", userList);
+        return "manager_userlist";
+    }
+
 
 	// 생년월일을 나이로 변환하는 메서드
 	private int calculateAge(String birthDateString) {
@@ -131,4 +139,23 @@ public class ManagerController {
 		return "manager";
 	}
 
+	 private String maskPhoneNumber(String phoneNumber) {
+	        if (phoneNumber == null || phoneNumber.length() < 11) {
+	            return phoneNumber;
+	        }
+	        return phoneNumber.substring(0, 4) + "xxxx" + phoneNumber.substring(8);
+	    }
+	
+	 
+	 // 주소를 마스킹하는 메서드
+	    private String maskAddress(String address) {
+	        if (address == null || address.length() < 6) {
+	            return address;
+	        }
+	        return address.substring(0, 5) + "xxxx";
+	    }
+	
 }
+
+
+
