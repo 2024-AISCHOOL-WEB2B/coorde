@@ -264,7 +264,7 @@ tbody input[type="text"] {
                             <td class="col-id"><input type="text" name="user_id" value="${user.user_id}" readonly></td>
                             <td class="col-name"><input type="text" name="user_name" value="${user.user_name}" readonly></td>
 							<td class="col-age"><input type="text" name="user_age" value="${user.userAge}" readonly></td>
-                            <td class="col-email"><input type="text" name="user_email" value="" readonly></td>
+                            <td class="col-email"><input type="text" name="user_email" value="${user.user_email }" readonly></td>
                             <td class="col-phone"><input type="text" name="user_phone" value="${user.user_phone}" readonly></td>
                             <td class="col-detail"><input type="text" name="user_addr" value="${user.user_addr}" readonly></td>
                             <td class="col-select"><input type="checkbox" name="selectedUsers" value="${user.user_id}" readonly></td>
