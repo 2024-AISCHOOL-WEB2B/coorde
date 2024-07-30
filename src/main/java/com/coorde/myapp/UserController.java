@@ -60,16 +60,18 @@ public class UserController {
 	private UserMapper userMapper;
 
 	
-    @RequestMapping("/signUp")
-    public String signUp(User user, Model model) {
-        int cnt = userMapper.signUp(user);
-        if (cnt > 0) {
-            model.addAttribute("user_id", user.getUser_id());
-            return "redirect:/";
-        } else {
-            return "signUpFail";
-        }
-    }
+	 @RequestMapping(value = "/signUp", method = RequestMethod.POST)
+	   public @ResponseBody String signUp(@RequestBody User user) {
+	      
+	      System.out.println("Received User data: " + user);
+	      
+	       int cnt = userMapper.signUp(user);
+	       if (cnt > 0) {
+	           return "signUpResponse";
+	       } else {
+	           return "signUpFail";
+	       }
+	   }
     
     @RequestMapping("/userlogin")
     public String userlogin(User user, HttpSession session) {

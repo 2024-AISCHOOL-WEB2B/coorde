@@ -25,7 +25,7 @@
                 <a href="/myapp"><img src="resources/assets/images/browser/LOGO.jpg" alt="logo"></a>
             </div>
         </header>
-		<form action="signUp" method="post" id="signUpForm">
+		<form id="signUpForm">
 			<div class="form-group">
 			    <label for="id">ID</label>
 			    <input type="text" id="id" name="user_id" />
@@ -71,7 +71,7 @@
 			    <span class="search-icon" onclick="openModal()"><span class="lnr lnr-magnifier"></span></span>
 			</div>
 			<div class="join-button">
-				<button type="button" id="submitBtn">SIGN UP</button>
+				<button id="submitBtn" type="button">Sign up</button>
 			</div>
 			
 		</form>
@@ -278,14 +278,86 @@ $(document).ready(function() {
     }
 
     // 제출 버튼 클릭 시 실행될 이벤트 핸들러입니다.
-    $('#submitBtn').click(function(e) {
-        e.preventDefault(); // 기본 동작 방지
-        validateForm(function(isValid) {
-            if (isValid) {
-                $('#signUpForm').submit();
-            }
-        });
-    });
+    $(document).ready(function() {
+       $('#submitBtn').click(function(e) {
+           e.preventDefault();
+
+           const userWeight = $('#weight').val();
+           const userHeight = $('#height').val();
+           const userId = $('#id').val();
+           const userPw = $('#pw').val();
+           const verifyPw = $('#verify-pw').val();
+           const userName = $('#name').val();
+           const userBirth = $('#birth').val();
+           const userPhone = $('#phone').val();
+           const userAddr = $('#address').val();
+
+           if (userPw !== verifyPw) {
+               alert("Passwords do not match");
+               return;
+           }
+
+           $.ajax({
+               url: 'http://localhost:8081/predict',
+               type: 'POST',
+               contentType: 'application/json',
+               data: JSON.stringify({
+                   weight: userWeight,
+                   height: userHeight
+               }),
+               success: function(response) {
+                   console.log('서버 응답:', response);
+
+                   $.ajax({
+                       url: 'signUp',
+                       type: 'POST',
+                       contentType: 'application/json',
+                       data: JSON.stringify({
+                           user_id: userId,
+                           user_pw: userPw,
+                           user_name: userName,
+                           user_birth: userBirth,
+                           user_phone: userPhone,
+                           user_hei: userHeight,
+                           user_wei: userWeight,
+                           user_addr: userAddr,
+                           user_arm: response.arm,  
+                           user_top: response.top,
+                           user_sh: response.shoulder,  
+                           user_ch: response.chest,  
+                           user_waist: response.waist,  
+                           user_thighs: response.thigh,  
+                           user_bot: response.bottom
+                       }),
+                       success: function(signUpResponse) {
+                           console.log('회원 가입 성공:', signUpResponse);
+                           console.log('signUpResponse 타입:', typeof signUpResponse);
+                           
+                           if (typeof signUpResponse === 'string') {
+                              let signUpResponse = "http://localhost:8080/myapp/";
+                              try {
+                                  new URL(signUpResponse); 
+                                  window.location.href = signUpResponse; 
+                              } catch (e) {
+                                  console.error('유효하지 않은 리다이렉트 URL:', signUpResponse);
+                              }
+                            } else {
+                                $('#submitBtn').closest('form').submit();
+                            }
+                       },
+                       error: function(xhr, status, error) {
+                           console.error('회원 가입 에러 발생:', error);
+                       }
+                   });
+               },
+               error: function(xhr, status, error) {
+                   console.error('에러 발생:', error);
+               }
+           });
+       });
+   });
+
+
 
     // ID 중복 체크 버튼 클릭 시 실행될 이벤트 핸들러입니다.
     $('#idCheckBtn').click(function() {
