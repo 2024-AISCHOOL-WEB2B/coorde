@@ -91,25 +91,7 @@ public class ClosetController {
 	    
 	    return "closet";
 	}
-	
-	 
-	@RequestMapping("/goManagerClcart")
-	public String goManagerClcart(Model model) {
-		List<Closet> clothList = closetMapper.getAllCloset();
-		model.addAttribute("closetList", clothList);
-	    return "manager_clcart";
-	}
-	
-	
-	@PostMapping("/deleteCloset")
-	public String deleteCloset(@RequestParam(value="selectedCloset", required=false) List<String> closetIdx, RedirectAttributes redirectAttributes) {
-	    if (closetIdx != null && !closetIdx.isEmpty()) {
-	        int deletedCount = closetMapper.deleteClosetAndSize(closetIdx);
-	        redirectAttributes.addFlashAttribute("message", deletedCount + "개의 항목이 삭제되었습니다.");
-	    } 
-	    return "redirect:/goManagerClcart";
-	}
-	
+
 	@RequestMapping("/closetToWish")
 	@ResponseBody
 	public Map<String, Object> closetToWish(@RequestParam("cl_idx") int cl_idx, @RequestParam("user_id") String user_id) {
@@ -141,17 +123,7 @@ public class ClosetController {
 
 		return response;
 	}
-	@RequestMapping("/gomyPage")
-    public String gomyPage(HttpSession session, Model model) {
-    	User loginUser = (User)session.getAttribute("loginUser");
-    	if(loginUser != null) {
-    		String userId = loginUser.getUser_id();
-    		List<Closet> wishListItems = closetMapper.getWishListWithClosetInfo(userId);
-    		model.addAttribute("wishListItems", wishListItems);
-    	}
-        return "mypage";
-    }
-    
+	
     @PostMapping("/deleteWishlistItems")
     public String deleteWishlistItems(@RequestParam("productIds") String productIdsString, HttpSession session, RedirectAttributes redirectAttributes) {
         User loginUser = (User) session.getAttribute("loginUser");

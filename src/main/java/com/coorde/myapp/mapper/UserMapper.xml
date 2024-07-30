@@ -44,16 +44,12 @@
 	    UPDATE user_tb
 	    SET user_name = #{user_name},
 	        user_phone = #{user_phone},
-	        user_email = #{user_email},
 	        user_hei = #{user_hei},
 	        user_wei = #{user_wei},
+	        user_email = #{user_email},
 	        user_addr = #{user_addr}
 	    WHERE user_id = #{user_id}
 	</update>
-	
-	<select id="getUserById" resultType="com.coorde.myapp.entity.User">
-	    SELECT * FROM user_tb WHERE user_id = #{userId}
-	</select>
 	
 	<!-- 획인 -->
 	<select id="checkDuplicate" resultType="int">

@@ -77,7 +77,7 @@
 		delete from wish_tb
 		where user_id = #{user_id} and cl_idx = #{cl_idx}
 	</delete>
-	
+
 	<select id="getWishListWithClosetInfo" resultType="com.coorde.myapp.entity.Closet">
 	    SELECT c.cl_idx, c.cl_name, c.cl_cate, c.cl_cate_detail, c.cl_color, c.cl_imgurl, c.cl_url, c.cl_price, c.cl_dc_price
 	    FROM wish_tb w
@@ -110,5 +110,4 @@
 	    SET review_star = #{review_star}
 	    WHERE user_id = #{user_id} AND cl_idx = #{cl_idx}
 	</update>
-
 </mapper>

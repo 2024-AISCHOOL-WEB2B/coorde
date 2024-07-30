@@ -36,8 +36,13 @@ public interface UserMapper {  // xml에 기재된 sql을 호출하는 인터페
 
 	// 회원 정보 수정
 	int updateUser(User user);
+
+	User findUserById(String userId);
+
+	int submitFaq(User user);
 	
 	void updateUserMeasurements(@Param("userId") String userId, @Param("updates") Map<String, Integer> updates);
 
 	User getUserById(@NonNull String user_id);
+
 }

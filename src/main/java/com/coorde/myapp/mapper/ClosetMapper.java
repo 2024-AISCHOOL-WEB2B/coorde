@@ -42,4 +42,5 @@ public interface ClosetMapper {
     int updateStar(Map<String, Object> reviewInfo);
 
 	
+	
 }

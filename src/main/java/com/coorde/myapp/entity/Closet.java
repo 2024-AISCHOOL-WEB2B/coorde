@@ -39,6 +39,5 @@ public class Closet {
 	private int cl_hem;
 	
 	private int review_star;
-
 }
 

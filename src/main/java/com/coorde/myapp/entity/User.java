@@ -41,5 +41,12 @@ public class User {
 	
 	private Date joined_dt;
 	private String user_cate;
+	private String faq_cate;
+	private String faq_title;
+	private String faq_detail;
+	private String faq_answer;
+
+	
+	
 }
 
