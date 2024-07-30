@@ -3,8 +3,8 @@
 <mapper namespace="com.coorde.myapp.mapper.UserMapper">
 
     <insert id="signUp" parameterType="com.coorde.myapp.entity.User" keyProperty="user_id" useGeneratedKeys="true">
-        insert into user_tb(user_id, user_pw, user_name, user_birth, user_phone, user_hei, user_wei, user_addr, user_arm, user_sh, user_top, user_ch, user_waist, user_thighs, user_bot) 
-        values(#{user_id},#{user_pw},#{user_name},#{user_birth},#{user_phone},#{user_hei},#{user_wei},#{user_addr}, 0, 0, 0, 0, 0, 0, 0)
+        insert into user_tb(user_id, user_pw, user_name, user_birth, user_phone, user_hei, user_wei, user_addr, user_arm, user_sh, user_top, user_ch, user_waist, user_thighs, user_bot, user_email) 
+        values(#{user_id},#{user_pw},#{user_name},#{user_birth},#{user_phone},#{user_hei},#{user_wei},#{user_addr}, 0, 0, 0, 0, 0, 0, 0,#{user_email})
     </insert>
 
     <select id="userlogin" parameterType="com.coorde.myapp.entity.User" resultType="com.coorde.myapp.entity.User">

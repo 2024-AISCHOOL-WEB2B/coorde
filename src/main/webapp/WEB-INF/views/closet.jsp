@@ -585,7 +585,7 @@ button {
 			</footer>
 		</div>
 	</div>
-
+   <script src="resources/assets/js/vendor-all.min.js"></script>
 	<script>
         let selectedColor = 'all';
         let selectedCategory = 'all';

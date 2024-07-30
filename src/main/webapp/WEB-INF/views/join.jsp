@@ -45,6 +45,10 @@
 					name="user_name" />
 			</div>
 			<div class="form-group">
+				<label for="email">EMAIL</label> <input type="text" id="email" name="user_email" />
+				<span class="validation-icon"></span>
+			</div>
+			<div class="form-group">
 			    <label for="birth">BIRTH</label>
 			    <input type="text" id="birth" name="user_birth" placeholder="YYYY-MM-DD" maxlength="10" />
 			</div>
@@ -67,7 +71,7 @@
 			    <span class="search-icon" onclick="openModal()"><span class="lnr lnr-magnifier"></span></span>
 			</div>
 			<div class="join-button">
-				<button type="button" id="submitBtn" onclick="validateForm()">SIGN UP</button>
+				<button type="button" id="submitBtn">SIGN UP</button>
 			</div>
 			
 		</form>
@@ -108,6 +112,29 @@ function openDaumPostcode() {
     }).embed(document.getElementById('daumPostcode'));
 }
 
+//생년월일 형식 지정 함수
+function formatBirthDate() {
+    var input = $(this);
+    var value = input.val();
+    value = value.replace(/[^\d-]/g, '');
+    
+    if (value.length > 4 && value.charAt(4) !== '-') {
+        value = value.slice(0, 4) + '-' + value.slice(4);
+    }
+    if (value.length > 7 && value.charAt(7) !== '-') {
+        value = value.slice(0, 7) + '-' + value.slice(7);
+    }
+    
+    input.val(value);
+
+    if (value.length === 10) {
+        if (!isValidDate(value)) {
+            alert('올바르지 않은 날짜입니다. 다시 입력해주세요.');
+            input.val('').focus();
+        }
+    }
+}
+
 function isValidDate(dateString) {
     // YYYY-MM-DD 형식인지 확인
     if(!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) return false;
@@ -122,6 +149,13 @@ function isValidDate(dateString) {
     // 입력된 년, 월, 일이 유효한지 확인
     return date.getFullYear() === year && date.getMonth() === month && date.getDate() === day;
 }
+
+//이메일 유효성을 검사하는 함수
+function isValidEmail(email) {
+    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailRegex.test(email);
+}
+
 
 // 문서가 완전히 로드된 후에 실행될 코드를 정의합니다.
 $(document).ready(function() {
@@ -222,7 +256,17 @@ $(document).ready(function() {
             return;
         }
         
-        // ID 중복 체크를 수행합니다.
+     	// 이메일 유효성 검사
+        var email = $('#email').val();
+        if (!isValidEmail(email)) {
+            alert('유효한 이메일 주소를 입력해주세요.');
+            $('#email').focus();
+            callback(false);
+            return;
+        }
+
+        
+     	// ID 중복 체크를 수행합니다.
         checkUserId(function(isValidId) {
             if (isValidId) {
                 callback(true);
@@ -234,10 +278,11 @@ $(document).ready(function() {
     }
 
     // 제출 버튼 클릭 시 실행될 이벤트 핸들러입니다.
-    $('#submitBtn').click(function() {
+    $('#submitBtn').click(function(e) {
+        e.preventDefault(); // 기본 동작 방지
         validateForm(function(isValid) {
             if (isValid) {
-                $('#signUpForm').submit(); // 폼이 유효하면 제출합니다.
+                $('#signUpForm').submit();
             }
         });
     });
@@ -326,6 +371,27 @@ $(document).ready(function() {
         }
     });
 });
+//이메일 입력 필드 유효성 검사 및 아이콘 표시 함수
+function validateEmail() {
+    var email = $(this).val();
+    var $validationIcon = $(this).siblings('.validation-icon');
+    
+    if (email.trim() === '') {
+        $validationIcon.hide();
+        return;
+    }
+
+    if (isValidEmail(email)) {
+        $validationIcon.removeClass('invalid').addClass('valid').show();
+        $(this).removeClass('error');
+    } else {
+        $validationIcon.removeClass('valid').addClass('invalid').show();
+        $(this).addClass('error');
+    }
+}
+
+
+
 </script>
 
 </body>
