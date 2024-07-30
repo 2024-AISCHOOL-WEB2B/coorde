@@ -1,98 +1,292 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Coorde</title>
 <!-- Meta -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <meta name="author" content="Phoenixcoded" />
+<meta name="author" content="Phoenixcoded" />
 
-	<link
-      rel="stylesheet"
-      href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"
-    />
+<link rel="stylesheet"
+	href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css" />
 
-    <!-- vendor css -->
-    <link rel="stylesheet" href="resources/assets/css/manager_clcart.css">
+<!-- vendor css -->
+<link rel="stylesheet" href="resources/assets/css/manager_clcart.css">
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+button {
+	border: none;
+	background: none;
+	font-size: 20px; /* 크기 조정 */
+	cursor: pointer;
+}
+
+.logo {
+	text-align: center;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #ddd;
+}
+
+.CL-CART {
+	font-size: 20px;
+	text-align: center;
+	flex-grow: 1;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+.wrap {
+	width: 100%;
+	overflow: hidden;
+}
+
+.container {
+	width: 1280px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.right {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	margin-bottom: 20px;
+	text-align: right;
+}
+
+.right a, .right button {
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+
+.control-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.search-container {
+	display: flex;
+	align-items: center;
+}
+
+.search-container input {
+	padding: 10px;
+	font-size: 16px;
+	border: 1px solid #ddd;
+	border-radius: 5px 0 0 5px;
+	outline: none;
+}
+
+.search-container button {
+	padding: 10px;
+	font-size: 16px;
+	border: 1px solid #ddd;
+	background-color: #f0f0f0;
+	border-radius: 0 5px 5px 0;
+	cursor: pointer;
+}
+
+.button-container {
+	display: flex;
+	gap: 35px;
+}
+
+.button-container-under {
+	display: flex;
+	gap: 35px;
+	justify-content: flex-end; /* 오른쪽 정렬 */
+	margin-top: 20px;
+}
+
+table {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+thead th {
+	background-color: #f0f0f0;
+	padding: 10px;
+	position: relative;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.sort-arrow {
+	cursor: pointer;
+	margin-left: 20px;
+	font-size: 12px;
+}
+
+tbody td {
+	padding: 10px;
+	border-top: 1px solid #ddd;
+	text-align: center; /* 모든 텍스트를 가운데 정렬 */
+}
+
+tbody input[type="text"] {
+	width: 100%;
+	padding: 5px;
+	font-size: 16px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	text-align: center; /* 입력 텍스트를 가운데 정렬 */
+}
+
+.dc-price-input {
+	color: red;
+}
+
+/* 열 너비를 조절하기 위한 클래스 */
+.col-index {
+	width: 7%;
+}
+
+.col-name {
+	width: 35%;
+}
+
+.col-price {
+	width: 12%;
+}
+
+.col-dc-price {
+	width: 15%;
+}
+
+.col-color {
+	width: 10%;
+}
+
+.col-detail {
+	width: 16%;
+}
+
+.col-select {
+	width: 5%; /* 최소 너비로 설정 */
+}
+</style>
 </head>
 <body>
-<div class="wrap">
-        <div class="logo"><a href="goManager"><img src="resources/assets/images/browser/LOGO.jpg" alt="Main LOGO"></a>
-            <div class="CL-CART">CLOSET</div>
-        </div>
-       
-        <div class="container">
-            <div class="right">
-                <a href="logoutUser"><button class="logout button">LOGOUT</button></a>
-                <a href="goManager" class="button">MANAGER</a>
-            </div>
+	<div class="wrap">
+		<div class="logo">
+			<a href="goManager"><img
+				src="resources/assets/images/browser/LOGO.jpg" alt="Main LOGO"></a>
+			<div class="CL-CART">CLOSET</div>
+		</div>
 
-            <form id="user-management-form" action="deleteCloset" method="POST">
-                <div class="control-row">
-                    <div class="search-container">
-                        <input type="text" id="search" placeholder="검색">
-                        <button type="button" onclick="searchCL()"><span class="lnr lnr-magnifier"></span></button>
-                    </div>
-                    
-                    <div class="button-container">
-                        <button type="submit" onclick="return confirm('선택한 항목을 삭제하시겠습니까?')">DELETE</button>
-                    </div>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="col-index">번호</th>
-                            <th class="col-name">CL_Name</th>
-                            <th class="col-price">
-                                <span onclick="resetTableOrder()" class="clickable">Price</span>
-                                <span class="sort-arrow" onclick="sortTableByPrice('asc')">⬆</span>
-                                <span class="sort-arrow" onclick="sortTableByPrice('desc')">⬇</span>
-                            </th>
-                            <th class="col-detail">Detail_Category
-                                <select id="category-filter" onchange="filterByCategory()">
-                                    <option value="All">All</option>
-                                    <option value="bs">bs</option>
-                                    <option value="bh">bh</option>
-                                    <option value="bt">bt</option>
-                                    <option value="bl">bl</option>
-                                    <option value="bd">bd</option>
-                                    <option value="bc">bc</option>
-                                </select>
-                            </th>
-                            <th class="col-select">Select</th>
-                        </tr>
-                    </thead>
-                    <tbody id="cl_cart">
-				    <c:forEach var="closet" items="${closetList}" varStatus="status">
-				        <tr>
-				            <td class="col-index"><input type="text" name="cl_idx" value="${closet.cl_idx}" readonly></td>
-				            <td class="col-name"><input type="text" name="cl_name" value="${closet.cl_name}" readonly></td>
-				            <td class="col-price"><input type="text" name="cl_price" value="${closet.cl_price}"></td>
-				            <td class="col-detail"><input type="text" name="cl_cate_detail" value="${closet.cl_cate_detail}"></td>
-				            <td class="col-select"><input type="checkbox" name="selectedCloset" value="${closet.cl_idx}" class="row-checkbox"></td>
-				        </tr>
-				    </c:forEach>
-				</tbody>
-                </table>
-                <div class="button-container-under">
-                    <button type="submit" onclick="return confirm('선택한 항목을 삭제하시겠습니까?')">DELETE</button>
-                </div>
-            </form>
-        </div>
-            <c:if test="${not empty message}">
-			    <div class="alert">${message}</div>
-			</c:if>
-    </div>
-    <script>
+		<div class="container">
+			<div class="right">
+				<a href="logoutUser"><button class="logout button">LOGOUT</button></a>
+				<a href="goManager" class="button">MANAGER</a>
+			</div>
+
+			<form id="user-management-form" action="deleteCloset" method="POST">
+				<div class="control-row">
+					<div class="search-container">
+						<input type="text" id="search" placeholder="검색">
+						<button type="button" onclick="searchCL()">
+							<span class="lnr lnr-magnifier"></span>
+						</button>
+					</div>
+
+					<div class="button-container">
+						<button type="submit"
+							onclick="return confirm('선택한 항목을 삭제하시겠습니까?')">DELETE</button>
+						<button type="button" onclick="editCloset()">EDIT</button>
+					</div>
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th class="col-index">번호</th>
+							<th class="col-name">CL_Name</th>
+							<th class="col-price"><span onclick="resetTableOrder()"
+								class="clickable">Price</span> <span class="sort-arrow"
+								onclick="sortTableByPrice('asc')">⬆</span> <span
+								class="sort-arrow" onclick="sortTableByPrice('desc')">⬇</span></th>
+							<th class="col-dc-price"><span
+								onclick="sortTableByDcPrice('asc')" class="clickable">DC_Price</span>
+								<span class="sort-arrow" onclick="sortTableByDcPrice('asc')">⬆</span>
+								<span class="sort-arrow" onclick="sortTableByDcPrice('desc')">⬇</span>
+							</th>
+							<th class="col-color">Color</th>
+							<th class="col-detail">Detail_Category <select
+								id="category-filter" onchange="filterByCategory()">
+									<option value="All">All</option>
+									<option value="bs">bs</option>
+									<option value="bh">bh</option>
+									<option value="bt">bt</option>
+									<option value="bl">bl</option>
+									<option value="bd">bd</option>
+									<option value="bc">bc</option>
+							</select>
+							</th>
+							<th class="col-select">Select</th>
+						</tr>
+					</thead>
+					<tbody id="cl_cart">
+						<c:forEach var="closet" items="${closetList}" varStatus="status">
+							<tr>
+								<td class="col-index"><input type="text" name="cl_idx"
+									value="${closet.cl_idx}" readonly></td>
+								<td class="col-name"><input type="text" name="cl_name"
+									value="${closet.cl_name}" readonly></td>
+								<td class="col-price"><input type="text" name="cl_price"
+									value="${closet.cl_price}"></td>
+								<td class="col-dc-price"><input type="text"
+									name="cl_dc_price" value="${closet.cl_dc_price}"
+									class="dc-price-input"></td>
+								<td class="col-color"><input type="text" name="cl_color"
+									value="${closet.cl_color}"></td>
+								<td class="col-detail"><input type="text"
+									name="cl_cate_detail" value="${closet.cl_cate_detail}"></td>
+								<td class="col-select"><input type="checkbox"
+									name="selectedCloset" value="${closet.cl_idx}"
+									class="row-checkbox"></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<div class="button-container-under">
+					<button type="submit" onclick="return confirm('선택한 항목을 삭제하시겠습니까?')">DELETE</button>
+					<button type="button" onclick="editCloset()">EDIT</button>
+				</div>
+			</form>
+		</div>
+		<c:if test="${not empty message}">
+			<div class="alert">${message}</div>
+		</c:if>
+	</div>
+	<script>
         let originalOrder = [];
         let priceSortOrder = true; // true: 오름차순, false: 내림차순
+        let dcPriceSortOrder = true; // true: 오름차순, false: 내림차순
 
-     	// 페이지 로드 완료 시 실행되는 이벤트 리스너
+        // 페이지 로드 완료 시 실행되는 이벤트 리스너
         document.addEventListener('DOMContentLoaded', () => {
             // 테이블 요소를 가져옴
             const table = document.getElementById('cl_cart');
@@ -107,7 +301,6 @@
             // 카테고리가 변경될 때마다 filterByCategory 함수 실행
             document.getElementById('category-filter').addEventListener('change', filterByCategory);
         });
-
 
         function searchCL() {
             const searchValue = document.getElementById('search').value.toLowerCase();
@@ -141,7 +334,7 @@
             });
         }
 
-     // 가격을 기준으로 테이블을 정렬하는 함수
+        // 가격을 기준으로 테이블을 정렬하는 함수
         function sortTableByPrice(order) {
             const table = document.getElementById('cl_cart');
             const rows = Array.from(table.rows);
@@ -157,7 +350,23 @@
             sortedRows.forEach(row => table.appendChild(row));
         }
 
-    	// 테이블을 원래 순서로 되돌리는 함수
+        // DC_Price를 기준으로 테이블을 정렬하는 함수
+        function sortTableByDcPrice(order) {
+            const table = document.getElementById('cl_cart');
+            const rows = Array.from(table.rows);
+            // DC_Price를 기준으로 행을 정렬
+            const sortedRows = rows.sort((a, b) => {
+                const aPrice = parseFloat(a.querySelector('.col-dc-price input').value) || 0;
+                const bPrice = parseFloat(b.querySelector('.col-dc-price input').value) || 0;
+                // order 매개변수에 따라 오름차순 또는 내림차순 정렬
+                return order === 'asc' ? aPrice - bPrice : bPrice - aPrice;
+            });
+            // 정렬된 행을 테이블에 다시 추가
+            table.innerHTML = '';
+            sortedRows.forEach(row => table.appendChild(row));
+        }
+
+        // 테이블을 원래 순서로 되돌리는 함수
         function resetTableOrder() {
             const table = document.getElementById('cl_cart');
             // 테이블 내용을 비우고 원래 순서대로 행을 다시 추가
@@ -165,7 +374,7 @@
             originalOrder.forEach(row => table.appendChild(row));
         }
         
-     	// cl_idx를 기준으로 테이블을 정렬하는 함수
+        // cl_idx를 기준으로 테이블을 정렬하는 함수
         function sortTableByClIdx() {
             // 테이블 요소를 가져옴
             const table = document.getElementById('cl_cart');
@@ -186,8 +395,7 @@
             sortedRows.forEach(row => table.appendChild(row)); // 정렬된 행 추가
         }
 
-
-     	// 카테고리 필터링 및 검색 기능을 수행하는 함수
+        // 카테고리 필터링 및 검색 기능을 수행하는 함수
         function filterByCategory() {
             // 카테고리 필터 요소와 선택된 카테고리 값을 가져옴
             const categoryFilter = document.getElementById('category-filter');
@@ -231,12 +439,51 @@
                 }
             });
             
-        	 // 'All' 카테고리가 선택된 경우 cl_idx로 정렬
+             // 'All' 카테고리가 선택된 경우 cl_idx로 정렬
             if (selectedCategory === 'all') {
                 sortTableByClIdx();
             }
         }
 
+        // EDIT 버튼 클릭 시 호출되는 함수
+         // EDIT 버튼 클릭 시 호출되는 함수
+    function editCloset() {
+    const table = document.getElementById('cl_cart');
+    const rows = Array.from(table.rows);
+    const updatedClosets = rows.map(row => {
+        return {
+            cl_idx: row.querySelector('input[name="cl_idx"]').value,
+            cl_price: parseInt(row.querySelector('input[name="cl_price"]').value),
+            cl_dc_price: parseInt(row.querySelector('input[name="cl_dc_price"]').value),
+            cl_color: row.querySelector('input[name="cl_color"]').value,
+            cl_cate_detail: row.querySelector('input[name="cl_cate_detail"]').value
+        };
+    });
+
+    fetch('editCloset', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedClosets)
+    })
+    .then(response => {
+        if (response.redirected) {
+            window.location.href = response.url;
+        } else {
+            return response.json();
+        }
+    })
+    .then(data => {
+        if (data && data.message) {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('서버 오류가 발생했습니다.');
+    });
+}
     </script>
 </body>
 </html>

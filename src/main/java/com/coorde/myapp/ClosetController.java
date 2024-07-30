@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -203,4 +205,33 @@ public class ClosetController {
         return response;
     }
 
+    
+    @PostMapping("/editCloset")
+    public String editCloset(@RequestBody List<Closet> closets, RedirectAttributes redirectAttributes) {
+        if (closets != null && !closets.isEmpty()) {
+            try {
+                int updatedCount = closetMapper.updateCloset(closets);
+                redirectAttributes.addFlashAttribute("message", updatedCount + "개의 항목이 수정되었습니다.");
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("message", "수정 중 오류가 발생했습니다: " + e.getMessage());
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("message", "수정할 항목이 없습니다.");
+        }
+        return "redirect:/goManagerClcart";
+    }
+
+    @PostMapping("/deleteCloset")
+    public String deleteCloset(@RequestParam(value = "selectedCloset", required = false) List<String> closetIdx, RedirectAttributes redirectAttributes) {
+        if (closetIdx != null && !closetIdx.isEmpty()) {
+            int deletedCount = closetMapper.deleteClosetAndSize(closetIdx);
+            redirectAttributes.addFlashAttribute("message", deletedCount + "개의 항목이 삭제되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "삭제할 항목이 없습니다.");
+        }
+        return "redirect:/goManagerClcart";
+    }
+
+    
+    
 }

@@ -22,7 +22,7 @@
 <body>
 <div class="wrap">
         <div class="logo">
-            <a href="goManaer"><img src="resources/assets/images/browser/LOGO.jpg" alt=""></a>
+            <a href="goManager"><img src="resources/assets/images/browser/LOGO.jpg" alt="Main LOGO"></a>
             <div class="FAQ">FAQ</div>
         </div>
                 <form action="#">

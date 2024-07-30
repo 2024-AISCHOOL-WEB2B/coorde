@@ -17,7 +17,9 @@ public interface ClosetMapper {
 
 	int deleteCloset(List<String> closetIdx);
 	
-	int deleteClosetAndSize(List<String> closetIdx);
+	int deleteClosetAndSize(@Param("closetIdx") List<String> closetIdx);
+	
+	int updateCloset(List<Closet> closets);
 
 	List<String> getTopColors(String user_id);
 	
@@ -40,6 +42,8 @@ public interface ClosetMapper {
     int insertStar(Map<String, Object> reviewInfo);
 
     int updateStar(Map<String, Object> reviewInfo);
+
+	
 
 	
 	

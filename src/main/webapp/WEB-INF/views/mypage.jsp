@@ -1,536 +1,563 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@page import="com.coorde.myapp.entity.User"%>
 <%@page import="com.coorde.myapp.entity.Closet"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<meta name="_csrf" content="${_csrf.token}"/>
-    <meta name="_csrf_header" content="${_csrf.headerName}"/>
-    <script>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
+<script>
         var contextPath = "${pageContext.request.contextPath}";
     </script>
-    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OOTB 위시리스트</title>
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
-	@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+<link rel="stylesheet"
+   href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOTB 위시리스트</title>
+<style>
+@import
+   url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap')
+   ;
+
+@import
+   url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap')
+   ;
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
 }
 
 .wrap {
-    width: 100%;
+   width: 100%;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+   text-decoration: none;
+   color: inherit;
 }
 
 .container {
-    width: 1280px;
-    margin: 0 auto;
-    text-align: center;
+   width: 1280px;
+   margin: 0 auto;
+   text-align: center;
 }
 
 .logo img {
-  
-    margin-bottom: 20px;
+   margin-bottom: 20px;
 }
 
 button {
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 16px;
+   border: none;
+   background: none;
+   cursor: pointer;
+   font-size: 16px;
 }
 
 .right {
-    font-size: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    position: absolute;
-    right: -150px;
-    top: 50px;
-    margin-right: 50px;
+   font-size: 20px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+   position: absolute;
+   right: -150px;
+   top: 50px;
+   margin-right: 50px;
 }
 
 .right a {
-    display: block;
-    margin-bottom: 10px;
-    line-height: 1.5;
+   display: block;
+   margin-bottom: 10px;
+   line-height: 1.5;
 }
 
 .nav {
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ccc;
-    height: 50px;
-    font-size: 20px;
-    position: relative;
+   margin-bottom: 20px;
+   border-bottom: 1px solid #ccc;
+   height: 50px;
+   font-size: 20px;
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: space-between; /* 좌우 정렬을 위해 추가 */
+}
+
+.nav .wishlist-title {
+   position: absolute;
+   left: 50%;
+   transform: translateX(-50%);
 }
 
 .header-buttons {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    right: 0;
+   display: flex;
+   align-items: center;
+   position: absolute;
+   right: 0;
+   top:25px;
 }
 
 .dropdown {
-    position: relative;
-    display: inline-block;
-    top: -26px;
+   position: relative;
+   display: inline-block;
+   top: -26px;
 }
 
 #dropdownButton {
-    z-index: 5;
+   z-index: 5;
 }
 
 #colorSortButton {
-    z-index: 4;
+   z-index: 4;
 }
 
 #categoryButton {
-    z-index: 3;
+   z-index: 3;
+   width:150px;
 }
 
 /* 드롭다운 버튼의 사이즈를 조정하려면 */
 .dropbtn {
-    color: black;
-    font-size: 20px; /* 글자 크기를 조정합니다. */
-    border: none;
-    cursor: pointer;
-    
-    width: 120px; /* 너비를 원하는 크기로 조정합니다. */
-    height: 60px; /* 높이를 원하는 크기로 조정합니다. */
+   color: black;
+   font-size: 20px; /* 글자 크기를 조정합니다. */
+   border: none;
+   cursor: pointer;
+   width: 120px; /* 너비를 원하는 크기로 조정합니다. */
+   height: 60px; /* 높이를 원하는 크기로 조정합니다. */
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 140px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-
+   display: none;
+   position: absolute;
+   background-color: #f9f9f9;
+   min-width: 150px;
+   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+   z-index: 1;
+   left: 50%;
+   transform: translateX(-50%);
+   text-align: center;
 }
 
 .dropdown:hover .dropdown-content {
-    display: block;
+   display: block;
 }
 
 .dropdown-content button {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    width: 100%; /* 이 값을 원하는 너비로 변경합니다. */
-    height: 50px; /* 이 값을 원하는 높이로 변경합니다. */
-    border: none;
-    background: none;
-    cursor: pointer;
-    text-align: center;
+   color: black;
+   padding: 12px 16px;
+   text-decoration: none;
+   display: block;
+   width: 100%; /* 이 값을 원하는 너비로 변경합니다. */
+   height: 50px; /* 이 값을 원하는 높이로 변경합니다. */
+   border: none;
+   background: none;
+   cursor: pointer;
+   text-align: center;
 }
 
 .dropdown-content button:hover {
-    background-color: #f1f1f1;
+   background-color: #f1f1f1;
 }
 
 .wishlist {
-    padding: 20px 0;
+   padding: 20px 0;
 }
 
 .products {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 20px;
-    margin-bottom: 20px;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: flex-start;
+   gap: 20px;
+   margin-bottom: 20px;
 }
 
 .product {
-    width: calc(20% - 16px); /* 5개의 상품이 한 줄에 들어가도록 설정 */
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: background-color 0.3s, opacity 0.3s;
-    position: relative;
+   width: calc(20% - 16px); /* 5개의 상품이 한 줄에 들어가도록 설정 */
+   margin-bottom: 20px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   transition: background-color 0.3s, opacity 0.3s;
+   position: relative;
 }
 
 .product-checkbox {
-    position: absolute;
-    top: 60px;
-    left: 10px;
-    transform: scale(2.5);
+   position: absolute;
+   top: 60px;
+   left: 10px;
+   transform: scale(2.5);
 }
 
 .product-name {
-    margin-bottom: 10px;
-    font-weight: bold;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
-    display: inline-block;
-    text-align: center;
+   margin-bottom: 10px;
+   font-weight: bold;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   width: 100%;
+   display: inline-block;
+   text-align: center;
 }
 
 .product img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    cursor: pointer;
+   width: 100%;
+   height: auto;
+   object-fit: cover;
+   cursor: pointer;
 }
 
 .product-name.readonly {
-    user-select: none;
-    pointer-events: none;
+   user-select: none;
+   pointer-events: none;
 }
 
 .product-info {
-    margin-top: 5px;
-    text-align: center;
+   margin-top: 5px;
+   text-align: center;
 }
 
 .price-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 
 .product-info .original-price {
-    margin: 5px 10px 5px 0;
-    color: gray;
-    text-decoration: line-through;
+   margin: 5px 10px 5px 0;
+   color: gray;
+   text-decoration: line-through;
 }
 
 .product-info .discount-rate {
-    margin: 2px 0;
-    color: red;
+   margin: 2px 0;
+   color: red;
 }
 
 .product-info .discounted-price {
-    margin: 2px 0;
-    color: red;
+   margin: 2px 0;
+   color: red;
 }
 
 .icon {
-    font-size: 20px;
-    cursor: pointer;
-    border: none;
-    padding: 0;
+   font-size: 20px;
+   cursor: pointer;
+   border: none;
+   padding: 0;
 }
 
 .faq {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 80px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: 80px;
 }
 
 .faq a {
-    text-decoration: none;
-    color: inherit;
+   text-decoration: none;
+   color: inherit;
 }
 
 .faq button {
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    background: white;
+   padding: 10px;
+   border: none;
+   cursor: pointer;
+   transition: background-color 0.3s;
+   background: white;
 }
 
 .usage-info {
-    border: 1px solid #000;
-    padding: 10px;
-    text-align: left;
-    margin: 5px 0;
+   border: 1px solid #000;
+   padding: 10px;
+   text-align: left;
+   margin: 5px 0;
 }
 
 .usage-info h2 {
-    margin-bottom: 10px;
+   margin-bottom: 10px;
 }
 
 .usage-info p {
-    margin-bottom: 5px;
-    margin-left: 5px;
+   margin-bottom: 5px;
+   margin-left: 5px;
 }
 
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+   display: none;
+   position: fixed;
+   z-index: 1;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   overflow: auto;
+   background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
-    background-color: #fff;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    text-align: center;
+   background-color: #fff;
+   margin: 15% auto;
+   padding: 20px;
+   border: 1px solid #888;
+   width: 80%;
+   max-width: 600px;
+   text-align: center;
 }
 
 .modal img {
-    width: 100px;
-    height: 100px;
+   width: 100px;
+   height: 100px;
 }
 
 .modal .product-info {
-    margin-bottom: 20px;
+   margin-bottom: 20px;
 }
 
 .modal table {
-    width: 100%;
-    margin-bottom: 20px;
+   width: 100%;
+   margin-bottom: 20px;
 }
 
 .modal table th, .modal table td {
-    padding: 10px;
-    text-align: center;
+   padding: 10px;
+   text-align: center;
 }
 
 .modal table th {
-    background-color: #f2f2f2;
+   background-color: #f2f2f2;
 }
 
 #modal-img {
-    margin-left: 17px;
+   margin-left: 17px;
 }
 
 #modal-product-name {
-    margin-left: 17px;
+   margin-left: 17px;
 }
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+   color: #aaa;
+   float: right;
+   font-size: 28px;
+   font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+.close:hover, .close:focus {
+   color: black;
+   text-decoration: none;
+   cursor: pointer;
 }
 
 .submit-button {
-    background-color: rgb(215, 215, 215);
-    color: black;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 10px;
+   background-color: rgb(215, 215, 215);
+   color: black;
+   padding: 10px 20px;
+   border: none;
+   cursor: pointer;
+   font-size: 16px;
+   border-radius: 10px;
 }
 
 .submit-button:hover {
-    background-color: grey;
+   background-color: grey;
 }
 
 .modal-content .product-info p#modal-product-price {
-    color: red;
+   color: red;
 }
 
 .rating {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
+   display: flex;
+   justify-content: center;
+   margin-bottom: 10px;
 }
 
 .star {
-    font-size: 24px;
-    cursor: pointer;
-    color: #ddd;
-    transition: color 0.3s;
+   font-size: 24px;
+   cursor: pointer;
+   color: #ddd;
+   transition: color 0.3s;
 }
 
-.star:hover,
-.star.selected,
-.star.hover {
-    color: gold;
+.star:hover, .star.selected, .star.hover {
+   color: gold;
 }
-    
-    </style>
+
+.nav-links {
+   display: flex;
+   gap: 20px;
+}
+</style>
 </head>
 <body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<c:if test="${not empty message}">
-    <script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <c:if test="${not empty message}">
+      <script>
         alert('${message}');
     </script>
-</c:if>
-<% User loginUser = (User) session.getAttribute("loginUser"); %>
-    <div class="wrap">
-        <div class="container">
-            <div class="logo">
-                <a href="/myapp"><img src="resources/assets/images/browser/LOGO.jpg" alt=""></a>
+   </c:if>
+   <% User loginUser = (User) session.getAttribute("loginUser"); %>
+   <div class="wrap">
+      <div class="container">
+         <div class="logo">
+            <a href="/myapp"><img
+               src="resources/assets/images/browser/LOGO.jpg" alt=""></a>
+         </div>
+         <div class="nav">
+            <div class="nav-links">
+               <a href="goCloset?cl_cate=t&user_id=${loginUser.user_id}">TOP</a> /  <a
+                  href="goCloset?cl_cate=b&user_id=${loginUser.user_id}">BOTTOM</a>
             </div>
-            <div class="nav">
-                WISH LIST
-                <div class="header-buttons">
-                    <div class="dropdown">
-                        <button class="dropbtn" id="dropdownButton">정렬</button>
-                        <div class="dropdown-content">
-						    <button onclick="resetSort()">정렬</button>
-						    <button onclick="sortProducts('가격 낮은순', '가격순_오름차순')">가격 낮은순</button>
-						    <button onclick="sortProducts('가격 높은순', '가격순_내림차순')">가격 높은순</button>
-						    <button onclick="sortProducts('별점순', '별점순')">별점순</button>
-						</div>
-                    </div>
-                    <div class="dropdown">
-                        <button class="dropbtn" id="colorSortButton">색상</button>
-                        <div class="dropdown-content">
-                            <button onclick="resetFilter('color')">색상</button>
-                            <button onclick="filterProductsByColor('검정', 'black')">검정</button>
-                            <button onclick="filterProductsByColor('흰색', 'white')">흰색</button>
-                            <button onclick="filterProductsByColor('네이비', 'navy')">네이비</button>
-                            <button onclick="filterProductsByColor('라이트그레이', 'lightgray')">라이트그레이</button>
-                            <button onclick="filterProductsByColor('다크그레이', 'darkgray')">다크그레이</button>
-                            <button onclick="filterProductsByColor('회색', 'gray')">회색</button>
-                            <button onclick="filterProductsByColor('파란색', 'blue')">파란색</button>
-                            <button onclick="filterProductsByColor('아이보리', 'ivory')">아이보리</button>
-                            <button onclick="filterProductsByColor('스카이블루', 'skyblue')">스카이블루</button>
-                            <button onclick="filterProductsByColor('베이지', 'beige')">베이지</button>
-                            <button onclick="filterProductsByColor('녹색', 'green')">녹색</button>
-                            <button onclick="filterProductsByColor('데님', 'denim')">데님</button>
-                            <button onclick="filterProductsByColor('연청', 'lightblue')">연청</button>
-                            <button onclick="filterProductsByColor('중청', 'midblue')">중청</button>
-                            <button onclick="filterProductsByColor('진청', 'deepblue')">진청</button>
-                            <button onclick="filterProductsByColor('흑청', 'darkblue')">흑청</button>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <button class="dropbtn" id="categoryButton">카테고리</button>
-                        <div class="dropdown-content">
-                            <button onclick="resetFilter('category')">카테고리</button>
-						    <button onclick="filterProductsByCategory('스포츠하의', 'bs')">스포츠하의</button>
-						    <button onclick="filterProductsByCategory('반바지', 'bh')">반바지</button>
-						    <button onclick="filterProductsByCategory('트레이닝 바지', 'bt')">트레이닝 바지</button>
-						    <button onclick="filterProductsByCategory('슬렉스 바지', 'bl')">슬렉스 바지</button>
-						    <button onclick="filterProductsByCategory('데님 바지', 'bd')">데님 바지</button>
-						    <button onclick="filterProductsByCategory('코튼 바지', 'bc')">코튼 바지</button>
-						    <button onclick="filterProductsByCategory('반소매 티셔츠', 'th')">반소매 티셔츠</button>
-						    <button onclick="filterProductsByCategory('셔츠', 'tt')">셔츠</button>
-						    <button onclick="filterProductsByCategory('스포츠 상의', 'ts')">스포츠 상의</button>
-						    <button onclick="filterProductsByCategory('민소매', 'tn')">민소매</button>
-						    <button onclick="filterProductsByCategory('카라티셔츠', 'tc')">카라티셔츠</button>
-						    <button onclick="filterProductsByCategory('긴소매', 'tl')">긴소매</button>
-						    <button onclick="filterProductsByCategory('후드', 'td')">후드</button>
-						    <button onclick="filterProductsByCategory('맨투맨', 'tm')">맨투맨</button>
-                        </div>
-                    </div>
-                    
-                    <div class="right">
-                        <a href="logoutUser">LOGOUT</a>
-                        <a href="goEdit">EDIT</a>
-                        <a href="goCloset?cl_cate=t&user_id=${loginUser.user_id}">TOP</a>
-                        <a href="goCloset?cl_cate=b&user_id=${loginUser.user_id}">BOTTOM</a>
-                    </div>
-                </div>
+            <div class="wishlist-title">WISH LIST</div>
+            <div class="header-buttons">
+               <div class="dropdown">
+                  <button class="dropbtn" id="dropdownButton">정렬</button>
+                  <div class="dropdown-content">
+                     <button onclick="resetSort()">정렬</button>
+                     <button onclick="sortProducts('가격 낮은순', '가격순_오름차순')">가격
+                        낮은순</button>
+                     <button onclick="sortProducts('가격 높은순', '가격순_내림차순')">가격
+                        높은순</button>
+                     <button onclick="sortProducts('별점순', '별점순')">별점순</button>
+                  </div>
+               </div>
+               <div class="dropdown">
+                  <button class="dropbtn" id="colorSortButton">색상</button>
+                  <div class="dropdown-content">
+                     <button onclick="resetFilter('color')">색상</button>
+                     <button onclick="filterProductsByColor('검정', 'black')">검정</button>
+                     <button onclick="filterProductsByColor('흰색', 'white')">흰색</button>
+                     <button onclick="filterProductsByColor('네이비', 'navy')">네이비</button>
+                     <button onclick="filterProductsByColor('라이트그레이', 'lightgray')">라이트그레이</button>
+                     <button onclick="filterProductsByColor('다크그레이', 'darkgray')">다크그레이</button>
+                     <button onclick="filterProductsByColor('회색', 'gray')">회색</button>
+                     <button onclick="filterProductsByColor('파란색', 'blue')">파란색</button>
+                     <button onclick="filterProductsByColor('아이보리', 'ivory')">아이보리</button>
+                     <button onclick="filterProductsByColor('스카이블루', 'skyblue')">스카이블루</button>
+                     <button onclick="filterProductsByColor('베이지', 'beige')">베이지</button>
+                     <button onclick="filterProductsByColor('녹색', 'green')">녹색</button>
+                     <button onclick="filterProductsByColor('데님', 'denim')">데님</button>
+                     <button onclick="filterProductsByColor('연청', 'lightblue')">연청</button>
+                     <button onclick="filterProductsByColor('중청', 'midblue')">중청</button>
+                     <button onclick="filterProductsByColor('진청', 'deepblue')">진청</button>
+                     <button onclick="filterProductsByColor('흑청', 'darkblue')">흑청</button>
+                  </div>
+               </div>
+               <div class="dropdown">
+                  <button class="dropbtn" id="categoryButton">카테고리</button>
+                  <div class="dropdown-content">
+                     <button onclick="resetFilter('category')">카테고리</button>
+                     <button onclick="filterProductsByCategory('스포츠하의', 'bs')">스포츠하의</button>
+                     <button onclick="filterProductsByCategory('반바지', 'bh')">반바지</button>
+                     <button onclick="filterProductsByCategory('트레이닝 바지', 'bt')">트레이닝
+                        바지</button>
+                     <button onclick="filterProductsByCategory('슬렉스 바지', 'bl')">슬렉스
+                        바지</button>
+                     <button onclick="filterProductsByCategory('데님 바지', 'bd')">데님
+                        바지</button>
+                     <button onclick="filterProductsByCategory('코튼 바지', 'bc')">코튼
+                        바지</button>
+                     <button onclick="filterProductsByCategory('반소매 티셔츠', 'th')">반소매
+                        티셔츠</button>
+                     <button onclick="filterProductsByCategory('셔츠', 'tt')">셔츠</button>
+                     <button onclick="filterProductsByCategory('스포츠 상의', 'ts')">스포츠
+                        상의</button>
+                     <button onclick="filterProductsByCategory('민소매', 'tn')">민소매</button>
+                     <button onclick="filterProductsByCategory('카라티셔츠', 'tc')">카라티셔츠</button>
+                     <button onclick="filterProductsByCategory('긴소매', 'tl')">긴소매</button>
+                     <button onclick="filterProductsByCategory('후드', 'td')">후드</button>
+                     <button onclick="filterProductsByCategory('맨투맨', 'tm')">맨투맨</button>
+                  </div>
+               </div>
+               <div class="right">
+                  <a href="logoutUser">LOGOUT</a> <a href="goEdit">EDIT</a>
+               </div>
             </div>
-            <form action="">
-                <div class="products">
-				    <%
-				    List<Closet> wishListItems = (List<Closet>)request.getAttribute("wishListItems");
-				    if(wishListItems != null && !wishListItems.isEmpty()) {
-				    %>
-				   <c:forEach items="${wishListItems}" var="item">
-				         <div class="product" data-color="${item.cl_color}" data-category="${item.cl_cate}" data-product-id="${item.cl_idx}" data-category-detail="${item.cl_cate_detail}">
-	                        <input type="checkbox" class="product-checkbox">
-	                        <p class="product-name readonly">${item.cl_name}</p>
-	                        <a href="${item.cl_url}"><img src="${item.cl_imgurl}" alt="${item.cl_name}"></a>
-	                        <div class="product-info">
-	                            <div class="price-container">
-	                                <p class="original-price">${item.cl_price}원</p>
-	                            </div>
-	                            <p class="discounted-price">할인가: ${item.cl_dc_price}원
-	                                <button class="modal-button">
-									    <span class="lnr lnr-thumbs-up"></span>
-									</button>
-	                            </p>
-	                        </div>
-	                    </div >
-			        </c:forEach>
-				    <%
-				    } else {
-				    %>
-				        <p>위시리스트가 비어있습니다.</p>
-				    <%
-				    }
-				    %>
-				</div>
-                <div class="faq">
-                    <a href="goFaq">FAQ</a>
-                    <button id="delete-button" type="button">DELETE</button>
-                </div>
-            </form>
+         </div>
+         <form action="">
+            <div class="products">
+               <%
+                    List<Closet> wishListItems = (List<Closet>)request.getAttribute("wishListItems");
+                    if(wishListItems != null && !wishListItems.isEmpty()) {
+                    %>
+               <c:forEach items="${wishListItems}" var="item">
+                  <div class="product" data-color="${item.cl_color}"
+                     data-category="${item.cl_cate}" data-product-id="${item.cl_idx}"
+                     data-category-detail="${item.cl_cate_detail}">
+                     <input type="checkbox" class="product-checkbox">
+                     <p class="product-name readonly">${item.cl_name}</p>
+                     <a href="${item.cl_url}"><img src="${item.cl_imgurl}"
+                        alt="${item.cl_name}"></a>
+                     <div class="product-info">
+                        <div class="price-container">
+                           <p class="original-price">${item.cl_price}원</p>
+                        </div>
+                        <p class="discounted-price">
+                           할인가: ${item.cl_dc_price}원
+                           <button class="modal-button">
+                              <span class="lnr lnr-thumbs-up"></span>
+                           </button>
+                        </p>
+                     </div>
+                  </div>
+               </c:forEach>
+               <%
+                    } else {
+                    %>
+               <p>위시리스트가 비어있습니다.</p>
+               <%
+                    }
+                    %>
+            </div>
+            <div class="faq">
+               <a href="goFaq">FAQ</a>
+               <button id="delete-button" type="button">DELETE</button>
+            </div>
+         </form>
 
-            <div class="usage-info">
-                <h2>이용안내</h2>
-                <p>- 체크 버튼을 클릭 후 DELETE 버튼을 누르면 목록에서 삭제됩니다.</p>
-                <p>- 회원가입시와 동일한 이용방법으로 제공되는 정보를 관리하실 수 있습니다.</p>
-                <p>- 정확한 회원 정보를 통해 정확한 안내와 주문처리를 위해 등록된 정보를 확인해 주십시오.</p>
-            </div>
-        </div>
-    </div>
-    <div id="myModal" class="modal">
-    <div class="modal-content" onclick="event.stopPropagation();">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <div class="product-info">
+         <div class="usage-info">
+            <h2>이용안내</h2>
+            <p>- 체크 버튼을 클릭 후 DELETE 버튼을 누르면 목록에서 삭제됩니다.</p>
+            <p>- 회원가입시와 동일한 이용방법으로 제공되는 정보를 관리하실 수 있습니다.</p>
+            <p>- 정확한 회원 정보를 통해 정확한 안내와 주문처리를 위해 등록된 정보를 확인해 주십시오.</p>
+         </div>
+      </div>
+   </div>
+   <div id="myModal" class="modal">
+      <div class="modal-content" onclick="event.stopPropagation();">
+         <span class="close" onclick="closeModal()">&times;</span>
+         <div class="product-info">
             <p id="modal-product-name" class="readonly"></p>
             <img id="modal-img" src="" alt="Product Image">
             <div class="rating">
-                <span class="star" data-value="1">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="5">&#9733;</span>
+               <span class="star" data-value="1">&#9733;</span> <span class="star"
+                  data-value="2">&#9733;</span> <span class="star" data-value="3">&#9733;</span>
+               <span class="star" data-value="4">&#9733;</span> <span class="star"
+                  data-value="5">&#9733;</span>
             </div>
             <p id="modal-product-price"></p>
-        </div>
-        <table>
+         </div>
+         <table>
             <thead>
-                <tr>
-                    <th></th>
-                    <th>작아요</th>
-                    <th>적당해요</th>
-                    <th>커요</th>
-                </tr>
+               <tr>
+                  <th></th>
+                  <th>작아요</th>
+                  <th>적당해요</th>
+                  <th>커요</th>
+               </tr>
             </thead>
             <tbody>
-                <!-- 여기에 동적으로 내용이 생성됩니다 -->
+               <!-- 여기에 동적으로 내용이 생성됩니다 -->
             </tbody>
-        </table>
-        <button class="submit-button" onclick="submitModal()">저장</button>
-    </div>
-    <div id="filterResult" style="margin-top: 10px;"></div>
-</div>
-    <script>
+         </table>
+         <button class="submit-button" onclick="submitModal()">저장</button>
+      </div>
+      <div id="filterResult" style="margin-top: 10px;"></div>
+   </div>
+   <script>
         let originalProductsOrder = [];
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.modal-button').forEach(button => {
