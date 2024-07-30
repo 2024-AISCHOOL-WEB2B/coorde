@@ -298,7 +298,7 @@ $(document).ready(function() {
            }
 
            $.ajax({
-               url: 'http://localhost:8081/predict',
+               url: 'http://localhost:5000/predict',
                type: 'POST',
                contentType: 'application/json',
                data: JSON.stringify({
@@ -334,7 +334,7 @@ $(document).ready(function() {
                            console.log('signUpResponse 타입:', typeof signUpResponse);
                            
                            if (typeof signUpResponse === 'string') {
-                              let signUpResponse = "http://localhost:8080/myapp/";
+                              let signUpResponse = "http://localhost:8081/myapp/";
                               try {
                                   new URL(signUpResponse); 
                                   window.location.href = signUpResponse; 
