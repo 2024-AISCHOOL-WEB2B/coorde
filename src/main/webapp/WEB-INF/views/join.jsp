@@ -291,6 +291,7 @@ $(document).ready(function() {
            const userBirth = $('#birth').val();
            const userPhone = $('#phone').val();
            const userAddr = $('#address').val();
+           const userEmail = $('#email').val();
 
            if (userPw !== verifyPw) {
                alert("Passwords do not match");
@@ -321,13 +322,15 @@ $(document).ready(function() {
                            user_hei: userHeight,
                            user_wei: userWeight,
                            user_addr: userAddr,
+                           user_email: userEmail,
                            user_arm: response.arm,  
                            user_top: response.top,
                            user_sh: response.shoulder,  
                            user_ch: response.chest,  
                            user_waist: response.waist,  
                            user_thighs: response.thigh,  
-                           user_bot: response.bottom
+                           user_bot: response.bottom,
+                           user_hem: response.hem                         
                        }),
                        success: function(signUpResponse) {
                            console.log('회원 가입 성공:', signUpResponse);

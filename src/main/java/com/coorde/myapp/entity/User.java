@@ -27,7 +27,7 @@ public class User {
 	@NonNull private int user_hei;
 	@NonNull private int user_wei;
 	@NonNull private String user_addr;
-	@NonNull private String user_detail_address;
+	private String user_detail_address;
 	@NonNull private int user_ch;
 	@NonNull private int user_arm;
 	@NonNull private int user_waist;
