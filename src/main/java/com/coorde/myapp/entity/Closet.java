@@ -37,6 +37,8 @@ public class Closet {
 	private int cl_thighs;
 	private int cl_bot;
 	private int cl_hem;
+	
+	private int review_star;
 
 }
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.coorde.myapp.entity.Closet;
 
@@ -29,6 +30,16 @@ public interface ClosetMapper {
 	int insertToWish(Map<String, Object> wishItem);
 
 	int deleteToWish(Map<String, Object> wishItem);
+	
+	List<Closet> getWishListWithClosetInfo(String userId);
+	
+	int deleteWishlistItems(@Param("clIdxList") List<String> clIdxList, @Param("userId") String userId);
+
+    int checkStar(Map<String, Object> reviewInfo);
+
+    int insertStar(Map<String, Object> reviewInfo);
+
+    int updateStar(Map<String, Object> reviewInfo);
 
 	
 }

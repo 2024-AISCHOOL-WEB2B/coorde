@@ -77,5 +77,38 @@
 		delete from wish_tb
 		where user_id = #{user_id} and cl_idx = #{cl_idx}
 	</delete>
+	
+	<select id="getWishListWithClosetInfo" resultType="com.coorde.myapp.entity.Closet">
+	    SELECT c.cl_idx, c.cl_name, c.cl_cate, c.cl_cate_detail, c.cl_color, c.cl_imgurl, c.cl_url, c.cl_price, c.cl_dc_price
+	    FROM wish_tb w
+	    INNER JOIN closet_tb c ON w.cl_idx = c.cl_idx
+	    WHERE w.user_id = #{userId}
+	</select>
+	
+	<delete id="deleteWishlistItems">
+	    DELETE FROM wish_tb
+	    WHERE cl_idx IN
+	    <foreach collection="clIdxList" item="clIdx" open="(" separator="," close=")">
+	        #{clIdx}
+	    </foreach>
+	    AND user_id = #{userId}
+	</delete>
+	
+	<select id="checkStar" parameterType="map" resultType="int">
+	    SELECT COUNT(*)
+	    FROM review_tb
+	    WHERE user_id = #{user_id} AND cl_idx = #{cl_idx}
+	</select>	
+	
+	<insert id="insertStar" parameterType="map">
+	    INSERT INTO review_tb (cl_idx, user_id, review_star)
+	    VALUES (#{cl_idx}, #{user_id}, #{review_star})
+	</insert>
+	
+	<update id="updateStar" parameterType="map">
+	    UPDATE review_tb 
+	    SET review_star = #{review_star}
+	    WHERE user_id = #{user_id} AND cl_idx = #{cl_idx}
+	</update>
 
 </mapper>

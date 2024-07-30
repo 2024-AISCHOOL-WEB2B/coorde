@@ -641,19 +641,30 @@
             }
         }
         function closetToWish(cl_idx, user_id) {
+            if (!user_id) {
+                alert("로그인이 필요한 서비스입니다.");
+                return;
+            }
 
             $.ajax({
-                url : './closetToWish',
-                data : {
-                   cl_idx : cl_idx,
-                    user_id : user_id
+                url: './closetToWish',
+                data: {
+                    cl_idx: cl_idx,
+                    user_id: user_id
                 },
-                type : 'POST',
-                dataType : 'json',
-                success : function(result) {
+                type: 'POST',
+                dataType: 'json',
+                success: function(result) {
                     if (result.success) {
-                        pass;
-                    } 
+                        alert("위시리스트에 추가되었습니다.");
+                    } else if (result.deleted) {
+                        alert("위시리스트에서 제거되었습니다.");
+                    } else {
+                        alert("오류가 발생했습니다. 다시 시도해주세요.");
+                    }
+                },
+                error: function() {
+                    alert("서버 오류가 발생했습니다. 나중에 다시 시도해주세요.");
                 }
             });
         }

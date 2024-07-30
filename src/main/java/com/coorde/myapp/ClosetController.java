@@ -55,6 +55,9 @@ public class ClosetController {
 	
 	@Autowired
 	private ClosetMapper closetMapper;
+	@Autowired
+	private UserMapper userMapper;
+	private Map<String, Object> review_star;
 	
 	
 	@RequestMapping("/goCloset")
@@ -138,5 +141,94 @@ public class ClosetController {
 
 		return response;
 	}
+	@RequestMapping("/gomyPage")
+    public String gomyPage(HttpSession session, Model model) {
+    	User loginUser = (User)session.getAttribute("loginUser");
+    	if(loginUser != null) {
+    		String userId = loginUser.getUser_id();
+    		List<Closet> wishListItems = closetMapper.getWishListWithClosetInfo(userId);
+    		model.addAttribute("wishListItems", wishListItems);
+    	}
+        return "mypage";
+    }
+    
+    @PostMapping("/deleteWishlistItems")
+    public String deleteWishlistItems(@RequestParam("productIds") String productIdsString, HttpSession session, RedirectAttributes redirectAttributes) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            List<String> productIds = Arrays.asList(productIdsString.split(","));
+            int deletedCount = closetMapper.deleteWishlistItems(productIds, loginUser.getUser_id());
+            redirectAttributes.addFlashAttribute("message", deletedCount + "개의 상품이 위시리스트에서 삭제되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "로그인이 필요합니다.");
+        }
+        return "redirect:/gomyPage";
+    }
+    
+    @PostMapping("/updateUserMeasurements")
+    @ResponseBody
+    public Map<String, Object> updateUserMeasurements(@RequestBody Map<String, Object> params, HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+        User loginUser = (User) session.getAttribute("loginUser");
+        
+        if (loginUser != null) {
+            try {
+                String userId = loginUser.getUser_id();
+                String clIdx = String.valueOf(params.get("cl_idx"));
+                int reviewStar = Integer.parseInt(String.valueOf(params.get("review_star")));
+                Map<String, String> sizeInfo = (Map<String, String>) params.get("sizeInfo");
+
+                // 사용자 측정값 업데이트
+                Map<String, Integer> updates = new HashMap<>();
+                Map<String, Integer> changeValues = new HashMap<String, Integer>() {{
+                    put("arm", 2);
+                    put("sh", 2);
+                    put("top", 4);
+                    put("ch", 2);
+                    put("waist", 1);
+                    put("thighs", 2);
+                    put("bot", 3);
+                    put("hem", 2);
+                }};
+                
+                for (Map.Entry<String, Integer> entry : changeValues.entrySet()) {
+                    String field = entry.getKey();
+                    int changeValue = entry.getValue();
+                    String value = sizeInfo.get("cl_" + field);
+                    System.out.println(field);
+                    System.out.println(changeValue);
+                    System.out.println(value);
+                    if (value != null) {
+                        int change = value.equals("small") ? changeValue : (value.equals("large") ? -changeValue : 0);
+                        updates.put("user_" + field, change);
+                    }
+                }
+                
+                userMapper.updateUserMeasurements(userId, updates);
+                
+                // 별점 정보 저장
+                Map<String, Object> reviewInfo = new HashMap<>();
+                reviewInfo.put("cl_idx", clIdx);
+                reviewInfo.put("user_id", userId);
+                reviewInfo.put("review_star", reviewStar);
+                
+                int starCount = closetMapper.checkStar(reviewInfo);
+                if (starCount == 0) {
+                    closetMapper.insertStar(reviewInfo);
+                } else {
+                    closetMapper.updateStar(reviewInfo);
+                }
+                 
+                response.put("success", true);
+            } catch (Exception e) {
+                response.put("success", false);
+                e.printStackTrace();
+            }
+        } else {
+            response.put("success", false);
+        }
+        
+        return response;
+    }
 
 }

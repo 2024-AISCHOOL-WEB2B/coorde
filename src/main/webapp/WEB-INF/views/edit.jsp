@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Coorde</title>
+<title>OOTB 정보수정</title>
 <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -18,7 +18,169 @@
     />
 
     <!-- vendor css -->
-    <link rel="stylesheet" href="resources/assets/css/edit.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+.container {
+    text-align: center;
+}
+
+
+.logo{
+    margin-bottom: 20px ;
+}
+
+.form-group {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.form-group2 input {
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 5px;
+    width: 200px;
+    margin-right: 80px;
+    text-align: center;
+}
+
+
+.form-group input {
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 5px;
+    width: 200px;
+    text-align: center;
+}
+
+.form-group#detail-address-group {
+    margin-left: 50px;
+}
+
+.form-group .search-icon {
+    cursor: pointer;
+}
+.actions {
+    margin: 30px 0 ;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* 링크 사이의 간격을 설정 */
+}
+
+.actions button, .actions a {
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px; /* 간격을 더 추가하고 싶다면 패딩을 추가 */
+}
+
+
+/* 수평 정렬 */
+.form-group-horizontal {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+/* 모달 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 10px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    text-align: left; /* 모달 내용 왼쪽 정렬 */
+}
+
+.modal-title {
+    text-align: center; /* 제목 가운데 정렬 */
+}
+
+.modalbackcolor{
+    background: whitesmoke;
+}
+
+.subtitle{
+    background-color: whitesmoke;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#leaveModal .form-group label {
+    display: block;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+#leaveModal .form-group input[type="text"],
+#leaveModal .form-group input[type="password"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#leaveModal .form-group div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#leaveModal .form-group div label {
+    margin-bottom: 10px;
+}
+    </style>
 </head>
 <body>
 
@@ -37,6 +199,13 @@
 			    <input type="tel" id="phone" name="user_phone" value="${loginUser.user_phone}"
 			           pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" 
 			           title="전화번호는 000-0000-0000 형식으로 입력해주세요"
+			           required>
+			</div>
+	        <div class="form-group">
+			    <label for="email">EMAIL</label>
+			    <input type="tel" id="email" name="user_email" value="${loginUser.user_email}"
+			           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+           			   title="유효한 이메일 주소를 입력해주세요 (예: example@domain.com)"
 			           required>
 			</div>
 	        <div class="form-group">
@@ -196,7 +365,23 @@
        	    var password = prompt("비밀번호를 입력하세요:");
        	    if (password != null && password != "") {
        	        document.getElementById('confirmPassword').value = password;
-       	        document.getElementById('editForm').submit();
+       	        
+       	        $.ajax({
+       	            url: '/myapp/updateUser',
+       	            type: 'POST',
+       	            data: $('#editForm').serialize(),
+       	            success: function(response) {
+       	                if(response.status === "success") {
+       	                    alert("프로필이 성공적으로 업데이트되었습니다.");
+       	                    window.location.href = '/myapp/goEdit'; // 페이지를 새로고침하는 대신 편집 페이지로 리다이렉트
+       	                } else {
+       	                    alert("업데이트 실패: " + response.message);
+       	                }
+       	            },
+       	            error: function() {
+       	                alert("서버 오류가 발생했습니다.");
+       	            }
+       	        });
        	    }
        	}
     

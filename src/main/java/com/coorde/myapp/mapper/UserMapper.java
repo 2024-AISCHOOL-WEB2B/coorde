@@ -1,11 +1,14 @@
 package com.coorde.myapp.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.coorde.myapp.entity.User;
+
+import lombok.NonNull;
 
 @Mapper
 public interface UserMapper {  // xml에 기재된 sql을 호출하는 인터페이스
@@ -33,4 +36,8 @@ public interface UserMapper {  // xml에 기재된 sql을 호출하는 인터페
 
 	// 회원 정보 수정
 	int updateUser(User user);
+	
+	void updateUserMeasurements(@Param("userId") String userId, @Param("updates") Map<String, Integer> updates);
+
+	User getUserById(@NonNull String user_id);
 }
