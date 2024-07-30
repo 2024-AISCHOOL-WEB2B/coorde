@@ -188,6 +188,12 @@ tbody input[type="text"] {
 .col-select {
     width: 5%; /* 최소 너비로 설정 */
 }
+
+input {
+            border: none;
+            outline: none;
+        }
+
 </style>
 </head>
 <body>

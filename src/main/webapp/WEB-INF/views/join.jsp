@@ -17,20 +17,29 @@
 
 <!-- vendor css -->
 <link rel="stylesheet" href="resources/assets/css/join.css">
+
+
+<style>
+input {
+	border: none;
+	outline: none;
+}
+</style>
+
 </head>
 <body>
 	<div class="container">
 		<header>
-            <div class="logo">
-                <a href="/myapp"><img src="resources/assets/images/browser/LOGO.jpg" alt="logo"></a>
-            </div>
-        </header>
+			<div class="logo">
+				<a href="/myapp"><img
+					src="resources/assets/images/browser/LOGO.jpg" alt="logo"></a>
+			</div>
+		</header>
 		<form id="signUpForm">
 			<div class="form-group">
-			    <label for="id">ID</label>
-			    <input type="text" id="id" name="user_id" />
-			    <span class="search-icon" type="button" id="idCheckBtn"><span class="lnr lnr-magnifier"></span></span>
-			    <span id="idCheckResult"></span>
+				<label for="id">ID</label> <input type="text" id="id" name="user_id" />
+				<span class="search-icon" type="button" id="idCheckBtn"><span
+					class="lnr lnr-magnifier"></span></span> <span id="idCheckResult"></span>
 			</div>
 			<div class="form-group">
 				<label for="pw">PW</label> <input type="password" id="pw"
@@ -45,17 +54,17 @@
 					name="user_name" />
 			</div>
 			<div class="form-group">
-				<label for="email">EMAIL</label> <input type="text" id="email" name="user_email" />
-				<span class="validation-icon"></span>
+				<label for="email">EMAIL</label> <input type="text" id="email"
+					name="user_email" /> <span class="validation-icon"></span>
 			</div>
 			<div class="form-group">
-			    <label for="birth">BIRTH</label>
-			    <input type="text" id="birth" name="user_birth" placeholder="YYYY-MM-DD" maxlength="10" />
+				<label for="birth">BIRTH</label> <input type="text" id="birth"
+					name="user_birth" placeholder="YYYY-MM-DD" maxlength="10" />
 			</div>
 			<div class="form-group">
-			    <label for="phone">PHONE</label>
-			    <input type="text" id="phone" name="user_phone" placeholder="010-XXXX-XXXX" maxlength="13" />
-			    <span id="phoneCheckResult"></span>
+				<label for="phone">PHONE</label> <input type="text" id="phone"
+					name="user_phone" placeholder="010-XXXX-XXXX" maxlength="13" /> <span
+					id="phoneCheckResult"></span>
 			</div>
 			<div class="form-group">
 				<label for="height">HEIGHT</label> <input type="text" id="height"
@@ -66,29 +75,31 @@
 					name="user_wei" />
 			</div>
 			<div class="form-group">
-			    <label for="address">ADDRESS</label>
-			    <input type="text" id="address" name="user_addr">
-			    <span class="search-icon" onclick="openModal()"><span class="lnr lnr-magnifier"></span></span>
+				<label for="address">ADDRESS</label> <input type="text" id="address"
+					name="user_addr"> <span class="search-icon"
+					onclick="openModal()"><span class="lnr lnr-magnifier"></span></span>
 			</div>
 			<div class="join-button">
 				<button id="submitBtn" type="button">Sign up</button>
 			</div>
-			
+
 		</form>
 	</div>
 	<div id="addressModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('addressModal')">&times;</span>
-            <h2>주소 찾기</h2>
-            <div id="daumPostcode" style="width:500px;height:500px;"></div>
-        </div>
-    </div>
-	
-    
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<!-- Query 라이브러리를 로드합니다. 이 라이브러리는 JavaScript를 더 쉽게 사용할 수 있게 해줍니다. -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
+		<div class="modal-content">
+			<span class="close" onclick="closeModal('addressModal')">&times;</span>
+			<h2>주소 찾기</h2>
+			<div id="daumPostcode" style="width: 500px; height: 500px;"></div>
+		</div>
+	</div>
+
+
+	<script
+		src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<!-- Query 라이브러리를 로드합니다. 이 라이브러리는 JavaScript를 더 쉽게 사용할 수 있게 해줍니다. -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
 //모달 열기
 function openModal() {
     document.getElementById('addressModal').style.display = 'block';

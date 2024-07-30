@@ -162,15 +162,15 @@
         }
         
         .original_price{
-<<<<<<< HEAD
+
     	color: grey;
     	text-decoration: line-through;
 		}
-=======
-       color: grey;
-       text-decoration: line-through;
-      }
->>>>>>> branch 'master' of https://github.com/2024-AISCHOOL-WEB2B/coorde.git
+		
+		input {
+            border: none;
+            outline: none;
+        }
         
     </style>
     

@@ -19,6 +19,15 @@
     <!-- vendor css -->
     <link rel="stylesheet" href="resources/assets/css/find.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+    
+    input {
+            border: none;
+            outline: none;
+        }
+    </style>
+        
+    
 </head>
 <body>
  <div class="container">

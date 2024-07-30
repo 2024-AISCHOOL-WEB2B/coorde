@@ -290,6 +290,10 @@ button {
 .pagination a:hover {
 	text-decoration: underline;
 }
+    input {
+            border: none;
+            outline: none;
+        }
 </style>
 </head>
 <body>

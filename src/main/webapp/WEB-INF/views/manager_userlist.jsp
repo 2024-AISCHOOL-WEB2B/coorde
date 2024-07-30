@@ -152,6 +152,12 @@
         .col-select {
             width: 5%;
         }
+        
+		    input {
+            border: none;
+            outline: none;
+        }
+        
     </style>
 </head>
 <body>

@@ -115,6 +115,11 @@
             font-size: 16px; /* 버튼 텍스트 크기 설정 (선택 사항) */
             cursor: pointer; /* 마우스를 올렸을 때 커서가 포인터로 변경 */
         }
+        
+            input {
+            border: none;
+            outline: none;
+        }
     </style>
 </head>
 <body>

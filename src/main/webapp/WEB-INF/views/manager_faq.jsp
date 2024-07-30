@@ -1,76 +1,102 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Coordy</title>
 <!-- Meta -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <meta name="author" content="Phoenixcoded" />
+<meta name="author" content="Phoenixcoded" />
 
-   <link
-      rel="stylesheet"
-      href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"
-    />
+<link rel="stylesheet"
+	href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css" />
 
-    <!-- vendor css -->
-    <link rel="stylesheet" href="resources/assets/css/managerfaq.css">
+<!-- vendor css -->
+<link rel="stylesheet" href="resources/assets/css/managerfaq.css">
+
+
+<style>
+input {
+	border: none;
+	outline: none;
+}
+</style>
+
 </head>
 <body>
-<div class="wrap">
-        <div class="logo">
-            <a href="goManager"><img src="resources/assets/images/browser/LOGO.jpg" alt="Main LOGO"></a>
-            <div class="FAQ">FAQ</div>
-        </div>
-                <form action="#">
-        <div class="container">
-        
-            <div class="sidebar">
-                <h2>사용자별 대화내역</h2><br><br>
-                <div class="user" onclick="showMessages('user1')">
-                    <p>USER 1</p>
-                    <p><strong>Q:</strong> <span id="recent-user1"></span></p>
-                </div>
-                <div class="user" onclick="showMessages('user2')">
-                    <p>USER 2</p>
-                    <p><strong>Q:</strong> <span id="recent-user2"></span></p>
-                </div>
-                <div class="user" onclick="showMessages('user3')">
-                    <p>USER 3</p>
-                    <p><strong>Q:</strong> <span id="recent-user3"></span></p>
-                </div>
-                <div class="user" onclick="showMessages('user4')">
-                    <p>USER 4</p>
-                    <p><strong>Q:</strong> <span id="recent-user4"></span></p>
-                </div>
-               
-            </div>
+	<div class="wrap">
+		<div class="logo">
+			<a href="goManager"><img
+				src="resources/assets/images/browser/LOGO.jpg" alt="Main LOGO"></a>
+			<div class="FAQ">FAQ</div>
+		</div>
+		<form action="#">
+			<div class="container">
 
-            <div class="respond">
-                <div class="stats" id="stats">
-                    <div>총 응답횟수: <span id="total-answered">0</span></div><br>
-                    <div>응답 완료: <span id="answered">0</span></div><br>
-                    <div>미응답: <span id="unanswered">0</span></div>
-                    
-                </div>
-                
-                <div class="chat" id="chat">
-                    <!-- 메시지가 여기에 표시됩니다 -->
-                </div>
-            </div>
-            <div class="right">
-                <a href="/main.html"><button class="logout button">LOGOUT</button></a>
-                <a href="goManagerClcart">CLOSET</a>
-                <a href="goManagerUserList">USER</a>
-            </div> 
-        </div>
-    </form>
-    </div>
+				<div class="sidebar">
+					<h2>사용자별 대화내역</h2>
+					<br>
+					<br>
+					<div class="user" onclick="showMessages('user1')">
+						<p>USER 1</p>
+						<p>
+							<strong>Q:</strong> <span id="recent-user1"></span>
+						</p>
+					</div>
+					<div class="user" onclick="showMessages('user2')">
+						<p>USER 2</p>
+						<p>
+							<strong>Q:</strong> <span id="recent-user2"></span>
+						</p>
+					</div>
+					<div class="user" onclick="showMessages('user3')">
+						<p>USER 3</p>
+						<p>
+							<strong>Q:</strong> <span id="recent-user3"></span>
+						</p>
+					</div>
+					<div class="user" onclick="showMessages('user4')">
+						<p>USER 4</p>
+						<p>
+							<strong>Q:</strong> <span id="recent-user4"></span>
+						</p>
+					</div>
 
-    <script>
+				</div>
+
+				<div class="respond">
+					<div class="stats" id="stats">
+						<div>
+							총 응답횟수: <span id="total-answered">0</span>
+						</div>
+						<br>
+						<div>
+							응답 완료: <span id="answered">0</span>
+						</div>
+						<br>
+						<div>
+							미응답: <span id="unanswered">0</span>
+						</div>
+
+					</div>
+
+					<div class="chat" id="chat">
+						<!-- 메시지가 여기에 표시됩니다 -->
+					</div>
+				</div>
+				<div class="right">
+					<a href="/main.html"><button class="logout button">LOGOUT</button></a>
+					<a href="goManagerClcart">CLOSET</a> <a href="goManagerUserList">USER</a>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<script>
         let currentUser = '';
 
         const messages = {
