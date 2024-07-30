@@ -87,7 +87,7 @@ public class UserController {
            }
         } else {
            System.out.println("Fail");
-            return "redirect:/login";
+            return "login";
         }
     }
     
