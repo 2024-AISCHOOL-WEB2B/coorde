@@ -224,33 +224,48 @@ public class UserController {
         }
         return "fail";
     }
+
+    @RequestMapping("/goFaq")
+    public String goFaq(HttpSession session, Model model) {
+
+        User user = (User) session.getAttribute("loginUser");
+        
+        List<User> userfaqList = userMapper.goUserFaq(user);
+
+        model.addAttribute("userfaqList", userfaqList);
+        
+        return "userfaq";
+    }
     
-	 
-	@RequestMapping("/submitFaq")
-    public String submitFaq(@RequestParam("option") String option,
-            @RequestParam("inquiry") String inquiry,
-            @RequestParam("title") String title,
-            @RequestParam("userId") String userId) {
-    	
-    	User user = userMapper.findUserById(userId);
-    	if (user == null) {
-            System.out.println("User not found");
-            return "/";
-        }
+    @PostMapping("/submitFaq")
+    @ResponseBody
+    public Map<String, Object> submitFaq(HttpSession session,
+    		@RequestParam("faq_cate") String faq_cate,
+            @RequestParam("faq_detail") String faq_detail,
+            @RequestParam("faq_title") String faq_title) {
 
-        user.setFaq_cate(option);
-        user.setFaq_title(title);
-        user.setFaq_detail(inquiry);
+        
+    	User user = (User) session.getAttribute("loginUser");
+    	System.out.println(user.toString());
+    	Map<String, Object> response = new HashMap<>();
 
-        // FAQ 정보 저장
+        user.setFaq_cate(faq_cate);
+        user.setFaq_title(faq_title);
+        user.setFaq_detail(faq_detail);
+
+        System.out.println("test1");
         int cnt = userMapper.submitFaq(user);
         if (cnt > 0) {
-            System.out.println("submit success");
-            return "gomyPage";
+            System.out.println("질문 입력 성공");
+            response.put("status", "success");
+            response.put("message", "프로필이 성공적으로 업데이트되었습니다.");
         } else {
-            System.out.println("submit fail");
-            return "redirect:/submitFaq";
+            System.out.println("질문 입력 실패");
+            response.put("status", "error");
+            response.put("message", "프로필 업데이트에 실패했습니다.");
         }
+
+        return response;
 
     }
 	

@@ -67,6 +67,15 @@
 	</update>
 	
 		
+	<select id="goUserFaq" parameterType="com.coorde.myapp.entity.User" resultType="com.coorde.myapp.entity.User">
+	    SELECT * FROM faq_tb where user_id = #{user_id}
+	</select>
+	
+    <insert id="submitFaq" parameterType="com.coorde.myapp.entity.User">
+	    insert into faq_tb(user_id, faq_cate, faq_title, faq_detail) 
+        values(#{user_id}, #{faq_cate}, #{faq_title}, #{faq_detail})
+	</insert>
+		
 	<select id="goManagerFaq" resultType="com.coorde.myapp.entity.User">
 	    SELECT * FROM faq_tb
 	</select>

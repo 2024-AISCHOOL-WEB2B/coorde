@@ -92,19 +92,5 @@ public class MainController {
     public String goEdit() {
         return "edit";
     }
-    
-    @RequestMapping("/goFaq")
-    public String goFaq(HttpSession session, Model model) {
-
-        User user = (User) session.getAttribute("loginUser");
-
-        model.addAttribute("user", user);
-        
-        return "userfaq";
-    }
-    
-
-
-
 
 }

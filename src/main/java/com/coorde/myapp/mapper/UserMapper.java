@@ -38,18 +38,17 @@ public interface UserMapper {  // xml에 기재된 sql을 호출하는 인터페
 	int updateUser(User user);
 
 	User findUserById(String userId);
-
-	int submitFaq(User user);
 	
 	void updateUserMeasurements(@Param("userId") String userId, @Param("updates") Map<String, Integer> updates);
 
 	User getUserById(@NonNull String user_id);
 	
+	List<User> goUserFaq(User user);
+	
+	int submitFaq(User user);
+	
 	List<User> goManagerFaq();
 
 	int submitAnswer(User user);
-
-
-
 
 }
