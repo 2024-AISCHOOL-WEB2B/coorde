@@ -1,6 +1,6 @@
-<%@page import="com.coorde.myapp.entity.User"%>
-<%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page import="com.coorde.myapp.entity.User"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -266,21 +266,26 @@
         .modal-footer .btn:hover {
             background-color: #333;
         }
+        
+        #inquiry-title {
+            text-align: center;
+        }
+        
     </style>
 </head>
 <body>
-	<%    
+    <%    
         User userfaqList = (User) session.getAttribute("userfaqList");
     %>
     <div class="wrap">
         <div class="container">
             <div class="header">
-                <h1>OOTB</h1>
+                <img alt="LOGO" src="resources/assets/images/browser/LOGO.jpg">
             </div>
             <div class="faq-section">
                 <div class="nav">
-					<a href="logoutUser">LOGOUT</a><br> 
-					<a href="gomyPage">MYPAGE</a>
+                    <a href="logoutUser">LOGOUT</a><br> 
+                    <a href="gomyPage">MYPAGE</a>
                 </div>
                 <div>
                     <h2><span class="lnr lnr-magnifier"></span>자주하는 질문</h2>
@@ -331,7 +336,7 @@
             </div>
         </div>
     </div>
-	<script src="resources/assets/js/vendor-all.min.js"></script>
+    <script src="resources/assets/js/vendor-all.min.js"></script>
     <script>
         let inquiryText = '';
         let selectedOption = '';
@@ -373,7 +378,6 @@
         }
 
         function submitInquiry() {
-        	
             const inquiryText = document.getElementById('inquiry-text').value;
             const title = document.getElementById('inquiry-title').value;
             const option = selectedOption; 
@@ -386,10 +390,6 @@
                 alert('문의 내용을 입력하세요.');
                 return;
             }
-            console.log("title : "+title);
-            console.log("text : "+inquiryText);
-            console.log("option : "+option);
-            
 
             $.ajax({
                 url: './submitFaq',
@@ -401,12 +401,14 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function(response) {
-                    
                     if (response.status === 'success') {
                         alert('문의가 성공적으로 접수되었습니다.');
                         // 필요 시 폼 초기화
+                        document.getElementById('inquiry-title').value = '';
                         document.getElementById('inquiry-text').value = '';
                         selectedOption = '';
+                        buttons.forEach(btn => btn.classList.remove('active'));
+                        buttons = [];
                     } else {
                         alert('문의 접수에 실패했습니다. 다시 시도해 주세요.');
                     }
@@ -417,15 +419,16 @@
             });
         }
 
-
         function openModal() {
+            const inquiryText = document.getElementById('inquiry-text').value;
+            const readableOption = selectedOption === 'm' ? '회원정보' : selectedOption === 'p' ? '상품확인' : selectedOption === 's' ? '서비스' : '';
             document.getElementById('modal-body').innerHTML = `
                 <div class="inquiry-detail">
-                    <p><strong>${selectedOption} 관련 문의</strong></p>
+                    <p><strong>\${readableOption} 관련 문의</strong></p>
                     <p>아이디: 사용자 아이디</p>
-                    <p>문의 유형: ${selectedOption}</p>
+                    <p>문의 유형: \${readableOption}</p>
                     <p>문의 날짜: \${new Date().toISOString().split('T')[0]}</p>
-                    <p>문의 내용: ${inquiryText}</p>
+                    <p>문의 내용: \${inquiryText}</p>
                 </div>
                 <div class="response">
                     <div class="response-header">
@@ -439,7 +442,6 @@
             `;
             document.getElementById('myModal').style.display = 'block';
         }
-
 
         function closeModal() {
             document.getElementById('myModal').style.display = 'none';

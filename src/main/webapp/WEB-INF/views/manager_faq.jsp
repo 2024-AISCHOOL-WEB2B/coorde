@@ -64,6 +64,8 @@
     </div>
     <script src="resources/assets/js/vendor-all.min.js"></script>
     <script>
+    
+   
         let currentUser = '';
         const messages = {};
 
@@ -85,7 +87,7 @@
             chat.innerHTML = ''; // 기존의 메세지 지우기
 
             if (!messages[user]) {
-                console.log(`No messages found for user: ${user}`);
+                console.log(`No messages found for user: \${user}`);
                 return;
             }
 
@@ -135,7 +137,7 @@
                 chat.appendChild(messageDiv); // 새로운 메세지 추가
             });
         }
-
+       
         function submitResponse(index) {
             console.log(`Submitting response for index: ` + index);
             const chat = document.getElementById('chat');
@@ -144,7 +146,7 @@
             console.log(textarea);
             
             if (!textarea) {
-                console.error(`Textarea with data-index='${index}' not found.`);
+                console.error(`Textarea with data-index='\${index}' not found.`);
                 return;
             }
 
@@ -217,10 +219,10 @@
                     if (element) {
                         element.textContent = recentMessage || 'No messages';
                     } else {
-                        console.error(`Element with ID recent-${userId} not found`);
+                        console.error(`Element with ID recent-\${userId} not found`);
                     }
                 } else {
-                    console.error(`No messages found for user: ${userId}`);
+                    console.error(`No messages found for user: \${userId}`);
                 }
             });
         }
