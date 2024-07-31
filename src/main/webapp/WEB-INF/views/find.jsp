@@ -361,17 +361,7 @@ margin-left : 20px
 	</div>
 
 	<script>
-        function submitForm() {
-        	
-        	let phoneValue = $('#user_phone').val();
-        	let birthValue = $('#user_birth').val();
-
-        	phoneValue = phoneValue.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-        	birthValue = birthValue.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-        	    
-        	$('#user_phone').val(phoneValue);
-        	$('#user_birth').val(birthValue);
-        	
+        function submitForm() {        	       	
             $.ajax({
                 url: 'idFind',
                 type: 'POST',
@@ -389,17 +379,7 @@ margin-left : 20px
             });
         }
 
-        function submitPwForm() {
-        	
-        	let phoneValue = $('#phone-pw').val();
-        	let birthValue = $('#birth-pw').val();
-
-        	phoneValue = phoneValue.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-        	birthValue = birthValue.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-        	    
-        	$('#phone-pw').val(phoneValue);
-        	$('#birth-pw').val(birthValue);
-        	
+        function submitPwForm() {      	      	
             $.ajax({
                 url: 'pwFind',
                 type: 'POST',
