@@ -129,10 +129,14 @@ public class ManagerController {
 		return "redirect:/goManagerUserList";
 	}
 
-	@RequestMapping("/goManagerFaq")
-	public String goManagerFaq() {
-		return "manager_faq";
-	}
+    @RequestMapping("/goManager")
+    public String goManager(HttpSession session) {
+       User user = (User) session.getAttribute("loginUser");
+       if(user.getUser_cate().equals("a")) {
+    	   return "manager";    	   
+       }  	   
+       return "/";    	   
+    }
 
 	@RequestMapping("/goManager")
 	public String goManager() {
@@ -153,6 +157,36 @@ public class ManagerController {
 	            return address;
 	        }
 	        return address.substring(0, 5) + "xxxx";
+	    }
+	    
+
+	    @PostMapping("/submitAnswer")
+		@ResponseBody
+	    public Map<String, Object> submitAnswer(@RequestParam("user_id") String user_id,
+	                               @RequestParam("faq_title") String faq_title,
+	                               @RequestParam("faq_answer") String faq_answer, 
+	                               Model model) {
+	        User user = new User();
+	        Map<String, Object> response = new HashMap<>();
+	        
+	        System.out.println("test0");
+	        user.setUser_id(user_id);
+	        user.setFaq_title(faq_title); 
+	        user.setFaq_answer(faq_answer);
+
+	        System.out.println("test1");
+	        int cnt = userMapper.submitAnswer(user);
+	        if (cnt > 0) {
+	            System.out.println("답변 입력 성공");
+	            response.put("status", "success");
+	            response.put("message", "프로필이 성공적으로 업데이트되었습니다.");
+	        } else {
+	            System.out.println("답변 입력 실패");
+	            response.put("status", "error");
+	            response.put("message", "프로필 업데이트에 실패했습니다.");
+	        }
+
+	        return response;
 	    }
 	
 }

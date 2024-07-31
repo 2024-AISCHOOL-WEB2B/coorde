@@ -65,5 +65,16 @@
 	    </set>
 	    WHERE user_id = #{userId}
 	</update>
+	
+		
+	<select id="goManagerFaq" resultType="com.coorde.myapp.entity.User">
+	    SELECT * FROM faq_tb
+	</select>
+	
+    <update id="submitAnswer" parameterType="com.coorde.myapp.entity.User">
+	    UPDATE faq_tb
+	    SET faq_answer = #{faq_answer}
+	    WHERE user_id = #{user_id} and faq_title = #{faq_title}
+	</update>
 
 </mapper>

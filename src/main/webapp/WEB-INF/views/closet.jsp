@@ -456,7 +456,6 @@ button {
 				</div>
 				<div class="products" id="productContainer">
 
-
 					<%  int index = 0;%>
 					<c:forEach items="${clothList}" var="c" begin="0" end="29"
 						varStatus="status">
@@ -465,9 +464,9 @@ button {
 
 							<div class="product-header">
 								<div class="cart-icon">
-									<span class="lnr lnr-cart"></span>
-								</div>
-								<div class="size-display">띠바 별점 기능 씨바 띠바</div>
+			                        <button class="lnr lnr-cart" id="closetToWishlist" onclick="closetToWishList('${c.cl_idx}', '${loginUser.user_id}')"></button>
+			                    </div>
+								<div class="size-display">123123</div>
 								<div class="rating-number">
 									평점: <span id="rating-value-${c.cl_idx}">0</span>
 								</div>
@@ -506,9 +505,9 @@ button {
 
 									<div class="product-header">
 										<div class="cart-icon">
-											<span class="lnr lnr-cart"></span>
-										</div>
-										<div class="size-display">띠바 별점 기능 씨바 띠바</div>
+					                        <button class="lnr lnr-cart" id="closetToWishlist" onclick="closetToWishList('${c.cl_idx}', '${loginUser.user_id}')"></button>
+					                    </div>
+										<div class="size-display">123123</div>
 										<div class="rating-number">
 											평점: <span id="rating-value-${c.cl_idx}">0</span>
 										</div>
@@ -546,9 +545,9 @@ button {
 									data-color="${c.cl_color}">
 									<div class="product-header">
 										<div class="cart-icon">
-											<span class="lnr lnr-cart"></span>
-										</div>
-										<div class="size-display">띠바 별점 기능 씨바 띠바</div>
+					                        <button class="lnr lnr-cart" id="closetToWishlist" onclick="closetToWishList('${c.cl_idx}', '${loginUser.user_id}')"></button>
+					                    </div>
+										<div class="size-display">123123</div>
 										<div class="rating-number">
 											평점: <span id="rating-value-${c.cl_idx}">0</span>
 										</div>
@@ -589,7 +588,7 @@ button {
 			</footer>
 		</div>
 	</div>
-   <script src="resources/assets/js/vendor-all.min.js"></script>
+	<script src="resources/assets/js/vendor-all.min.js"></script>
 	<script>
         let selectedColor = 'all';
         let selectedCategory = 'all';
@@ -715,12 +714,14 @@ button {
                 });
             }
         }
-        function closetToWish(cl_idx, user_id) {
-
+        
+        function closetToWishList(cl_idx, user_id) {
+        	console.log(cl_idx)
+			console.log(user_id)
             $.ajax({
                 url : './closetToWish',
                 data : {
-                   cl_idx : cl_idx,
+                    cl_idx : cl_idx,
                     user_id : user_id
                 },
                 type : 'POST',
