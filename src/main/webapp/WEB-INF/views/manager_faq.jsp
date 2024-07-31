@@ -20,12 +20,6 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="resources/assets/css/managerfaq.css">
-	<style>
-	input {
-		border: none;
-		outline: none;
-	}
-	</style>
 </head>
 <body>
 

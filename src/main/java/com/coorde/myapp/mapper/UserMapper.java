@@ -46,8 +46,9 @@ public interface UserMapper {  // xml에 기재된 sql을 호출하는 인터페
 	User getUserById(@NonNull String user_id);
 	
 	List<User> goManagerFaq();
-	
+
 	int submitAnswer(User user);
+
 
 
 

@@ -1,55 +1,30 @@
 package com.coorde.myapp;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.coorde.myapp.entity.Closet;
 import com.coorde.myapp.entity.User;
 import com.coorde.myapp.mapper.ClosetMapper;
 import com.coorde.myapp.mapper.UserMapper;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 @Controller
 public class ManagerController {
@@ -129,6 +104,23 @@ public class ManagerController {
 		return "redirect:/goManagerUserList";
 	}
 
+	@RequestMapping("/goManagerFaq")
+    public String goManagerFaq(Model model) {
+        List<User> faqList = userMapper.goManagerFaq();
+        
+        Map<String, User> latestFaqMap = new LinkedHashMap<>();
+        for (User faq : faqList) {
+            latestFaqMap.put(faq.getUser_id(), faq);
+        }
+        
+        List<User> latestFaqList = new ArrayList<>(latestFaqMap.values());
+        
+        model.addAttribute("faqList", faqList);
+        model.addAttribute("latestFaqList", latestFaqList);
+        
+        return "manager_faq";
+    }
+
     @RequestMapping("/goManager")
     public String goManager(HttpSession session) {
        User user = (User) session.getAttribute("loginUser");
@@ -137,11 +129,6 @@ public class ManagerController {
        }  	   
        return "/";    	   
     }
-
-	@RequestMapping("/goManager")
-	public String goManager() {
-		return "manager";
-	}
 
 	 private String maskPhoneNumber(String phoneNumber) {
 	        if (phoneNumber == null || phoneNumber.length() < 11) {
