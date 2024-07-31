@@ -32,7 +32,7 @@ input {
 		<header>
 			<div class="logo">
 				<a href="/myapp"><img
-					src="resources/assets/images/browser/LOGO.png" alt="logo"></a>
+					src="resources/assets/images/browser/LOGO.jpg" alt="logo"></a>
 			</div>
 		</header>
 		<form id="signUpForm">
@@ -167,6 +167,23 @@ function isValidEmail(email) {
     return emailRegex.test(email);
 }
 
+function isValidPassword(password) {
+    // 최소 8자 이상, 최소 하나의 숫자, 하나의 영문자, 하나의 특수문자를 포함하는지 확인하는 정규 표현식
+    var passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+]).{8,}$/;
+    return passwordRegex.test(password);
+}
+
+function isValidHeight(height) {
+    var heightRegex = /^[0-9]+$/;
+    return heightRegex.test(height);
+}
+
+function isValidWeight(weight) {
+    var weightRegex = /^[0-9]+$/;
+    return weightRegex.test(weight);
+}
+
+
 
 // 문서가 완전히 로드된 후에 실행될 코드를 정의합니다.
 $(document).ready(function() {
@@ -184,8 +201,8 @@ $(document).ready(function() {
         }
         
         // 정규 표현식을 사용하여 ID가 영문자와 숫자로만 이루어져 있는지 확인합니다.
-        if(!/^[a-zA-Z0-9]+$/.test(userId)) {
-            alert('아이디는 영어와 숫자로만 입력해주세요.');
+        if(!/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/.test(userId)) {
+            alert('아이디는 영어와 숫자가 모두 포함되어 있는 값으로 입력해주세요.');
             $('#id').focus();
             callback(false);
             return;
@@ -245,9 +262,49 @@ $(document).ready(function() {
             return;
         }
         
+        var nameRegex;
+        var userName = $('#name').val();
+
+        if (/^[a-zA-Z\s]+$/.test(userName)) {
+            // 영어 (알파벳 및 공백 포함)
+            nameRegex = /^[a-zA-Z\s]+$/;
+            if (!nameRegex.test(userName)) {
+                alert('이름은 알파벳과 공백만 입력 가능합니다.');
+                $('#name').addClass('error').focus();
+                callback(false);
+                return;
+            }
+        } else if (/^[가-힣]+$/.test(userName)) {
+            // 한글 (공백 포함하지 않음)
+            nameRegex = /^[가-힣]+$/;
+            if (!nameRegex.test(userName)) {
+                alert('한글일때는 공백 입력이 불가능합니다.');
+                $('#name').addClass('error').focus();
+                callback(false);
+                return;
+            }
+        } else {
+            // 그 외의 문자가 포함된 경우
+            alert('이름은 영어 또는 한글로 입력해주세요.');
+            $('#name').addClass('error').focus();
+            callback(false);
+            return;
+        }
+
+        // 유효성 검사를 통과한 경우
+        $('#name').removeClass('error');
+        
+        
         // 비밀번호와 비밀번호 확인 필드의 값이 일치하는지 확인합니다.
         var password = $('#pw').val();
         var verifyPassword = $('#verify-pw').val();
+        // 비밀번호 유효성 검사
+        if (!isValidPassword(password)) {
+            alert('비밀번호는 숫자, 영문자, 특수문자를 모두 포함하여 8자 이상이어야 합니다.');
+            $('#pw').addClass('error').focus();
+            return;
+        }
+
         if (password !== verifyPassword) {
             alert('비밀번호를 확인해주세요.');
             $('#verify-pw').addClass('error').focus();
@@ -275,6 +332,21 @@ $(document).ready(function() {
             callback(false);
             return;
         }
+        
+        var height = $('#height').val();
+        var weight = $('#weight').val();
+
+        if (!isValidHeight(height)) {
+            alert('키는 숫자로만 입력해주세요.');
+            $('#height').addClass('error').focus();
+            return;
+        }
+
+        if (!isValidWeight(weight)) {
+            alert('몸무게는 숫자로만 입력해주세요.');
+            $('#weight').addClass('error').focus();
+            return;
+        }
 
         
      	// ID 중복 체크를 수행합니다.
@@ -288,6 +360,7 @@ $(document).ready(function() {
         });
     }
 
+   
 
 
 
@@ -376,6 +449,11 @@ $(document).ready(function() {
     });
     
     
+    
+    
+    
+    
+    // 추가ㅣ
   //이메일 입력 필드 유효성 검사 및 아이콘 표시 함수
     function validateEmail() {
         var email = $(this).val();
@@ -394,8 +472,7 @@ $(document).ready(function() {
             $(this).addClass('error');
         }
     }
-  
-  	
+
     $('#submitBtn').click(function(e) {
         e.preventDefault(); 
 
@@ -420,8 +497,8 @@ $(document).ready(function() {
                                 user_id: $('#id').val(),
                                 user_pw: $('#pw').val(),
                                 user_name: $('#name').val(),
-                                user_birth: $('#birth').val(),
-                                user_phone: $('#phone').val(),
+                                user_birth: $('#birth').val().replace(/-/g, ''),
+                                user_phone: $('#phone').val().replace(/-/g, ''),
                                 user_hei: $('#height').val(),
                                 user_wei: $('#weight').val(),
                                 user_addr: $('#address').val(),
@@ -464,6 +541,9 @@ $(document).ready(function() {
             }
         });
     });
+    
+    
+    
     
     
     
