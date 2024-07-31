@@ -288,88 +288,6 @@ $(document).ready(function() {
         });
     }
 
-    // 제출 버튼 클릭 시 실행될 이벤트 핸들러입니다.
-    $(document).ready(function() {
-       $('#submitBtn').click(function(e) {
-           e.preventDefault();
-
-           const userWeight = $('#weight').val();
-           const userHeight = $('#height').val();
-           const userId = $('#id').val();
-           const userPw = $('#pw').val();
-           const verifyPw = $('#verify-pw').val();
-           const userName = $('#name').val();
-           const userBirth = $('#birth').val();
-           const userPhone = $('#phone').val();
-           const userAddr = $('#address').val();
-           const userEmail = $('#email').val();
-
-           if (userPw !== verifyPw) {
-               alert("Passwords do not match");
-               return;
-           }
-
-           $.ajax({
-               url: 'http://localhost:5000/predict',
-               type: 'POST',
-               contentType: 'application/json',
-               data: JSON.stringify({
-                   weight: userWeight,
-                   height: userHeight
-               }),
-               success: function(response) {
-                   console.log('서버 응답:', response);
-
-                   $.ajax({
-                       url: 'signUp',
-                       type: 'POST',
-                       contentType: 'application/json',
-                       data: JSON.stringify({
-                           user_id: userId,
-                           user_pw: userPw,
-                           user_name: userName,
-                           user_birth: userBirth,
-                           user_phone: userPhone,
-                           user_hei: userHeight,
-                           user_wei: userWeight,
-                           user_addr: userAddr,
-                           user_email: userEmail,
-                           user_arm: response.arm,  
-                           user_top: response.top,
-                           user_sh: response.shoulder,  
-                           user_ch: response.chest,  
-                           user_waist: response.waist,  
-                           user_thighs: response.thigh,  
-                           user_bot: response.bottom,
-                           user_hem: response.hem                         
-                       }),
-                       success: function(signUpResponse) {
-                           console.log('회원 가입 성공:', signUpResponse);
-                           console.log('signUpResponse 타입:', typeof signUpResponse);
-                           
-                           if (typeof signUpResponse === 'string') {
-                              let signUpResponse = "http://localhost:8081/myapp/";
-                              try {
-                                  new URL(signUpResponse); 
-                                  window.location.href = signUpResponse; 
-                              } catch (e) {
-                                  console.error('유효하지 않은 리다이렉트 URL:', signUpResponse);
-                              }
-                            } else {
-                                $('#submitBtn').closest('form').submit();
-                            }
-                       },
-                       error: function(xhr, status, error) {
-                           console.error('회원 가입 에러 발생:', error);
-                       }
-                   });
-               },
-               error: function(xhr, status, error) {
-                   console.error('에러 발생:', error);
-               }
-           });
-       });
-   });
 
 
 
@@ -456,25 +374,104 @@ $(document).ready(function() {
             $('#submitBtn').prop('disabled', false);
         }
     });
-});
-//이메일 입력 필드 유효성 검사 및 아이콘 표시 함수
-function validateEmail() {
-    var email = $(this).val();
-    var $validationIcon = $(this).siblings('.validation-icon');
     
-    if (email.trim() === '') {
-        $validationIcon.hide();
-        return;
-    }
+    
+  //이메일 입력 필드 유효성 검사 및 아이콘 표시 함수
+    function validateEmail() {
+        var email = $(this).val();
+        var $validationIcon = $(this).siblings('.validation-icon');
+        
+        if (email.trim() === '') {
+            $validationIcon.hide();
+            return;
+        }
 
-    if (isValidEmail(email)) {
-        $validationIcon.removeClass('invalid').addClass('valid').show();
-        $(this).removeClass('error');
-    } else {
-        $validationIcon.removeClass('valid').addClass('invalid').show();
-        $(this).addClass('error');
+        if (isValidEmail(email)) {
+            $validationIcon.removeClass('invalid').addClass('valid').show();
+            $(this).removeClass('error');
+        } else {
+            $validationIcon.removeClass('valid').addClass('invalid').show();
+            $(this).addClass('error');
+        }
     }
-}
+  
+  	
+    $('#submitBtn').click(function(e) {
+        e.preventDefault(); 
+
+        validateForm(function(isValid) {
+            if (isValid) {
+                $.ajax({
+                    url: 'http://localhost:5000/predict',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        weight: $('#weight').val(),
+                        height: $('#height').val()
+                    }),
+                    success: function(response) {
+                        console.log('서버 응답:', response);
+
+                        $.ajax({
+                            url: 'signUp',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                user_id: $('#id').val(),
+                                user_pw: $('#pw').val(),
+                                user_name: $('#name').val(),
+                                user_birth: $('#birth').val(),
+                                user_phone: $('#phone').val(),
+                                user_hei: $('#height').val(),
+                                user_wei: $('#weight').val(),
+                                user_addr: $('#address').val(),
+                                user_email: $('#email').val(),
+                                user_arm: response.arm,
+                                user_top: response.top,
+                                user_sh: response.shoulder,
+                                user_ch: response.chest,
+                                user_waist: response.waist,
+                                user_thighs: response.thigh,
+                                user_bot: response.bottom,
+                                user_hem: response.hem
+                            }),
+                            success: function(signUpResponse) {
+                                console.log('회원 가입 성공:', signUpResponse);
+                                
+                                // 회원 가입 성공 후 리다이렉션을 처리합니다.
+                                if (typeof signUpResponse === 'string') {
+                                	let signUpResponse = "http://localhost:8081/myapp/";
+                                    try {
+                                        new URL(signUpResponse); 
+                                        window.location.href = signUpResponse; 
+                                    } catch (e) {
+                                        console.error('유효하지 않은 리다이렉트 URL:', signUpResponse);
+                                    }
+                                } else {
+                                    // 기타 처리
+                                    $('#submitBtn').closest('form').submit();
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('회원 가입 에러 발생:', error);
+                            }
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('에러 발생:', error);
+                    }
+                });
+            }
+        });
+    });
+    
+    
+    
+    
+    
+    
+});
+
 
 
 
