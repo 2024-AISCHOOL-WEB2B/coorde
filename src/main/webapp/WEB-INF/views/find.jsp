@@ -271,7 +271,7 @@ margin-left : 20px
 	<div class="container">
 		<div class="logo">
 			<a href="/myapp"><img
-				src="resources/assets/images/browser/LOGO.jpg" alt="logo"></a>
+				src="resources/assets/images/browser/LOGO.png" alt="logo"></a>
 			<div class="FIND">FIND</div>
 		</div>
 

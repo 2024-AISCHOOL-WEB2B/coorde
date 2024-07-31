@@ -119,7 +119,7 @@
 <div class="container">
     <header>
         <div class="logo">
-            <a href="/myapp"><img src="resources/assets/images/browser/LOGO.jpg" alt="logo"></a>
+            <a href="/myapp"><img src="resources/assets/images/browser/LOGO.png" alt="logo"></a>
         </div>
     </header>
     <form action="userlogin" method="post">

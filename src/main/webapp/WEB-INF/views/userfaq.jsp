@@ -280,7 +280,7 @@
     <div class="wrap">
         <div class="container">
             <div class="header">
-                <img alt="LOGO" src="resources/assets/images/browser/LOGO.jpg">
+                <img alt="LOGO" src="resources/assets/images/browser/LOGO.png">
             </div>
             <div class="faq-section">
                 <div class="nav">

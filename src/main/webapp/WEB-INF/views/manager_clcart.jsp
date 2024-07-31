@@ -200,7 +200,7 @@ input {
     <div class="wrap">
         <div class="logo">
             <a href="goManager"><img
-                src="resources/assets/images/browser/LOGO.jpg" alt="Main LOGO"></a>
+                src="resources/assets/images/browser/LOGO.png" alt="Main LOGO"></a>
             <div class="CL-CART">CLOSET</div>
         </div>
 

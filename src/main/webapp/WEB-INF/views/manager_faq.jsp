@@ -29,7 +29,7 @@
     %>
         <div class="wrap">
         <div class="logo">
-            <a href="goManager"><img src="resources/assets/images/browser/LOGO.jpg" alt=""></a>
+            <a href="goManager"><img src="resources/assets/images/browser/LOGO.png" alt=""></a>
             <div class="FAQ">FAQ</div>
         </div>
         <form action="#">

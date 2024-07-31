@@ -33,7 +33,7 @@ input {
 			<header>
 				<div class="logo">
 					<a href="goManager"><img
-						src="resources/assets/images/browser/LOGO.jpg" alt="logo"></a>
+						src="resources/assets/images/browser/LOGO.png" alt="logo"></a>
 				</div>
 			</header>
 

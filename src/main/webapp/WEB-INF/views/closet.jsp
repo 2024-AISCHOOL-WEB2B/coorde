@@ -311,7 +311,7 @@ button {
 		<div class="container">
 			<div class="logo">
 				<a href="/myapp"><img
-					src="resources/assets/images/browser/LOGO.jpg" alt=""></a>
+					src="resources/assets/images/browser/LOGO.png" alt=""></a>
 			</div>
 			<div class="TorB">
 				<a href="goCloset?cl_cate=t">TOP</a> / <a href="goCloset?cl_cate=b">BOTTOM</a>

@@ -409,7 +409,7 @@ input {
 		<div class="container">
 			<div class="logo">
 				<a href="/myapp"><img
-					src="resources/assets/images/browser/LOGO.jpg" alt=""></a>
+					src="resources/assets/images/browser/LOGO.png" alt=""></a>
 			</div>
 			<div class="nav">
 				<div class="nav-links">

@@ -187,7 +187,7 @@ body {
 <% User loginUser = (User) session.getAttribute("loginUser"); %>
 
 <div class="container">
-        <div class="logo"><a href="/myapp"><img src="resources/assets/images/browser/LOGO.jpg" alt=""></div></a>
+        <div class="logo"><a href="/myapp"><img src="resources/assets/images/browser/LOGO.png" alt=""></div></a>
         <form id="editForm" action="/myapp/updateUser" method="post">
 	        <div class="form-group">
 			    <label for="name">NAME</label>

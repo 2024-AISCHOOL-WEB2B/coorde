@@ -32,7 +32,7 @@ input {
 		<header>
 			<div class="logo">
 				<a href="/myapp"><img
-					src="resources/assets/images/browser/LOGO.jpg" alt="logo"></a>
+					src="resources/assets/images/browser/LOGO.png" alt="logo"></a>
 			</div>
 		</header>
 		<form id="signUpForm">
