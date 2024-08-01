@@ -290,29 +290,29 @@ margin-left : 20px
 		<div class="forms-container">
 			<div class="form-box">
 			    <form id="id-find-form" action="idFind" method="post">
-			        <label for="name">NAME<input type="text" id="user_name" name="user_name"></label>
-			        <label for="birth">BIRTH<input type="text" id="user_birth" name="user_birth" placeholder="YYYYMMDD"></label>
+			        <label for="name">NAME<input type="text" id="user_name" name="user_name" required placeholder="이름을 입력하세요"></label>
+			        <label for="birth">BIRTH<input type="text" id="user_birth" name="user_birth" required placeholder="YYYYMMDD"></label>
 			        <label for="phone">PHONE
-			            <input type="text" id="user_phone" name="user_phone" placeholder="01012345678">
+			            <input type="text" id="user_phone" name="user_phone" required placeholder="01012345678">
 			            <button type="button" id="id-phone-auth-button" onclick="openModal()">
 			                <span class="lnr lnr-magnifier"></span>
 			            </button>
 			        </label>
-			        <button type="button" class="submit-btn" onclick="submitForm()">ID FIND</button>
+			        <button type="submit" class="submit-btn">ID FIND</button>
 			    </form>
 			</div>
 			<div class="form-box">
 			    <form id="pw-find-form" action="pwFind" method="post">
-			        <label for="id">ID<input type="text" id="user_id" name="user_id"></label>
-			        <label for="name-pw">NAME<input type="text" id="name-pw" name="user_name"></label>
-			        <label for="birth-pw">BIRTH<input type="text" id="birth-pw" name="user_birth" placeholder="YYYYMMDD"></label>
+			        <label for="id">ID<input type="text" id="user_id" name="user_id" required></label>
+			        <label for="name-pw">NAME<input type="text" id="name-pw" name="user_name" required></label>
+			        <label for="birth-pw">BIRTH<input type="text" id="birth-pw" name="user_birth" placeholder="YYYYMMDD" required></label>
 			        <label for="phone-pw">PHONE
-			            <input type="text" id="phone-pw" name="user_phone" placeholder="01012345678">
+			            <input type="text" id="phone-pw" name="user_phone" placeholder="01012345678" required>
 			            <button type="button" id="pw-phone-auth-button" onclick="openModal()">
 			                <span class="lnr lnr-magnifier"></span>
 			            </button>
 			        </label>
-			        <button type="button" class="submit-btn" onclick="submitPwForm()">PW FIND</button>
+			        <button type="submit" class="submit-btn">PW FIND</button>
 			    </form>
 			</div>
 		</div>
@@ -382,21 +382,20 @@ margin-left : 20px
 	
 	/* 폼 유효성 검사 */
 	function validateForm(formId) {
-		/* 폼 선택 */
 	    const form = document.getElementById(formId);
-		/*  */
 	    const inputs = form.querySelectorAll('input[type="text"]');
 	    let isValid = true;
-
-	    inputs.forEach(input => {
+	
+	    for (let input of inputs) {
 	        if (!input.value.trim()) {
-	            alert(`${input.previousElementSibling.textContent}을(를) 입력해주세요.`);
+	            const labelText = input.closest('label').textContent.split(input.name)[0].trim();
+	            alert(`${labelText}을(를) 입력해주세요.`);
 	            input.focus();
 	            isValid = false;
-	            return false;
+	            break;
 	        }
-	    });
-
+	    }
+	
 	    return isValid;
 	}
 
@@ -437,6 +436,50 @@ margin-left : 20px
 	                alert("에러가 발생했습니다. 다시 시도해 주세요.");
 	            }
 	        });
+	    }
+	}
+
+	function submitForm() {
+	    if (document.getElementById('id-find-form').checkValidity()) {
+	        $.ajax({
+	            url: 'idFind',
+	            type: 'POST',
+	            data: $('#id-find-form').serialize(),
+	            success: function(response) {
+	                if (response.findId) {
+	                    alert("찾은 ID: " + response.findId);
+	                } else {
+	                    alert("ID를 찾을 수 없습니다.");
+	                }
+	            },
+	            error: function() {
+	                alert("에러가 발생했습니다. 다시 시도해 주세요.");
+	            }
+	        });
+	    } else {
+	        alert("모든 필드를 올바르게 입력해주세요.");
+	    }
+	}
+
+	function submitPwForm() {
+	    if (document.getElementById('pw-find-form').checkValidity()) {
+	        $.ajax({
+	            url: 'pwFind',
+	            type: 'POST',
+	            data: $('#pw-find-form').serialize(),
+	            success: function(response) {
+	                if (response.findPw) {
+	                    alert("찾은 비밀번호: " + response.findPw);
+	                } else {
+	                    alert("비밀번호를 찾을 수 없습니다.");
+	                }
+	            },
+	            error: function() {
+	                alert("에러가 발생했습니다. 다시 시도해 주세요.");
+	            }
+	        });
+	    } else {
+	        alert("모든 필드를 올바르게 입력해주세요.");
 	    }
 	}
 
@@ -523,6 +566,20 @@ margin-left : 20px
                 checkbox.checked = this.checked;
             });
         }
+        
+        document.getElementById('id-find-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (this.checkValidity()) {
+                submitForm();
+            }
+        });
+        
+        document.getElementById('pw-find-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // 기본 제출 동작 방지
+            if (this.checkValidity()) {
+                submitPwForm();
+            }
+        });
     </script>
 </body>
 </html>

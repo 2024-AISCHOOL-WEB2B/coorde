@@ -18,6 +18,21 @@
 
 <!-- vendor css -->
 <style>
+
+.actions {
+    display: flex;
+    justify-content: center;
+}
+
+.actions button {
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px;
+    justify-content: center;
+}
 #passwordModal .modal-content {
     background-color: #fefefe;
     margin: 10% auto;
