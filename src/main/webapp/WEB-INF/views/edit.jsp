@@ -134,27 +134,10 @@ body {
     text-align: left;
 }
 
-.right-group:nth-child(2){
-	margin-left:40px
-}
-
 .column {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.actions button{
-
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-   background: none;
-    border: none;
-    color: black;
-    cursor: pointer;
-    padding: 10px;
-    
 }
 
 .edit-actions  {
@@ -184,7 +167,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 20px;
-  	margin-right:20px
+     margin-right:20px
 }
 
 .link-actions button, .link-actions a {
@@ -272,15 +255,6 @@ body {
 #leaveModal .form-group div label {
     margin-bottom: 10px;
 }
-
-#leaveModal .actions {
-    text-align: center;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* 버튼 사이 간격 조정 */
-}
-
 </style>
 </head>
 <body>
@@ -544,7 +518,6 @@ function submitWithPassword() {
                 console.log("Response:", response);  // 응답 로깅
                 if(response.status === "success") {
                     alert(response.message);
-                    // 페이지의 필드들을 업데이트
                     updatePageFields(response.updatedUser);
                 } else {
                     alert("업데이트 실패: " + response.message);
