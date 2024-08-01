@@ -12,7 +12,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
-        * { margin: 0; padding: 0; }
+         * { margin: 0; padding: 0; }
 
         body {
             font-family: Arial, sans-serif;
@@ -125,11 +125,13 @@
         }
 
         textarea {
-            width: 100%;
+            width: 97%;
             height: 100px;
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ddd;
+            resize: none;
+        }
         }
 
         .inquiry-buttons {
@@ -269,8 +271,16 @@
         
         #inquiry-title {
             text-align: center;
+            margin: 10px 50px 20px;
+            border-radius:5px;
+			border: 1px solid #ddd;
+			height:40px;
         }
         
+         input {
+            border: none;
+            outline: none;
+        }
     </style>
 </head>
 <body>
@@ -280,7 +290,7 @@
     <div class="wrap">
         <div class="container">
             <div class="header">
-                <img alt="LOGO" src="resources/assets/images/browser/LOGO.png">
+                <a href="/myapp"><img alt="LOGO" src="resources/assets/images/browser/LOGO.png"></a>
             </div>
             <div class="faq-section">
                 <div class="nav">

@@ -144,6 +144,19 @@ body {
     gap: 10px;
 }
 
+.actions button{
+
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+   background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    padding: 10px;
+    
+}
+
 .edit-actions  {
     margin: 30px 0;
     font-size: 20px;
@@ -259,6 +272,15 @@ body {
 #leaveModal .form-group div label {
     margin-bottom: 10px;
 }
+
+#leaveModal .actions {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* 버튼 사이 간격 조정 */
+}
+
 </style>
 </head>
 <body>

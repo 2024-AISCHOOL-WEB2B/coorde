@@ -318,7 +318,7 @@ margin-left : 20px
 		</div>
 	</div>
 
-	<!-- Modal Structure -->
+	<!-- 모달창을 통한 pass api 인증화면 및 기능 구현-->
 	<div id="modal" class="modal">
 		<div class="modal-content">
 			<span class="close" onclick="closeModal()">&times;</span>
@@ -362,11 +362,15 @@ margin-left : 20px
 		</div>
 	</div>
 
+
 	<script>
+	
+	/* 숫자가 아닌 문자를 제거 : 생년월일*/
 	function formatBirth(input) {
 	    input.value = input.value.replace(/[^0-9]/g, '').slice(0, 8);
 	}
 
+	/* 앞에서부터 11자리 설정 : 전화번호 입력  */
 	function formatPhone(input) {
 	    let value = input.value.replace(/[^0-9]/g, '').slice(0, 11);
 	    if (!value.startsWith('010')) {
@@ -375,8 +379,12 @@ margin-left : 20px
 	    input.value = value;
 	}
 
+	
+	/* 폼 유효성 검사 */
 	function validateForm(formId) {
+		/* 폼 선택 */
 	    const form = document.getElementById(formId);
+		/*  */
 	    const inputs = form.querySelectorAll('input[type="text"]');
 	    let isValid = true;
 

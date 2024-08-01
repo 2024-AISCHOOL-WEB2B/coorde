@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="right">
-                    <a href="logoutUser"><button class="logout button">LOGOUT</button></a>
+                   <a href="/myapp" class="logout button">LOGOUT</a>
                     <a href="goManagerClcart">CLOSET</a>
                     <a href="goManagerUserList">USER</a>
                 </div> 
