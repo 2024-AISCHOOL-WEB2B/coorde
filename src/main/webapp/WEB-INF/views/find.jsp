@@ -27,9 +27,6 @@ input {
 	url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap')
 	;
 
-@import
-	url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap')
-	;
 
 input {
 	border: none;
@@ -142,6 +139,17 @@ button {
     background-color: white;
     cursor: pointer;
 }
+
+#user_phone{
+    margin:0px 0px 20px 10px;
+}
+
+#user_phone input {
+    border-bottom: 1px solid black;
+    margin-left: 20px; /* 선을 오른쪽으로 이동 */
+}
+
+
 
 .modal {
     display: none;

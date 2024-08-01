@@ -134,21 +134,47 @@ body {
     text-align: left;
 }
 
+.right-group:nth-child(2){
+	margin-left:40px
+}
+
 .column {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.actions {
+.edit-actions  {
     margin: 30px 0;
     font-size: 20px;
     display: flex;
     justify-content: center;
     gap: 20px;
+   
+    
 }
 
-.actions button, .actions a {
+.edit-actions  button{
+   background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px;
+    
+}
+
+
+.link-actions {
+    margin: 30px 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  	margin-right:20px
+}
+
+.link-actions button, .link-actions a {
     background: none;
     border: none;
     color: black;
@@ -322,12 +348,13 @@ body {
                 </div>
             
         </div>
-        <div class="actions">
-            <input type="hidden" id="confirmPassword" name="confirmPassword">
-            <button type="button" onclick="confirmAndSubmit()">EDIT</button>
-        </div>
+         <div class="edit-actions">
+        <input type="hidden" id="confirmPassword" name="confirmPassword">
+        <button type="button" onclick="confirmAndSubmit()">EDIT</button>
+    </div>
+
     </form>
-    <div class="actions">
+     <div class="link-actions">
         <a href="logoutUser">LOGOUT</a>
         <a href="gomyPage">MYPAGE</a>
         <button type="button" onclick="openLeaveModal()">LEAVE</button>
