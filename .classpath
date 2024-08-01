@@ -49,6 +49,6 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/USER/Desktop/Study/apache-tomcat-9.0.90/apache-tomcat-9.0.90/lib/mysql-connector-java-8.0.28.jar"/>
+	<classpathentry kind="lib" path="C:/Users/USER/git/repository/Coorde/src/main/webapp/WEB-INF/lib/mysql-connector-java-8.0.28.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

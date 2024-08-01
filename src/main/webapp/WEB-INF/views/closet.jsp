@@ -1,3 +1,4 @@
+<%@page import="java.util.Collections"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
@@ -322,6 +323,7 @@ input {
 
     // 중복이 제거된 리스트
     List<Closet> filteredDisplayList = new ArrayList<>(uniqueClosets.values());
+    Collections.shuffle(filteredDisplayList);
 %>
 	<script type="text/javascript">
         var loginUser = <%= (loginUser != null ? "{ userId: '" + loginUser.getUser_id() + "' }" : "null") %>;
@@ -342,7 +344,7 @@ input {
 							<button onclick="resetSort()">정렬</button>
 							<button onclick="sortProducts('높은 가격순', 'asc')">높은 가격순</button>
 							<button onclick="sortProducts('낮은 가격순', 'desc')">낮은 가격순</button>
-							<button onclick="sortProducts('rating', 'desc')">별점순</button>
+							<button onclick="sortProducts('별점순', 'desc')">별점순</button>
 						</div>
 					</div>
 					<div class="dropdown">
@@ -428,11 +430,8 @@ input {
 			<div class="main-content">
 				<div class="filter">
 					<div class="fit">
-						<label> REGULAR <input type="radio" name="user_fit"
-							value="regular" checked>
-						</label> <label> OVERFIT <input type="radio" name="user_fit"
-							value="overfit">
-						</label>
+						<label> REGULAR <input type="radio" name="user_fit" value="regular" checked> </label> 
+						<label> OVERFIT <input type="radio" name="user_fit" value="overfit"> </label>
 					</div>
 					<label> HEIGHT <input type="text" name="user_hei" value="<%= loginUser != null ? loginUser.getUser_hei() : "" %>">
 					</label> 
@@ -529,38 +528,69 @@ input {
 	let currentSort = '';
     let currentColor = '';
     let currentCategory = '';
+    let selectedFit = 'regular';
 
     function resetSort() {
         currentSort = '';
-        fetchFilteredAndSortedData();
+        updateSortButton();
+        filterBySize();
     }
 
     function sortProducts(sortType, sortOrder) {
         currentSort = sortType + ',' + sortOrder;
-        fetchFilteredAndSortedData();
+        updateSortButton();
+        filterBySize();
     }
 
     function resetFilter(filterType) {
         if (filterType === 'color') {
             currentColor = '';
+            updateColorButton();
         } else if (filterType === 'category') {
             currentCategory = '';
+            updateCategoryButton();
         }
-        fetchFilteredAndSortedData();
+        filterBySize();
     }
 
     function filterProductsByColor(colorName, colorCode) {
         currentColor = colorCode;
-        fetchFilteredAndSortedData();
+        updateColorButton(colorName);
+        filterBySize();
     }
 
     function filterProductsByCategory(categoryName, categoryCode) {
         currentCategory = categoryCode;
-        fetchFilteredAndSortedData();
+        updateCategoryButton(categoryName);
+        filterBySize();
     }
     
-    
+    function updateProductsBasedOnFit() {
+        selectedFit = document.querySelector('input[name="user_fit"]:checked').value;
 
+    }
+    
+    function updateSortButton() {
+        const sortButton = document.getElementById('dropdownButton');
+        if (currentSort) {
+            const [sortType, sortOrder] = currentSort.split(',');
+            sortButton.innerText = `\${sortType}`;
+        } else {
+            sortButton.innerText = '정렬';
+        }
+    }
+    
+    function updateColorButton(colorName) {
+        const colorButton = document.getElementById('colorSortButton');
+        colorButton.innerText = colorName ? `\${colorName}` : '색상';
+    }
+    
+    function updateCategoryButton(categoryName) {
+        const categoryButton = document.getElementById('categorySortButton');
+        categoryButton.innerText = categoryName ? `\${categoryName}` : '카테고리';
+    }
+
+    
     async function fetchFilteredAndSortedData() {
         const urlParams = new URLSearchParams(window.location.search);
         const cl_cate = urlParams.get('cl_cate');
@@ -591,57 +621,70 @@ input {
 
             console.log("test before response");
             if (response.ok) {
-                console.log("test response ok");
+				
+                console.log("test0")
                 const data = await response.json();
-                let html = '';
+                console.log("test : "+date)
+                updateProductContainer(data);
 
-                if (data.length > 0) {
-
-                	function formatPercentage(value) {
-                        return new Intl.NumberFormat('ko-KR', { style: 'percent', minimumFractionDigits: 0 }).format(value);
-                    }
-                	
-                    data.forEach(closet => {
-                    	const discountPercentage = (closet.cl_price - closet.cl_dc_price) / closet.cl_price;
-                        const formattedDiscountPercentage = formatPercentage(discountPercentage);
-                        
-                        html += '<div class="product" data-id="' + closet.cl_idx + '">';
-                        html += '<div class="product-header">';
-                        html += '<div class="cart-icon">';
-                        if (loginUser) {
-                            html += '<button class="lnr lnr-cart" id="closetToWishlist" onclick="closetToWishList(\'' + closet.cl_idx + '\', \'' + loginUser.userId + '\')"></button>';
-                        } else {
-                            html += '<button class="lnr lnr-cart" id="closetToWishlist" disabled></button>';
-                        }
-                        html += '</div>';
-                        html += '<div class="size-display">' + closet.cl_size + '</div>';
-                        html += '<div class="rating-number">평점: <span id="rating-value-' + closet.review_star + '">0</span></div>';
-                        html += '</div>';
-                        html += '<a href="' + closet.cl_url + '"><img src="' + closet.cl_imgurl + '" alt="' + closet.cl_name + '"></a>';
-                        html += '<p class="name">' + closet.cl_name + '</p>';
-                        html += '<div class="price">';
-                        if (closet.cl_price == 0) {
-                            html += '<span class="discount_price">' + closet.cl_dc_price + '원</span><br>';
-                            html += '<span class="original_price">할인 없음</span>';
-                        } else {
-                            html += '<span class="discount_price">' + closet.cl_dc_price + '원</span><br>';
-                            html += '<span class="original_price">' + closet.cl_price + '원</span>';
-                            html += '<span class="discount_percentage">' + formattedDiscountPercentage + ' SALE</span>';
-                        }
-                        html += '</div>';
-                        html += '</div>';
-                    });
-                } else {
-                    html = '<div class="no-products">상품이 없습니다.</div>';
-                }
-
-                document.getElementById('productContainer').innerHTML = html;
             } else {
                 console.error('Failed to fetch data:', response.statusText);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
+    }
+    
+    function updateProductContainer(data) {
+    	const formatPercentage = (value) => new Intl.NumberFormat('ko-KR', { style: 'percent', minimumFractionDigits: 0 }).format(value);
+        let html = '';
+
+        if (data.length > 0) {
+            data.forEach(closet => {
+                const {	
+                    cl_idx = '',
+                    cl_name = '',
+                    cl_size = '',
+                    cl_url = '#',
+                    cl_imgurl = '',
+                    cl_price = 0,
+                    cl_dc_price = 0,
+                    review_star = 0
+                } = closet;
+                
+                const discountPercentage = (cl_price - cl_dc_price) / cl_price;
+                const formattedDiscountPercentage = formatPercentage(discountPercentage);
+                
+                html += `
+                    <div class="product" data-id="\${cl_idx}">
+                        <div class="product-header">
+                            <div class="cart-icon">
+                                \${loginUser 
+                                    ? `<button class="lnr lnr-cart" id="closetToWishlist" onclick="closetToWishList('\${cl_idx}', '\${loginUser.getUser_id()}')"></button>` 
+                                    : `<button class="lnr lnr-cart" id="closetToWishlist" disabled></button>`
+                                }
+                            </div>
+                            <div class="size-display">\${cl_size}</div>
+                            <div class="rating-number">
+                                평점: <span id="rating-value-\${review_star}">0</span>
+                            </div>
+                        </div>
+                        <a href="\${cl_url}"><img src="\${cl_imgurl}" alt="\${cl_name}"></a>
+                        <p class="name">\${cl_name}</p>
+                        <div class="price">
+                            \${cl_price > 0 
+                                ? `<span class="discount_price">\${cl_dc_price}원</span><br><span class="original_price">\${cl_price}원</span><span class="discount_percentage">\${formattedDiscountPercentage} SALE</span>`
+                                : `<span class="discount_price">\${cl_dc_price}원</span><br><span class="original_price">할인 없음</span>`
+                            }
+                        </div>
+                    </div>`;
+            });
+        } else {
+            html = '<div class="no-products">상품이 없습니다.</div>';
+        }
+
+        const productContainer = document.getElementById('productContainer');
+        productContainer.innerHTML = html;
     }
 
     function closetToWishList(cl_idx, user_id) {
@@ -655,7 +698,7 @@ input {
             dataType: 'json',
             success: function(result) {
                 if (result.success) {
-                    // Handle success case
+                    pass
                 }
             }
         });
@@ -688,48 +731,178 @@ input {
         });
     });
     
-    function filterBySize() {
-    	var user_hei = document.querySelector('input[name="user_hei"]').value;
-        var user_wei = document.querySelector('input[name="user_wei"]').value;
+    async function filterBySize() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const cl_cate = urlParams.get('cl_cate');
+
+        if (!cl_cate) {
+            console.error("cl_cate parameter is missing or invalid.");
+            return;
+        }
+
+        const user_fit = document.querySelector('input[name="user_fit"]:checked').value;
+        const user_hei = parseFloat(document.querySelector('input[name="user_hei"]').value);
+        const user_wei = parseFloat(document.querySelector('input[name="user_wei"]').value);
+        let user_top = 0;
+        let user_ch = 0;
+        let user_sh = 0;
+        let user_arm = 0;
+        let user_bot = 0;
+        let user_waist = 0;
+        let user_thighs = 0;
+        let user_hem = 0;
+
+        if (cl_cate === 't') {
+            user_top = parseFloat(document.querySelector('input[name="user_top"]').value);
+            user_ch = parseFloat(document.querySelector('input[name="user_ch"]').value);
+            user_sh = parseFloat(document.querySelector('input[name="user_sh"]').value);
+            user_arm = parseFloat(document.querySelector('input[name="user_arm"]').value);
+        } else {
+            user_bot = parseFloat(document.querySelector('input[name="user_bot"]').value);
+            user_waist = parseFloat(document.querySelector('input[name="user_waist"]').value);
+            user_thighs = parseFloat(document.querySelector('input[name="user_thighs"]').value);
+            user_hem = parseFloat(document.querySelector('input[name="user_hem"]').value);
+        }
+
+        const sizeData = {
+            cl_cate: cl_cate,
+            user_fit: user_fit,
+            user_hei: user_hei,
+            user_wei: user_wei,
+            user_top: user_top,
+            user_ch: user_ch,
+            user_sh: user_sh,
+            user_arm: user_arm,
+            user_bot: user_bot,
+            user_waist: user_waist,
+            user_thighs: user_thighs,
+            user_hem: user_hem
+        };
+
         
-        predictBodySize(user_hei, user_wei)
-    	//추후 추가예정
+        if (!isNaN(user_hei) && !isNaN(user_wei) && user_hei > 0 && user_wei > 0) {
+            try {
+                const predictionResponse = await fetch('http://localhost:5000/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        weight: user_wei,
+                        height: user_hei
+                    })
+                });
+
+                if (predictionResponse.ok) {
+                    const predictionData = await predictionResponse.json();
+                    console.log(predictionData);
+                    updateUserInputs(cl_cate, predictionData);
+                } else {
+                    console.error('Failed to get size predictions:', predictionResponse.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching size predictions:', error);
+            }
+        } else {
+            console.warn('Height and/or weight are not provided or invalid.');
+        }
+
+        try {
+            const response = await fetch('./filterCloset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    cl_cate: cl_cate,
+                    sort: currentSort || '', 
+                    color: currentColor || '',
+                    category: currentCategory || '',
+                    user_fit: user_fit,
+                    user_hei: user_hei,
+                    user_wei: user_wei,
+                    user_top: user_top,
+                    user_ch: user_ch,
+                    user_sh: user_sh,
+                    user_arm: user_arm,
+                    user_bot: user_bot,
+                    user_waist: user_waist,
+                    user_thighs: user_thighs,
+                    user_hem: user_hem
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const regularCloth = data.regularCloth || [];
+                const overfitCloth = data.overfitCloth || [];
+
+                if (selectedFit === 'regular') {
+                    updateProductContainer(regularCloth);
+                } else if (selectedFit === 'overfit') {
+                    updateProductContainer(overfitCloth);
+                }
+            } else {
+                console.error('Failed to fetch data:', response.status);
+            }
+        } catch (error) {
+            console.error('Error occurred while fetching data:', error);
+        }
+    }
+        
+    function updateUserInputs(cl_cate, response) {
+    	console.log("update 실시")
+        if (cl_cate === "t") {
+        	
+        	const userTopInput = parseFloat($('input[name="user_top"]').val());
+        	const userChestInput = parseFloat($('input[name="user_ch"]').val());
+        	const userShoulderInput = parseFloat($('input[name="user_sh"]').val());
+        	const userArmInput = parseFloat($('input[name="user_arm"]').val());
+        	
+            if (isNaN(userTopInput) || userTopInput <= 0) {
+                $('input[name="user_top"]').val(response.top);
+            }
+            // userChestInput이 NaN이거나 0보다 작은 경우만 업데이트
+            if (isNaN(userChestInput) || userChestInput <= 0) {
+                $('input[name="user_ch"]').val(response.chest);
+            }
+            // userShoulderInput이 NaN이거나 0보다 작은 경우만 업데이트
+            if (isNaN(userShoulderInput) || userShoulderInput <= 0) {
+                $('input[name="user_sh"]').val(response.shoulder);
+            }
+            // userArmInput이 NaN이거나 0보다 작은 경우만 업데이트
+            if (isNaN(userArmInput) || userArmInput <= 0) {
+                $('input[name="user_arm"]').val(response.arm);
+            }
+        } else {
+        	const userBottomInput = parseFloat($('input[name="user_bot"]').val());
+       	    const userWaistInput = parseFloat($('input[name="user_waist"]').val());
+       	    const userThighsInput = parseFloat($('input[name="user_thighs"]').val());
+       	    const userHemInput = parseFloat($('input[name="user_hem"]').val());
+
+       	    // userBottomInput이 NaN이거나 0보다 작은 경우만 업데이트
+       	    if (isNaN(userBottomInput) || userBottomInput <= 0) {
+       	        $('input[name="user_bot"]').val(response.bottom);
+       	    }
+       	    // userWaistInput이 NaN이거나 0보다 작은 경우만 업데이트
+       	    if (isNaN(userWaistInput) || userWaistInput <= 0) {
+       	        $('input[name="user_waist"]').val(response.waist);
+       	    }
+       	    // userThighsInput이 NaN이거나 0보다 작은 경우만 업데이트
+       	    if (isNaN(userThighsInput) || userThighsInput <= 0) {
+       	        $('input[name="user_thighs"]').val(response.thigh);
+       	    }
+       	    // userHemInput이 NaN이거나 0보다 작은 경우만 업데이트
+       	    if (isNaN(userHemInput) || userHemInput <= 0) {
+       	        $('input[name="user_hem"]').val(response.hem);
+       	    }
+        }
     }
     
-    function predictBodySize(user_hei, user_wei) {
-    	console.log(user_hei)
-    	console.log(user_wei)
-	    $.ajax({
-	        url: 'http://localhost:5000/predict',
-	        data: JSON.stringify({
-	            weight: user_wei,
-	            height: user_hei
-	        }),
-	        type: 'POST',
-	        contentType: 'application/json',
-	        dataType: 'json',
-	        success: function(response) {
-
-                    var clCate = '<%= clothList.get(0).getCl_cate() %>'; 
-
-                    if (clCate === "t") {
-                        $('input[name="user_top"]').val(response.top);
-                        $('input[name="user_ch"]').val(response.chest);
-                        $('input[name="user_sh"]').val(response.shoulder);
-                        $('input[name="user_arm"]').val(response.arm);
-                    } else {
-                        $('input[name="user_bot"]').val(response.bottom);
-                        $('input[name="user_waist"]').val(response.waist);
-                        $('input[name="user_thighs"]').val(response.thigh);
-                        $('input[name="user_hem"]').val(response.hem);
-                    }
-
-	        },
-	        error: function(xhr, status, error) {
-	            console.error("AJAX error:", status, error);
-	        }
-	    });
-	}
+    
+    document.querySelectorAll('input[name="user_fit"]').forEach(radio => {
+        radio.addEventListener('change', updateProductsBasedOnFit);
+    });
     
     
     </script>

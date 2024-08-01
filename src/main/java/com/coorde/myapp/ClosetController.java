@@ -116,51 +116,107 @@ public class ClosetController {
 	
 	@PostMapping("/filterCloset")
 	@ResponseBody
-	public List<Closet> filterCloset(
+	public Map<String, List<Closet>> filterCloset(
 	    @RequestBody Map<String, Object> params,
 	    HttpSession session) {
 
 	    System.out.println("filterCloset");
 	    System.out.println("Received params: " + params);
 
-	    List<Closet> filteredclothList = new ArrayList<>();
+	    List<Closet> regularCloth = new ArrayList<>();
+	    List<Closet> overfitCloth = new ArrayList<>();
 
 	    String cl_cate = (String) params.get("cl_cate");
-	    System.out.println("cl_cate :" + cl_cate);
-
 	    if (cl_cate == null || cl_cate.isEmpty()) {
 	        throw new IllegalArgumentException("cl_cate parameter is missing or invalid.");
 	    }
+	    
+	    // Extracting size parameters
+	    double userTop = getDoubleFromMap(params, "user_top");
+	    double userChest = getDoubleFromMap(params, "user_ch");
+	    double userShoulder = getDoubleFromMap(params, "user_sh");
+	    double userArm = getDoubleFromMap(params, "user_arm");
+	    double userBottom = getDoubleFromMap(params, "user_bot");
+	    double userWaist = getDoubleFromMap(params, "user_waist");
+	    double userThighs = getDoubleFromMap(params, "user_thighs");
+	    double userHem = getDoubleFromMap(params, "user_hem");
 
-	    String color = (String) params.get("color");
-	    if (color != null && !color.isEmpty()) {
-	        System.out.println("color :" + color);
+	    System.out.println("Size parameters: top=" + userTop + ", chest=" + userChest + ", shoulder=" + userShoulder + ", arm=" + userArm);
+
+	    List<Closet> filteredClothList = closetMapper.getClosetListWithFilters(params);
+	    System.out.println(filteredClothList.get(0));
+
+
+	    for (Closet closet : filteredClothList) {
+	        boolean isRegularFit = true;
+	        boolean isOverFit = true;
+
+	        if (cl_cate.equals("t")) { // For top category
+	            double closetTop = closet.getCl_top();
+	            double closetChest = closet.getCl_ch();
+	            double closetShoulder = closet.getCl_sh();
+	            double closetArm = closet.getCl_arm();
+
+	            // Regular fit check
+	            if (userTop > 0 && Math.abs(closetTop - userTop) > 3) isRegularFit = false;
+	            if (userChest > 0 && Math.abs(closetChest - userChest) > 3) isRegularFit = false;
+	            if (userShoulder > 0 && Math.abs(closetShoulder - userShoulder) > 3) isRegularFit = false;
+	            if (userArm > 0 && Math.abs(closetArm - userArm) > 3) isRegularFit = false;
+
+	            // Over fit check
+	            if (userTop > 0 && (Math.abs(closetTop - userTop) <= 3 || Math.abs(closetTop - userTop) > 8)) isOverFit = false;
+	            if (userChest > 0 && (Math.abs(closetChest - userChest) <= 3 || Math.abs(closetChest - userChest) > 8)) isOverFit = false;
+	            if (userShoulder > 0 && (Math.abs(closetShoulder - userShoulder) <= 3 || Math.abs(closetShoulder - userShoulder) > 8)) isOverFit = false;
+	            if (userArm > 0 && (Math.abs(closetArm - userArm) <= 3 || Math.abs(closetArm - userArm) > 8)) isOverFit = false;
+
+	        } else { // For bottom category
+	            double closetBottom = closet.getCl_bot();
+	            double closetWaist = closet.getCl_waist();
+	            double closetThighs = closet.getCl_thighs();
+	            double closetHem = closet.getCl_hem();
+
+	            // Regular fit check
+	            if (userBottom > 0 && Math.abs(closetBottom - userBottom) > 3) isRegularFit = false;
+	            if (userWaist > 0 && Math.abs(closetWaist - userWaist) > 3) isRegularFit = false;
+	            if (userThighs > 0 && Math.abs(closetThighs - userThighs) > 3) isRegularFit = false;
+	            if (userHem > 0 && Math.abs(closetHem - userHem) > 3) isRegularFit = false;
+
+	            // Over fit check
+	            if (userBottom > 0 && (Math.abs(closetBottom - userBottom) <= 3 || Math.abs(closetBottom - userBottom) > 8)) isOverFit = false;
+	            if (userWaist > 0 && (Math.abs(closetWaist - userWaist) <= 3 || Math.abs(closetWaist - userWaist) > 8)) isOverFit = false;
+	            if (userThighs > 0 && (Math.abs(closetThighs - userThighs) <= 3 || Math.abs(closetThighs - userThighs) > 8)) isOverFit = false;
+	            if (userHem > 0 && (Math.abs(closetHem - userHem) <= 3 || Math.abs(closetHem - userHem) > 8)) isOverFit = false;
+	        }
+
+	        if (isRegularFit) {
+	            regularCloth.add(closet);
+	        }
+	        if (isOverFit) {
+	            overfitCloth.add(closet);
+	        }
 	    }
 
-	    String category = (String) params.get("category");
-	    if (category != null && !category.isEmpty()) {
-	        System.out.println("category :" + category);
-	    }
+	    System.out.println("regularCloth : " + regularCloth.get(0));
+	    System.out.println("overfitCloth : " + overfitCloth.get(0));
+	    Map<String, List<Closet>> result = new HashMap<>();
+	    result.put("regularCloth", regularCloth);
+	    result.put("overfitCloth", overfitCloth);
 
-	    String sort = (String) params.get("sort");
-	    if (sort != null && !sort.isEmpty()) {
-	        String[] sortParts = sort.split(",");
-	        System.out.println("sortField :" + sortParts[0]);
-	        System.out.println("sortOrder :" + sortParts[1]);
-	    }
-
-	    filteredclothList = closetMapper.getClosetListWithFilters(params);
-	    // 필터와 정렬이 적용된 리스트 가져오기
-	    if (filteredclothList.size() > 0) {
-	        System.out.println("필터링 리스트 0 :" + filteredclothList.get(0));
-	    }
-	    if (filteredclothList.size() > 1) {
-	        System.out.println("필터링 리스트 1 : " + filteredclothList.get(1));
-	    }
-
-	    // 필터링된 리스트 반환
-	    return filteredclothList;
+	    return result;
 	}
+
+	private boolean isParameterZero(double value) {
+	    return value <= 0;
+	}
+
+	private double getDoubleFromMap(Map<String, Object> map, String key) {
+	    Object value = map.get(key);
+	    if (value instanceof Number) {
+	        return ((Number) value).doubleValue();
+	    }
+	    return 0.0; // Default value if key is not found or not a number
+	}
+
 
 	@PostMapping("/closetToWish")
 	@ResponseBody

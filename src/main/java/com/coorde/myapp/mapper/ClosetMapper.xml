@@ -26,13 +26,13 @@
 	        ORDER BY 
 	        <choose>
 	            <when test="sortField == '낮은 가격순'">
-	                A.cl_dc_price ${sortOrder}
+	                A.cl_dc_price ${sort}
 	            </when>
 	            <when test="sortField == '높은 가격순'">
-	                A.cl_dc_price ${sortOrder}
+	                A.cl_dc_price ${sort}
 	            </when>
 	            <when test="sortField == '별점순'">
-	                A.cl_rating ${sortOrder}
+	                A.cl_rating ${sort}
 	            </when>
 	        </choose>
 	    </if>
