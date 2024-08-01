@@ -329,6 +329,7 @@ input {
         var loginUser = <%= (loginUser != null ? "{ userId: '" + loginUser.getUser_id() + "' }" : "null") %>;
     </script>
 
+	<input type="hidden" id="user_id" value="<%= loginUser != null ? loginUser.getUser_id() : "" %>">
 	<div class="wrap">
 		<div class="container">
 			<div class="logo">
@@ -342,8 +343,8 @@ input {
 						<button class="dropbtn" id="dropdownButton">정렬</button>
 						<div class="dropdown-content">
 							<button onclick="resetSort()">정렬</button>
-							<button onclick="sortProducts('높은 가격순', 'asc')">높은 가격순</button>
-							<button onclick="sortProducts('낮은 가격순', 'desc')">낮은 가격순</button>
+							<button onclick="sortProducts('높은 가격순', 'desc')">높은 가격순</button>
+							<button onclick="sortProducts('낮은 가격순', 'asc')">낮은 가격순</button>
 							<button onclick="sortProducts('별점순', 'desc')">별점순</button>
 						</div>
 					</div>
@@ -488,7 +489,7 @@ input {
 				                    </div>
 				                    <div class="size-display"><%= closet.getCl_size() %></div>
 				                    <div class="rating-number">
-				                        평점: <span id="rating-value-${closet.getReview_star()}">0</span>
+				                        평점: <span id="rating-value-<%= closet.getReview_star() %>"><%= closet.getReview_star() %></span>
 				                    </div>
 				                </div>
 				                <a href="<%= closet.getCl_url() %>"> <img src="<%= closet.getCl_imgurl() %>" alt="<%= closet.getCl_name() %>"></a>
@@ -526,10 +527,13 @@ input {
 	<script src="resources/assets/js/vendor-all.min.js"></script>
 	<script>
 	let currentSort = '';
+	let currentField = '';
     let currentColor = '';
     let currentCategory = '';
     let selectedFit = 'regular';
 
+    const userId = document.getElementById('user_id').value;
+    
     function resetSort() {
         currentSort = '';
         updateSortButton();
@@ -537,7 +541,8 @@ input {
     }
 
     function sortProducts(sortType, sortOrder) {
-        currentSort = sortType + ',' + sortOrder;
+        currentSort = sortType;
+        currentField = sortOrder;
         updateSortButton();
         filterBySize();
     }
@@ -573,8 +578,7 @@ input {
     function updateSortButton() {
         const sortButton = document.getElementById('dropdownButton');
         if (currentSort) {
-            const [sortType, sortOrder] = currentSort.split(',');
-            sortButton.innerText = `\${sortType}`;
+            sortButton.innerText = currentSort;
         } else {
             sortButton.innerText = '정렬';
         }
@@ -591,10 +595,59 @@ input {
     }
 
     
+    function processDisplayList(data) {
+        // Check if data is an array
+        if (!Array.isArray(data)) {
+            console.error('Data is not an array:', data);
+            return;
+        }
+
+        // Function to remove duplicates based on a unique property (e.g., cl_idx or cl_name)
+        const removeDuplicates = (array) => {
+            const uniqueItems = new Map();
+            array.forEach(item => {
+                // Use cl_idx to check duplicates. If you prefer cl_name, replace item.cl_idx with item.cl_name.
+                if (!uniqueItems.has(item.cl_idx)) {
+                    uniqueItems.set(item.cl_idx, item);
+                }
+            });
+            return Array.from(uniqueItems.values());
+        };
+
+        // Remove duplicates from the list
+        let filteredDisplayList = removeDuplicates(data);
+
+        // Check if sorting is applied
+        if (currentSort === '' && currentField === '') {
+            // No sorting, shuffle the list
+            filteredDisplayList = shuffleArray(filteredDisplayList);
+        } else {
+            // Sorting applied, use the list as is
+            filteredDisplayList = new Array(...filteredDisplayList);
+        }
+
+        // Update the product container with the processed list
+        updateProductContainer(filteredDisplayList);
+    }
+
+    function shuffleArray(array) {
+        if (!Array.isArray(array)) {
+            throw new TypeError('Expected an array but got:', typeof array);
+        }
+
+        let shuffledArray = array.slice(); // Create a copy of the array
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+        }
+        return shuffledArray;
+    }
+    
+    
+    
     async function fetchFilteredAndSortedData() {
         const urlParams = new URLSearchParams(window.location.search);
         const cl_cate = urlParams.get('cl_cate');
-        console.log("test fetchFilteredAndSortedData");
 
         if (!cl_cate) {
             console.error("cl_cate parameter is missing or invalid.");
@@ -602,14 +655,13 @@ input {
         }
 
         try {
-            console.log("test async");
             const requestBody = {
                 cl_cate: cl_cate,
                 sort: currentSort || '', 
+                field: currentField || '', 
                 color: currentColor || '',
                 category: currentCategory || ''
             };
-            console.log('Request Body:', requestBody);
 
             const response = await fetch('./filterCloset', {
                 method: 'POST',
@@ -619,14 +671,17 @@ input {
                 body: JSON.stringify(requestBody)
             });
 
-            console.log("test before response");
             if (response.ok) {
-				
-                console.log("test0")
                 const data = await response.json();
-                console.log("test : "+date)
-                updateProductContainer(data);
-
+                const regularCloth = data.regularCloth || [];
+                const overfitCloth = data.overfitCloth || [];
+                
+                if (selectedFit === 'regular') {
+                	processDisplayList(regularCloth)
+                } else if (selectedFit === 'overfit') {
+                	processDisplayList(overfitCloth)
+                }
+                
             } else {
                 console.error('Failed to fetch data:', response.statusText);
             }
@@ -654,19 +709,18 @@ input {
                 
                 const discountPercentage = (cl_price - cl_dc_price) / cl_price;
                 const formattedDiscountPercentage = formatPercentage(discountPercentage);
-                
                 html += `
                     <div class="product" data-id="\${cl_idx}">
                         <div class="product-header">
                             <div class="cart-icon">
                                 \${loginUser 
-                                    ? `<button class="lnr lnr-cart" id="closetToWishlist" onclick="closetToWishList('\${cl_idx}', '\${loginUser.getUser_id()}')"></button>` 
+                                    ? `<button class="lnr lnr-cart" id="closetToWishlist" onclick="closetToWishList('\${cl_idx}', '\${userId}')"></button>` 
                                     : `<button class="lnr lnr-cart" id="closetToWishlist" disabled></button>`
                                 }
                             </div>
                             <div class="size-display">\${cl_size}</div>
                             <div class="rating-number">
-                                평점: <span id="rating-value-\${review_star}">0</span>
+                                평점: <span id="rating-value-\${review_star}">\${review_star}</span>
                             </div>
                         </div>
                         <a href="\${cl_url}"><img src="\${cl_imgurl}" alt="\${cl_name}"></a>
@@ -704,32 +758,6 @@ input {
         });
     }
 
-    document.querySelectorAll('.rating input[type="radio"]').forEach(radio => {
-        radio.addEventListener('change', function() {
-            const ratingValue = this.value;
-            const productId = this.name.split('-')[1];
-
-            fetch('/submitRating', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    productId: productId,
-                    rating: ratingValue
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Rating submitted successfully');
-                    document.getElementById('rating-value-' + productId).innerText = data.newRating;
-                } else {
-                    alert('Failed to submit rating');
-                }
-            });
-        });
-    });
     
     async function filterBySize() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -779,7 +807,6 @@ input {
             user_hem: user_hem
         };
 
-        
         if (!isNaN(user_hei) && !isNaN(user_wei) && user_hei > 0 && user_wei > 0) {
             try {
                 const predictionResponse = await fetch('http://localhost:5000/predict', {
@@ -795,7 +822,6 @@ input {
 
                 if (predictionResponse.ok) {
                     const predictionData = await predictionResponse.json();
-                    console.log(predictionData);
                     updateUserInputs(cl_cate, predictionData);
                 } else {
                     console.error('Failed to get size predictions:', predictionResponse.statusText);
@@ -815,7 +841,8 @@ input {
                 },
                 body: JSON.stringify({
                     cl_cate: cl_cate,
-                    sort: currentSort || '', 
+                    sort: currentSort || '',
+                    field: currentField || '', 
                     color: currentColor || '',
                     category: currentCategory || '',
                     user_fit: user_fit,
@@ -836,11 +863,11 @@ input {
                 const data = await response.json();
                 const regularCloth = data.regularCloth || [];
                 const overfitCloth = data.overfitCloth || [];
-
+                
                 if (selectedFit === 'regular') {
-                    updateProductContainer(regularCloth);
+                	processDisplayList(regularCloth)
                 } else if (selectedFit === 'overfit') {
-                    updateProductContainer(overfitCloth);
+                	processDisplayList(overfitCloth)
                 }
             } else {
                 console.error('Failed to fetch data:', response.status);

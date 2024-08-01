@@ -69,8 +69,6 @@ public class ClosetController {
 	    if (cl_cate == null || cl_cate.isEmpty()) {
 	        return "main"; 
 	    }
-	    System.out.println("============");
-	    System.out.println("goCloset 접근");
 
 	    List<Closet> clothList = closetMapper.getClosetList(cl_cate);
 	    List<Closet> filteredclothList = new ArrayList<>();
@@ -92,26 +90,16 @@ public class ClosetController {
 	            filteredclothList = closetMapper.getFilteredClothes(filterParams);
 	        }
 	    } else {
-	        System.out.println("isLoggedIn 안함");
 	        // 로그인되지 않은 경우: 기본 리스트 가져오기
 	        filteredclothList = closetMapper.getClosetList(cl_cate);
 	    }
 
-	    // 모델에 데이터 추가
 	    model.addAttribute("clothList", clothList);
-    	if (clothList.size() > 0) {
-	        System.out.println("필터링 리스트 0 :"+clothList.get(0));
-	    }
-	    if (clothList.size() > 1) {
-	        System.out.println("필터링 리스트 1 : "+clothList.get(1));
-	    }
-	    
+
 	    model.addAttribute("filteredclothList", filteredclothList);
 	    model.addAttribute("clothList", clothList);
-	    System.out.println("model 추가");
 
-	    // 전체 페이지 반환
-	    return "closet"; // 전체 페이지
+	    return "closet"; 
 	}
 	
 	@PostMapping("/filterCloset")
@@ -130,7 +118,7 @@ public class ClosetController {
 	    if (cl_cate == null || cl_cate.isEmpty()) {
 	        throw new IllegalArgumentException("cl_cate parameter is missing or invalid.");
 	    }
-	    
+
 	    // Extracting size parameters
 	    double userTop = getDoubleFromMap(params, "user_top");
 	    double userChest = getDoubleFromMap(params, "user_ch");
@@ -141,10 +129,13 @@ public class ClosetController {
 	    double userThighs = getDoubleFromMap(params, "user_thighs");
 	    double userHem = getDoubleFromMap(params, "user_hem");
 
-	    System.out.println("Size parameters: top=" + userTop + ", chest=" + userChest + ", shoulder=" + userShoulder + ", arm=" + userArm);
-
 	    List<Closet> filteredClothList = closetMapper.getClosetListWithFilters(params);
-	    System.out.println(filteredClothList.get(0));
+	    
+	    if (filteredClothList != null && !filteredClothList.isEmpty()) {
+	        System.out.println("filteredClothList : " + filteredClothList.get(0));
+	    } else {
+	        System.out.println("filteredClothList is null or empty");
+	    }
 
 
 	    for (Closet closet : filteredClothList) {
@@ -176,16 +167,16 @@ public class ClosetController {
 	            double closetHem = closet.getCl_hem();
 
 	            // Regular fit check
-	            if (userBottom > 0 && Math.abs(closetBottom - userBottom) > 3) isRegularFit = false;
-	            if (userWaist > 0 && Math.abs(closetWaist - userWaist) > 3) isRegularFit = false;
-	            if (userThighs > 0 && Math.abs(closetThighs - userThighs) > 3) isRegularFit = false;
-	            if (userHem > 0 && Math.abs(closetHem - userHem) > 3) isRegularFit = false;
+	            if (userBottom > 0 && Math.abs(closetBottom - userBottom) > 5) isRegularFit = false;
+	            if (userWaist > 0 && Math.abs(closetWaist - userWaist) > 5) isRegularFit = false;
+	            if (userThighs > 0 && Math.abs(closetThighs - userThighs) > 5) isRegularFit = false;
+	            if (userHem > 0 && Math.abs(closetHem - userHem) > 5) isRegularFit = false;
 
 	            // Over fit check
-	            if (userBottom > 0 && (Math.abs(closetBottom - userBottom) <= 3 || Math.abs(closetBottom - userBottom) > 8)) isOverFit = false;
-	            if (userWaist > 0 && (Math.abs(closetWaist - userWaist) <= 3 || Math.abs(closetWaist - userWaist) > 8)) isOverFit = false;
-	            if (userThighs > 0 && (Math.abs(closetThighs - userThighs) <= 3 || Math.abs(closetThighs - userThighs) > 8)) isOverFit = false;
-	            if (userHem > 0 && (Math.abs(closetHem - userHem) <= 3 || Math.abs(closetHem - userHem) > 8)) isOverFit = false;
+	            if (userBottom > 0 && (Math.abs(closetBottom - userBottom) <= 5 || Math.abs(closetBottom - userBottom) > 10)) isOverFit = false;
+	            if (userWaist > 0 && (Math.abs(closetWaist - userWaist) <= 5 || Math.abs(closetWaist - userWaist) > 10)) isOverFit = false;
+	            if (userThighs > 0 && (Math.abs(closetThighs - userThighs) <= 5 || Math.abs(closetThighs - userThighs) > 10)) isOverFit = false;
+	            if (userHem > 0 && (Math.abs(closetHem - userHem) <= 5 || Math.abs(closetHem - userHem) > 10)) isOverFit = false;
 	        }
 
 	        if (isRegularFit) {
@@ -196,8 +187,18 @@ public class ClosetController {
 	        }
 	    }
 
-	    System.out.println("regularCloth : " + regularCloth.get(0));
-	    System.out.println("overfitCloth : " + overfitCloth.get(0));
+	    if (!regularCloth.isEmpty()) {
+	        System.out.println("regularCloth : " + regularCloth.get(0));
+	    } else {
+	        System.out.println("No regular fit clothes found.");
+	    }
+	    
+	    if (!overfitCloth.isEmpty()) {
+	        System.out.println("overfitCloth : " + overfitCloth.get(0));
+	    } else {
+	        System.out.println("No overfit clothes found.");
+	    }
+	    
 	    Map<String, List<Closet>> result = new HashMap<>();
 	    result.put("regularCloth", regularCloth);
 	    result.put("overfitCloth", overfitCloth);

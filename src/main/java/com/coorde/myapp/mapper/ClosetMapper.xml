@@ -12,34 +12,47 @@
     </select>
     
     <select id="getClosetListWithFilters" parameterType="map" resultType="com.coorde.myapp.entity.Closet">
-	    SELECT *
-	    FROM closet_tb A
-	    JOIN cl_size_tb B ON A.cl_idx = B.cl_idx
-	    WHERE A.cl_cate = #{cl_cate}
+	    SELECT 
+	        A.*,
+	        B.*, 
+	       IFNULL(AVG(R.review_star), 0) AS review_star
+	    FROM 
+	        closet_tb A
+	    JOIN 
+	        cl_size_tb B ON A.cl_idx = B.cl_idx
+	    LEFT JOIN 
+	        review_tb R ON A.cl_idx = R.cl_idx
+	    WHERE 
+	        A.cl_cate = #{cl_cate}
 	    <if test="color != null and color != ''">
 	        AND A.cl_color = #{color}
 	    </if>
 	    <if test="category != null and category != ''">
 	        AND A.cl_cate_detail = #{category}
 	    </if>
-	    <if test="sortField != null and sortField != ''">
-	        ORDER BY 
-	        <choose>
-	            <when test="sortField == '낮은 가격순'">
-	                A.cl_dc_price ${sort}
-	            </when>
-	            <when test="sortField == '높은 가격순'">
-	                A.cl_dc_price ${sort}
-	            </when>
-	            <when test="sortField == '별점순'">
-	                A.cl_rating ${sort}
-	            </when>
-	        </choose>
-	    </if>
-	    <if test="sortField == null or sortField == ''">
-	        ORDER BY RAND()
-	    </if>
+	    GROUP BY 
+	        A.cl_idx, B.cl_size
+	    <choose>
+	        <when test="sort != null and sort != ''">
+	            ORDER BY 
+	            <choose>
+	                <when test="sort == '낮은 가격순'">
+	                    A.cl_dc_price ${field}
+	                </when>
+	                <when test="sort == '높은 가격순'">
+	                    A.cl_dc_price ${field}
+	                </when>
+	                <when test="sort == '별점순'">
+	                    review_star desc
+	                </when>
+	            </choose>
+	        </when>
+	        <otherwise>
+	            ORDER BY RAND()
+	        </otherwise>
+	    </choose>
 	</select>
+
     
     <select id="getAllCloset" resultType="com.coorde.myapp.entity.Closet">
         SELECT * FROM closet_tb ORDER BY RAND()

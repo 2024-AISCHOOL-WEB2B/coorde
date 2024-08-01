@@ -27,3 +27,35 @@ ALTER TABLE tb_cody_favorite ADD CONSTRAINT FOREIGN KEY (cody_idx) REFERENCES tb
 show full processlist;
 
 kill 208964;
+
+
+
+
+	SELECT A.*, 
+       B.*, 
+       IFNULL(AVG(R.review_star), 0) AS avg_review_star
+	FROM closet_tb A
+	JOIN cl_size_tb B ON A.cl_idx = B.cl_idx
+	LEFT JOIN review_tb R ON A.cl_idx = R.cl_idx
+	WHERE A.cl_cate = 'b'
+	GROUP BY A.cl_idx, B.cl_size  
+	ORDER BY avg_review_star DESC, A.cl_rating DESC;
+
+		SELECT *
+	    FROM closet_tb A
+	    JOIN cl_size_tb B ON A.cl_idx = B.cl_idx
+	    WHERE A.cl_cate = 'b'
+	    ORDER BY A.cl_rating desc
+
+	    
+	    SELECT A.*, 
+		       B.*, 
+		       IFNULL(AVG(R.review_star), 0) AS avg_review_star
+		FROM closet_tb A
+		JOIN cl_size_tb B ON A.cl_idx = B.cl_idx
+		LEFT JOIN review_tb R ON A.cl_idx = R.cl_idx
+		WHERE A.cl_cate = 'b'
+		GROUP BY A.cl_idx, B.cl_size
+		ORDER BY avg_review_star DESC;
+
+
