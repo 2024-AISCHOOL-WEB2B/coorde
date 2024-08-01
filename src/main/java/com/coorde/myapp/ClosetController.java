@@ -63,38 +63,106 @@ public class ClosetController {
 	
 	
 	@RequestMapping("/goCloset")
-	public String goCloset(@RequestParam("cl_cate") String cl_cate, @RequestParam(value = "user_id", required = false) String user_id, Model model) {
+	public String goCloset(
+	    @RequestParam("cl_cate") String cl_cate, Model model, HttpServletRequest request, HttpSession session) {
 
-		List<Closet> filteredclothList = new ArrayList<>();
-	    List<Closet> clothList = new ArrayList<>();
+	    if (cl_cate == null || cl_cate.isEmpty()) {
+	        return "main"; 
+	    }
+	    System.out.println("============");
+	    System.out.println("goCloset 접근");
 
-	    System.out.println("test1");
-	    if (user_id != null && !user_id.isEmpty()) {
-	        List<String> topColors = closetMapper.getTopColors(user_id);
-	        List<String> topCategories = closetMapper.getTopCategories(user_id);
-	        System.out.println(topColors);
-	        System.out.println(topCategories);
+	    List<Closet> clothList = closetMapper.getClosetList(cl_cate);
+	    List<Closet> filteredclothList = new ArrayList<>();
+
+	    // 로그인 여부 확인
+	    User loginUser = (User) session.getAttribute("loginUser");
+	    boolean isLoggedIn = loginUser != null; // 로그인 여부를 확인하는 방식
+
+	    if (isLoggedIn) {
+	        System.out.println("isLoggedIn 확인");
+	        // 로그인된 경우: 상위 색상과 카테고리를 포함한 필터링된 리스트 가져오기
+	        List<String> topColors = closetMapper.getTopColors(loginUser);
+	        List<String> topCategories = closetMapper.getTopCategories(loginUser);
 
 	        if (topColors.size() >= 2 && topCategories.size() >= 2) {
-	            Map<String, Object> params = new HashMap<>();
-	            params.put("topColors", topColors);
-	            params.put("topCategories", topCategories);
-	             
-	            filteredclothList = closetMapper.getFilteredClothes(params);
-	            System.out.println("wish 전송");
+	            Map<String, Object> filterParams = new HashMap<>();
+	            filterParams.put("topColors", topColors);
+	            filterParams.put("topCategories", topCategories);
+	            filteredclothList = closetMapper.getFilteredClothes(filterParams);
 	        }
+	    } else {
+	        System.out.println("isLoggedIn 안함");
+	        // 로그인되지 않은 경우: 기본 리스트 가져오기
+	        filteredclothList = closetMapper.getClosetList(cl_cate);
 	    }
 
-	    clothList = closetMapper.getClosetList(cl_cate);
-
+	    // 모델에 데이터 추가
+	    model.addAttribute("clothList", clothList);
+    	if (clothList.size() > 0) {
+	        System.out.println("필터링 리스트 0 :"+clothList.get(0));
+	    }
+	    if (clothList.size() > 1) {
+	        System.out.println("필터링 리스트 1 : "+clothList.get(1));
+	    }
+	    
 	    model.addAttribute("filteredclothList", filteredclothList);
 	    model.addAttribute("clothList", clothList);
-	    System.out.println("test2");
-	    
-	    return "closet";
+	    System.out.println("model 추가");
+
+	    // 전체 페이지 반환
+	    return "closet"; // 전체 페이지
+	}
+	
+	@PostMapping("/filterCloset")
+	@ResponseBody
+	public List<Closet> filterCloset(
+	    @RequestBody Map<String, Object> params,
+	    HttpSession session) {
+
+	    System.out.println("filterCloset");
+	    System.out.println("Received params: " + params);
+
+	    List<Closet> filteredclothList = new ArrayList<>();
+
+	    String cl_cate = (String) params.get("cl_cate");
+	    System.out.println("cl_cate :" + cl_cate);
+
+	    if (cl_cate == null || cl_cate.isEmpty()) {
+	        throw new IllegalArgumentException("cl_cate parameter is missing or invalid.");
+	    }
+
+	    String color = (String) params.get("color");
+	    if (color != null && !color.isEmpty()) {
+	        System.out.println("color :" + color);
+	    }
+
+	    String category = (String) params.get("category");
+	    if (category != null && !category.isEmpty()) {
+	        System.out.println("category :" + category);
+	    }
+
+	    String sort = (String) params.get("sort");
+	    if (sort != null && !sort.isEmpty()) {
+	        String[] sortParts = sort.split(",");
+	        System.out.println("sortField :" + sortParts[0]);
+	        System.out.println("sortOrder :" + sortParts[1]);
+	    }
+
+	    filteredclothList = closetMapper.getClosetListWithFilters(params);
+	    // 필터와 정렬이 적용된 리스트 가져오기
+	    if (filteredclothList.size() > 0) {
+	        System.out.println("필터링 리스트 0 :" + filteredclothList.get(0));
+	    }
+	    if (filteredclothList.size() > 1) {
+	        System.out.println("필터링 리스트 1 : " + filteredclothList.get(1));
+	    }
+
+	    // 필터링된 리스트 반환
+	    return filteredclothList;
 	}
 
-	@RequestMapping("/closetToWish")
+	@PostMapping("/closetToWish")
 	@ResponseBody
 	public Map<String, Object> closetToWish(@RequestParam("cl_idx") int cl_idx, @RequestParam("user_id") String user_id) {
 

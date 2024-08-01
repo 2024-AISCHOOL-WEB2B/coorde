@@ -4,8 +4,42 @@
 <mapper namespace="com.coorde.myapp.mapper.ClosetMapper">
 
     <select id="getClosetList" parameterType="String" resultType="com.coorde.myapp.entity.Closet">
-        SELECT * FROM closet_tb where cl_cate = #{cl_cate} ORDER BY RAND()
+        SELECT * 
+		FROM closet_tb A 
+		JOIN cl_size_tb B 
+		ON A.cl_idx = B.cl_idx where A.cl_cate = #{cl_cate}
+		ORDER BY RAND()
     </select>
+    
+    <select id="getClosetListWithFilters" parameterType="map" resultType="com.coorde.myapp.entity.Closet">
+	    SELECT *
+	    FROM closet_tb A
+	    JOIN cl_size_tb B ON A.cl_idx = B.cl_idx
+	    WHERE A.cl_cate = #{cl_cate}
+	    <if test="color != null and color != ''">
+	        AND A.cl_color = #{color}
+	    </if>
+	    <if test="category != null and category != ''">
+	        AND A.cl_cate_detail = #{category}
+	    </if>
+	    <if test="sortField != null and sortField != ''">
+	        ORDER BY 
+	        <choose>
+	            <when test="sortField == '낮은 가격순'">
+	                A.cl_dc_price ${sortOrder}
+	            </when>
+	            <when test="sortField == '높은 가격순'">
+	                A.cl_dc_price ${sortOrder}
+	            </when>
+	            <when test="sortField == '별점순'">
+	                A.cl_rating ${sortOrder}
+	            </when>
+	        </choose>
+	    </if>
+	    <if test="sortField == null or sortField == ''">
+	        ORDER BY RAND()
+	    </if>
+	</select>
     
     <select id="getAllCloset" resultType="com.coorde.myapp.entity.Closet">
         SELECT * FROM closet_tb ORDER BY RAND()
@@ -49,17 +83,20 @@
     </select>
     
     <select id="getFilteredClothes" parameterType="map" resultType="com.coorde.myapp.entity.Closet">
-        SELECT * FROM closet_tb
-        WHERE cl_color IN
-        <foreach item="color" collection="topColors" open="(" separator="," close=")">
-            #{color}
-        </foreach>
-        AND cl_cate_detail IN
-        <foreach item="category" collection="topCategories" open="(" separator="," close=")">
-            #{category}
-        </foreach>
-        order by rand()
-    </select>
+	    SELECT * 
+	    FROM closet_tb A
+	    JOIN cl_size_tb B 
+		ON A.cl_idx = B.cl_idx where A.cl_cate = #{cl_cate}
+	    and A.cl_color IN
+	    <foreach item="color" collection="topColors" open="(" separator="," close=")">
+	        #{color}
+	    </foreach>
+	    AND A.cl_cate_detail IN
+	    <foreach item="category" collection="topCategories" open="(" separator="," close=")">
+	        #{category}
+	    </foreach>
+	    ORDER BY RAND()
+	</select>
     
     <select id="checkWish" parameterType="map" resultType="int">
         select count(*)     

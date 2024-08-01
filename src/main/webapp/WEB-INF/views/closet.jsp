@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="com.coorde.myapp.entity.Closet"%>
 <%@page import="java.util.List"%>
 <%@page import="com.coorde.myapp.entity.User"%>
@@ -22,279 +25,283 @@
 <!-- vendor css -->
 
 <style>
-@import
-	url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap')
-	;
-
-@import
-	url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap')
-	;
-
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .wrap {
-	width: 100%;
+    width: 100%;
 }
 
 a {
-	text-decoration: none;
-	color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
 
 .container {
-	width: 1280px;
-	margin: 0 auto;
-	text-align: center;
+    width: 1280px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .logo img {
-	margin-left: 20px;
-	margin-bottom: 40px;
+    margin-left: 20px;
+    margin-bottom: 40px;
 }
 
 button {
-	border: none;
-	background: none;
-	cursor: pointer;
-	font-size: 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    
 }
 
 .right {
-	font-size: 20px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	position: relative;
-	top: 30px;
-	right: 20px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    top: 30px;
+    right: 20px;
 }
 
 .right a {
-	display: block;
-	margin-bottom: 10px;
-	line-height: 1.5;
+    display: block;
+    margin-bottom: 10px;
+    line-height: 1.5;
 }
 
 .TorB {
-	border-bottom: 1px solid #ccc;
-	height: 50px;
-	font-size: 20px;
-	position: relative;
-	margin-top: -20px; /* 기존 margin-top 값에서 20px 위로 이동 */
+    border-bottom: 1px solid #ccc;
+    height: 50px;
+    font-size: 20px;
+    position: relative;
+    margin-top: -20px;
 }
 
 .header-buttons {
-	display: flex;
-	align-items: center;
-	position: absolute;
-	right: 0;
-	z-index: 9999;
-	top: 15px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    z-index: 9999;
+    top: 15px;
 }
 
 .dropdown {
-	position: relative;
-	display: inline-block;
-	top: -26px;
+    position: relative;
+    display: inline-block;
+    top: -26px;
 }
 
-/* 드롭다운 버튼의 사이즈를 조정하려면 */
 .dropbtn {
-	color: black;
-	font-size: 20px; /* 글자 크기를 조정합니다. */
-	border: none;
-	cursor: pointer;
-	width: 140px; /* 너비를 원하는 크기로 조정합니다. */
-	height: 60px; /* 높이를 원하는 크기로 조정합니다. */
+    color: black;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    width: 140px;
+    height: 60px;
 }
 
 .dropdown-content {
-	display: none;
-	position: absolute;
-	background-color: #f9f9f9;
-	min-width: 140px;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	z-index: 1;
-	left: 50%;
-	transform: translateX(-50%);
-	text-align: center;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 140px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
 }
 
 .dropdown:hover .dropdown-content {
-	display: block;
+    display: block;
 }
 
 .dropdown-content button {
-	color: black;
-	padding: 12px 16px;
-	text-decoration: none;
-	display: block;
-	width: 100%; /* 이 값을 원하는 너비로 변경합니다. */
-	height: 50px; /* 이 값을 원하는 높이로 변경합니다. */
-	border: none;
-	background: none;
-	cursor: pointer;
-	text-align: center;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 50px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: center;
+    font-size:16px
 }
 
 .dropdown-content button:hover {
-	background-color: #f1f1f1;
+    background-color: #f1f1f1;
 }
 
 .filter {
-	width: 150px;
-	margin-right: 20px;
-	flex-direction: column;
-	display: flex;
+    width: 150px;
+    margin-right: 20px;
+    flex-direction: column;
+    display: flex;
 }
 
 .filter label {
-	display: block;
-	margin-bottom: 10px;
+    display: block;
+    margin-bottom: 10px;
 }
 
 .filter input[type="radio"] {
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
 .filter label:nth-child(2) input[type="radio"] {
-	margin-left: 7.5px;
+    margin-left: 7.5px;
 }
 
 .fit {
-	margin-bottom: 30px;
-	margin-left: 15px;
+    margin-bottom: 30px;
+    margin-left: 15px;
 }
 
 .filter input[type="text"] {
-	display: block;
-	width: 100%;
-	border: none;
-	border-bottom: 1px solid #000;
-	margin-top: 5px;
-	margin-bottom: 15px;
-	text-align: center;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #000;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 .main-content {
-	display: flex;
-	margin-top: 40px;
+    display: flex;
+    margin-top: 40px;
 }
 
 .submit-btn {
-	align-self: center;
-	width: 70px;
-	height: 30px;
-	border-radius: 15px;
-	background-color: white;
-	border-style: none;
-	cursor: pointer;
-	font-size: 20px;
-	margin-right: 10px;
+    align-self: center;
+    width: 70px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: white;
+    border-style: none;
+    cursor: pointer;
+    font-size: 20px;
+    margin-right: 10px;
 }
 
 .products {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
-	width: 70%;
-	margin-left: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 70%;
+    margin-left: 30px;
 }
 
 .product {
-	width: calc(33.33% - 10px);
-	text-align: center;
-	position: relative;
-	z-index: 1;
-	margin-top: 30px;
+    width: calc(33.33% - 10px);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    margin-top: 30px;
 }
 
 .product-header {
-	display: flex;
-	align-items: center;
-	justify-content: center; /* 수정된 부분: 가운데 정렬 */
-	margin-bottom: 10px;
-	height: 30px;
-	overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    height: 30px;
+    overflow: hidden;
 }
 
+
 .size-display {
-	color: red;
-	padding: 5px;
-	font-size: 14px;
-	font-weight: bold;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	max-width: 150px; /* 최대 너비를 설정하여 ... 처리 */
-	text-align: center; /* 수정된 부분: 가운데 정렬 */
+    color: red;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    text-align: center;
+    flex: 1;
+    margin-left:20px
 }
 
 .rating-number {
-	font-size: 14px;
-	color: #555;
-	text-align: center; /* 수정된 부분: 가운데 정렬 */
+    font-size: 16px;
+    color: #555;
+    text-align: right;
+
+    
 }
 
 .cart-icon {
-	font-size: 24px;
-	cursor: pointer;
-	text-align: center; /* 수정된 부분: 가운데 정렬 */
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
 }
 
+#closetToWishlist {
+   font-size:30px
+}
+
+
 .product img {
-	width: 100%;
-	height: 300px; /* 고정된 높이 값을 설정합니다 */
-	object-fit: cover; /* 이미지가 고정된 크기에 맞게 잘리거나 늘어나지 않게 합니다 */
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
 }
 
 .price {
-	font-size: 16px;
+    font-size: 16px;
 }
 
 .discount_price {
-	color: red;
-	font-weight: bold;
+    color: red;
+    font-weight: bold;
 }
 
 .original_price {
-	color: gray;
-	text-decoration: line-through;
+    color: gray;
+    text-decoration: line-through;
 }
 
 .discount_percentage {
-	color: red;
-	font-size: 14px;
-	margin-left: 10px;
+    color: red;
+    font-size: 14px;
+    margin-left: 10px;
 }
 
 .pagination {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 20px;
-	margin-left: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 40px;
 }
 
 .pagination a {
-	margin: 0 5px;
-	text-decoration: none;
-	color: #000;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #000;
 }
 
 .pagination a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
-    input {
-            border: none;
-            outline: none;
-        }
+
+input {
+    border: none;
+    outline: none;
+}
 </style>
+
 </head>
 <body>
 
@@ -304,8 +311,21 @@ button {
     List<Closet> filteredclothList = (List<Closet>) request.getAttribute("filteredclothList");
     List<Closet> clothList = (List<Closet>) request.getAttribute("clothList");
 
-    %>
+    // Display list initialization
+    List<Closet> displayList = (filteredclothList != null && !filteredclothList.isEmpty()) ? filteredclothList : clothList;
+    
+    Map<Integer, Closet> uniqueClosets = new HashMap<>();
 
+    for (Closet closet : displayList) {
+        uniqueClosets.put(closet.getCl_idx(), closet);
+    }
+
+    // 중복이 제거된 리스트
+    List<Closet> filteredDisplayList = new ArrayList<>(uniqueClosets.values());
+%>
+	<script type="text/javascript">
+        var loginUser = <%= (loginUser != null ? "{ userId: '" + loginUser.getUser_id() + "' }" : "null") %>;
+    </script>
 
 	<div class="wrap">
 		<div class="container">
@@ -320,8 +340,9 @@ button {
 						<button class="dropbtn" id="dropdownButton">정렬</button>
 						<div class="dropdown-content">
 							<button onclick="resetSort()">정렬</button>
-							<button onclick="sortProducts('가격순', '가격순')">가격순</button>
-							<button onclick="sortProducts('별점순', '별점순')">별점순</button>
+							<button onclick="sortProducts('높은 가격순', 'asc')">높은 가격순</button>
+							<button onclick="sortProducts('낮은 가격순', 'desc')">낮은 가격순</button>
+							<button onclick="sortProducts('rating', 'desc')">별점순</button>
 						</div>
 					</div>
 					<div class="dropdown">
@@ -349,38 +370,37 @@ button {
 						</div>
 					</div>
 					<div class="dropdown">
-						<button class="dropbtn" id="categoryButton">카테고리</button>
+						<button class="dropbtn" id="categorySortButton">카테고리</button>
 						<div class="dropdown-content">
 							<button onclick="resetFilter('category')">카테고리</button>
 							<%if(clothList.get(0).getCl_cate().equals("t")) { %>
+
+							<button onclick="filterProductsByCategory('반소매 티셔츠', 'th')">반소매 티셔츠</button>
+							<button onclick="filterProductsByCategory('셔츠', 'tt')">셔츠</button>
 							<button
-								onclick="filterProductsByCategory('반소매 티셔츠', 'half_t_shirt')">반소매
-								티셔츠</button>
-							<button onclick="filterProductsByCategory('셔츠', 'shirt')">셔츠</button>
-							<button
-								onclick="filterProductsByCategory('스포츠 상의', 'sports_top')">스포츠
+								onclick="filterProductsByCategory('스포츠 상의', 'ts')">스포츠
 								상의</button>
-							<button onclick="filterProductsByCategory('민소매', 'no_arm')">민소매</button>
+							<button onclick="filterProductsByCategory('민소매', 'tn')">민소매</button>
 							<button
-								onclick="filterProductsByCategory('카라티셔츠', 'collar_t_shirt')">카라티셔츠</button>
-							<button onclick="filterProductsByCategory('긴소매', 'long_arm')">긴소매</button>
-							<button onclick="filterProductsByCategory('후드', 'hood_t_shirt')">후드</button>
-							<button onclick="filterProductsByCategory('맨투맨', 'man_2_man')">맨투맨</button>
+								onclick="filterProductsByCategory('카라티셔츠', 'tc')">카라티셔츠</button>
+							<button onclick="filterProductsByCategory('긴소매', 'tl')">긴소매</button>
+							<button onclick="filterProductsByCategory('후드', 'td')">후드</button>
+							<button onclick="filterProductsByCategory('맨투맨', 'tm')">맨투맨</button>
 							<%} else{ %>
 							<button
-								onclick="filterProductsByCategory('스포츠하의', 'sport_pants')">스포츠하의</button>
-							<button onclick="filterProductsByCategory('반바지', 'half_pants')">반바지</button>
+								onclick="filterProductsByCategory('스포츠하의', 'bs')">스포츠하의</button>
+							<button onclick="filterProductsByCategory('반바지', 'bh')">반바지</button>
 							<button
-								onclick="filterProductsByCategory('트레이닝 바지', 'training_pants')">트레이닝
+								onclick="filterProductsByCategory('트레이닝 바지', 'bt')">트레이닝
 								바지</button>
 							<button
-								onclick="filterProductsByCategory('슬렉스 바지', 'slacks_pants')">슬렉스
+								onclick="filterProductsByCategory('슬렉스 바지', 'bl')">슬렉스
 								바지</button>
 							<button
-								onclick="filterProductsByCategory('데님 바지', 'denim_pants')">데님
+								onclick="filterProductsByCategory('데님 바지', 'bd')">데님
 								바지</button>
 							<button
-								onclick="filterProductsByCategory('코튼 바지', 'cotton_pants')">코튼
+								onclick="filterProductsByCategory('코튼 바지', 'bc')">코튼
 								바지</button>
 							<%} %>
 						</div>
@@ -414,172 +434,88 @@ button {
 							value="overfit">
 						</label>
 					</div>
-					<label> HEIGHT <input type="text" name="user_hei">
-					</label> <label> WEIGHT <input type="text" name="user_wei">
-
-						<% 
-                    
-                    int top = 0;
-                    int ch = 0;
-                    int sh = 0;
-                    int arm = 0;
-                    int bot = 0;
-                    int waist = 0;
-                    int thighs = 0;
-                    int hem = 0;
-                    
-                    if(loginUser != null){
-                        top = loginUser.getUser_top();
-                        ch = loginUser.getUser_ch();
-                        sh = loginUser.getUser_sh();
-                        arm = loginUser.getUser_arm();
-                        bot = loginUser.getUser_bot();
-                        waist = loginUser.getUser_waist();
-                        thighs = loginUser.getUser_thighs();
-                        hem = loginUser.getUser_hem();
-                    }%> <% if(clothList.get(0).getCl_cate().equals("t")) { %>
-						<label> 상의 총장 <input type="text" name="user_top"
-							placeholder="<%= top %>"></label> <label> 가슴 단면 <input
-							type="text" name="user_ch" placeholder="<%= ch %>"></label> <label>
-							어깨 너비 <input type="text" name="user_sh" placeholder="<%= sh %>">
-					</label> <label> 팔 길이 <input type="text" name="user_arm"
-							placeholder="<%= arm %>"></label> <% } else { %> <label> 하의
-							총장 <input type="text" name="user_bot" placeholder="<%= bot %>">
-					</label> <label> 허리 단면 <input type="text" name="user_waist"
-							placeholder="<%= waist %>"></label> <label> 허벅지 단면 <input
-							type="text" name="user_thighs" placeholder="<%= thighs %>"></label>
-						<label> 밑단 단면 <input type="text" name="user_hem"
-							placeholder="<%= hem %>"></label> <% } %>
-
+					<label> HEIGHT <input type="text" name="user_hei" value="<%= loginUser != null ? loginUser.getUser_hei() : "" %>">
+					</label> 
+					<label> WEIGHT <input type="text" name="user_wei" value="<%= loginUser != null ? loginUser.getUser_wei() : "" %>">
 					</label>
+					<% 
+					int top = 0;
+					int ch = 0;
+					int sh = 0;
+					int arm = 0;
+					int bot = 0;
+					int waist = 0;
+					int thighs = 0;
+					int hem = 0;
+					
+					if (loginUser != null) {
+					    top = loginUser.getUser_top();
+					    ch = loginUser.getUser_ch();
+					    sh = loginUser.getUser_sh();
+					    arm = loginUser.getUser_arm();
+					    bot = loginUser.getUser_bot();
+					    waist = loginUser.getUser_waist();
+					    thighs = loginUser.getUser_thighs();
+					    hem = loginUser.getUser_hem();
+					}
+					%>
+					
+					<% if(clothList.get(0).getCl_cate().equals("t")) { %>
+					    <label> 상의 총장 <input type="text" name="user_top" value="<%= top %>"></label>
+					    <label> 가슴 단면 <input type="text" name="user_ch" value="<%= ch %>"></label>
+					    <label> 어깨 너비 <input type="text" name="user_sh" value="<%= sh %>"></label>
+					    <label> 팔 길이 <input type="text" name="user_arm" value="<%= arm %>"></label>
+					<% } else { %>
+					    <label> 하의 총장 <input type="text" name="user_bot" value="<%= bot %>"></label>
+					    <label> 허리 단면 <input type="text" name="user_waist" value="<%= waist %>"></label>
+					    <label> 허벅지 단면 <input type="text" name="user_thighs" value="<%= thighs %>"></label>
+					    <label> 밑단 단면 <input type="text" name="user_hem" value="<%= hem %>"></label>
+					<% } %>
+					
 					<button class="submit-btn" onclick="filterBySize()">SEARCH</button>
 				</div>
 				<div class="products" id="productContainer">
 
-					<%  int index = 0;%>
-					<c:forEach items="${clothList}" var="c" begin="0" end="29"
-						varStatus="status">
-						<div class="product" data-category="${c.cl_cate_detail}"
-							data-color="${c.cl_color}" data-index="${index}">
-
-							<div class="product-header">
-								<div class="cart-icon">
-			                        <button class="lnr lnr-cart" id="closetToWishlist" onclick="closetToWishList('${c.cl_idx}', '${loginUser.user_id}')"></button>
-			                    </div>
-								<div class="size-display">123123</div>
-								<div class="rating-number">
-									평점: <span id="rating-value-${c.cl_idx}">0</span>
-								</div>
-							</div>
-
-							<a href="${c.cl_url}"> <img src="${c.cl_imgurl}"
-								alt="${c.cl_name}" height="300">
-							</a>
-							<p class="name">${c.cl_name}</p>
-							<p class="price">
-								<%if(clothList.get(index).getCl_price() == 0) { %>
-								<span class="discount_price">${c.cl_dc_price}원</span> <br>
-								<span class="original_price">할인 없음</span>
-								<% }else { %>
-								<span class="discount_price">${c.cl_dc_price}원</span><br> <span
-									class="original_price">${c.cl_price}원</span> <span
-									class="discount_percentage"> <fmt:formatNumber
-										value="${(c.cl_price - c.cl_dc_price) / c.cl_price}"
-										type="percent" /> SALE
-								</span>
-								<%} %>
-
-							</p>
-
-						</div>
-						<% index++; %>
-					</c:forEach>
-
-					<c:choose>
-						<c:when
-							test="${filteredclothList != null and filteredclothList.size() > 0}">
-							<c:forEach items="${filteredclothList}" var="c" begin="0"
-								end="29" varStatus="status">
-								<div class="product" data-category="${c.cl_cate_detail}"
-									data-color="${c.cl_color}">
-
-									<div class="product-header">
-										<div class="cart-icon">
-					                        <button class="lnr lnr-cart" id="closetToWishlist" onclick="closetToWishList('${c.cl_idx}', '${loginUser.user_id}')"></button>
-					                    </div>
-										<div class="size-display">123123</div>
-										<div class="rating-number">
-											평점: <span id="rating-value-${c.cl_idx}">0</span>
-										</div>
-									</div>
-
-									<a href="${c.cl_url}"> <img src="${c.cl_imgurl}"
-										alt="${c.cl_name}"></a>
-									<p class="name">${c.cl_name}</p>
-									<p class="price">
-										<c:choose>
-											<c:when test="${c.cl_price == 0}">
-												<span class="discount_price">${c.cl_dc_price}원</span>
-												<br>
-												<span class="original_price">할인 없음</span>
-											</c:when>
-											<c:otherwise>
-												<span class="discount_price">${c.cl_dc_price}원</span>
-												<br>
-												<span class="original_price">${c.cl_price}원</span>
-												<span class="discount_percentage"> <fmt:formatNumber
-														value="${(c.cl_price - c.cl_dc_price) / c.cl_price}"
-														type="percent" /> SALE
-												</span>
-											</c:otherwise>
-										</c:choose>
-									</p>
-
-								</div>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<c:forEach items="${clothList}" var="c" begin="0" end="29"
-								varStatus="status">
-								<div class="product" data-category="${c.cl_cate_detail}"
-									data-color="${c.cl_color}">
-									<div class="product-header">
-										<div class="cart-icon">
-					                        <button class="lnr lnr-cart" id="closetToWishlist" onclick="closetToWishList('${c.cl_idx}', '${loginUser.user_id}')"></button>
-					                    </div>
-										<div class="size-display">123123</div>
-										<div class="rating-number">
-											평점: <span id="rating-value-${c.cl_idx}">0</span>
-										</div>
-									</div>
-									<a href="${c.cl_url}"> <img src="${c.cl_imgurl}"
-										alt="${c.cl_name}"></a>
-									<p class="name">${c.cl_name}</p>
-									<p class="price">
-										<c:choose>
-											<c:when test="${c.cl_price == 0}">
-												<span class="discount_price">${c.cl_dc_price}원</span>
-												<br>
-												<span class="original_price">할인 없음</span>
-											</c:when>
-											<c:otherwise>
-												<span class="discount_price">${c.cl_dc_price}원</span>
-												<br>
-												<span class="original_price">${c.cl_price}원</span>
-												<span class="discount_percentage"> <fmt:formatNumber
-														value="${(c.cl_price - c.cl_dc_price) / c.cl_price}"
-														type="percent" /> SALE
-												</span>
-											</c:otherwise>
-										</c:choose>
-									</p>
-								</div>
-							</c:forEach>
-						</c:otherwise>
-					</c:choose>
-
-
-
+					<% if (filteredDisplayList != null && !filteredDisplayList.isEmpty()) { %>
+				        <% for (Closet closet : filteredDisplayList) { %>
+				            <div class="product">
+				                <div class="product-header">
+				                    <div class="cart-icon">
+				                        <% if (loginUser != null) { %>
+										    <button class="lnr lnr-cart" id="closetToWishlist" onclick="closetToWishList('<%= closet.getCl_idx() %>', '<%= loginUser.getUser_id() %>')"></button>
+										<% } else { %>
+										    <button class="lnr lnr-cart" id="closetToWishlist" disabled></button>
+										<% } %>
+				                    </div>
+				                    <div class="size-display"><%= closet.getCl_size() %></div>
+				                    <div class="rating-number">
+				                        평점: <span id="rating-value-${closet.getReview_star()}">0</span>
+				                    </div>
+				                </div>
+				                <a href="<%= closet.getCl_url() %>"> <img src="<%= closet.getCl_imgurl() %>" alt="<%= closet.getCl_name() %>"></a>
+				                <p class="name"><%= closet.getCl_name() %></p>
+				                <div class="price">
+				                    <c:choose>
+				                        <c:when test="<%= closet.getCl_price() == 0 %>">
+				                            <span class="discount_price"><%= closet.getCl_dc_price() %>원</span>
+				                            <br>
+				                            <span class="original_price">할인 없음</span>
+				                        </c:when>
+				                        <c:otherwise>
+				                            <span class="discount_price"><%= closet.getCl_dc_price() %>원</span>
+				                            <br>
+				                            <span class="original_price"><%= closet.getCl_price() %>원</span>
+				                            <span class="discount_percentage">
+											    <fmt:formatNumber value="<%= ((double)(closet.getCl_price() - closet.getCl_dc_price()) / closet.getCl_price()) %>" type="percent" /> SALE
+											</span>
+				                        </c:otherwise>
+				                    </c:choose>
+				                </div>
+				            </div>
+				        <% } %>
+				    <% } else { %>
+				        <div class="no-products">상품이 없습니다.</div>
+				    <% } %>
 				</div>
 			</div>
 			<footer class="pagination">
@@ -590,179 +526,212 @@ button {
 	</div>
 	<script src="resources/assets/js/vendor-all.min.js"></script>
 	<script>
-        let selectedColor = 'all';
-        let selectedCategory = 'all';
+	let currentSort = '';
+    let currentColor = '';
+    let currentCategory = '';
 
-        function changeDropdownText(elementId, text) {
-            document.getElementById(elementId).innerText = text;
+    function resetSort() {
+        currentSort = '';
+        fetchFilteredAndSortedData();
+    }
+
+    function sortProducts(sortType, sortOrder) {
+        currentSort = sortType + ',' + sortOrder;
+        fetchFilteredAndSortedData();
+    }
+
+    function resetFilter(filterType) {
+        if (filterType === 'color') {
+            currentColor = '';
+        } else if (filterType === 'category') {
+            currentCategory = '';
+        }
+        fetchFilteredAndSortedData();
+    }
+
+    function filterProductsByColor(colorName, colorCode) {
+        currentColor = colorCode;
+        fetchFilteredAndSortedData();
+    }
+
+    function filterProductsByCategory(categoryName, categoryCode) {
+        currentCategory = categoryCode;
+        fetchFilteredAndSortedData();
+    }
+    
+    
+
+    async function fetchFilteredAndSortedData() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const cl_cate = urlParams.get('cl_cate');
+        console.log("test fetchFilteredAndSortedData");
+
+        if (!cl_cate) {
+            console.error("cl_cate parameter is missing or invalid.");
+            return;
         }
 
-        function hideDropdown(dropdown) {
-            dropdown.style.display = 'none';
-        }
+        try {
+            console.log("test async");
+            const requestBody = {
+                cl_cate: cl_cate,
+                sort: currentSort || '', 
+                color: currentColor || '',
+                category: currentCategory || ''
+            };
+            console.log('Request Body:', requestBody);
 
-        function showDropdown(dropdown) {
-            dropdown.style.display = 'block';
-        }
-
-        function sortProducts(displayText, criteria) {
-            changeDropdownText('dropdownButton', displayText);
-            const productContainer = document.getElementById('productContainer');
-            const products = Array.from(productContainer.getElementsByClassName('product'));
-
-            if (criteria === '가격순') {
-                products.sort((a, b) => {
-                    const priceA = parseInt(a.querySelector('.discount_price').textContent.replace('원', '').replace(',', ''));
-                    const priceB = parseInt(b.querySelector('.discount_price').textContent.replace('원', '').replace(',', ''));
-                    return priceA - priceB;
-                });
-            }
-            // 다른 정렬 기준 추가 가능
-            else if (criteria === '인기순') {
-                // 인기순 정렬 로직 추가
-            } else if (criteria === '별점순') {
-                // 별점순 정렬 로직 추가
-            }
-
-            products.forEach(product => productContainer.appendChild(product));
-            hideDropdown(document.querySelector('#dropdownButton').nextElementSibling);
-        }
-
-        function filterProducts() {
-            const productContainer = document.getElementById('productContainer');
-            const products = Array.from(productContainer.getElementsByClassName('product'));
-
-            products.forEach(product => {
-                const productColor = product.getAttribute('data-color');
-                const productCategory = product.getAttribute('data-category');
-                const matchesColor = (selectedColor === 'all' || productColor === selectedColor);
-                const matchesCategory = (selectedCategory === 'all' || productCategory === selectedCategory);
-
-                if (matchesColor && matchesCategory) {
-                    product.style.display = 'block';
-                } else {
-                    product.style.display = 'none';
-                }
-            });
-        }
-
-        function filterProductsByColor(displayText, color) {
-            changeDropdownText('colorSortButton', displayText);
-            selectedColor = color;
-            filterProducts();
-            hideDropdown(document.querySelector('#colorSortButton').nextElementSibling);
-        }
-
-        function filterProductsByCategory(displayText, category) {
-            changeDropdownText('categoryButton', displayText);
-            selectedCategory = category;
-            filterProducts();
-            hideDropdown(document.querySelector('#categoryButton').nextElementSibling);
-        }
-
-        function resetSort() {
-            changeDropdownText('dropdownButton', '정렬');
-            const productContainer = document.getElementById('productContainer');
-            const products = Array.from(productContainer.getElementsByClassName('product'));
-            products.sort((a, b) => a.dataset.index - b.dataset.index);
-            products.forEach(product => productContainer.appendChild(product));
-            hideDropdown(document.querySelector('#dropdownButton').nextElementSibling);
-        }
-
-        function resetFilter(type) {
-            if (type === 'color') {
-                changeDropdownText('colorSortButton', '색상');
-                selectedColor = 'all';
-            } else if (type === 'category') {
-                changeDropdownText('categoryButton', '카테고리');
-                selectedCategory = 'all';
-            }
-            filterProducts();
-            hideDropdown(document.querySelector(#${type}SortButton).nextElementSibling);
-        }
-
-        function filterBySize() {
-            const selectedSize = document.querySelector('.filter input[name="user_top"]').value.toUpperCase();
-            const products = document.querySelectorAll('.product');
-
-            products.forEach(product => {
-                const sizes = product.getAttribute('data-size').split(',');
-                if (sizes.includes(selectedSize)) {
-                    product.querySelector('.size-display').textContent = selectedSize;
-                } else {
-                    product.querySelector('.size-display').textContent = '';
-                }
-            });
-        }
-
-        document.querySelectorAll('.dropbtn').forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.stopPropagation();
-                const dropdown = this.nextElementSibling;
-                if (dropdown.style.display === 'block') {
-                    hideDropdown(dropdown);
-                } else {
-                    showDropdown(dropdown);
-                }
-            });
-        });
-
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropbtn')) {
-                document.querySelectorAll('.dropdown-content').forEach(dropdown => {
-                    hideDropdown(dropdown);
-                });
-            }
-        }
-        
-        function closetToWishList(cl_idx, user_id) {
-        	console.log(cl_idx)
-			console.log(user_id)
-            $.ajax({
-                url : './closetToWish',
-                data : {
-                    cl_idx : cl_idx,
-                    user_id : user_id
+            const response = await fetch('./filterCloset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
                 },
-                type : 'POST',
-                dataType : 'json',
-                success : function(result) {
-                    if (result.success) {
-                        pass;
-                    } 
+                body: JSON.stringify(requestBody)
+            });
+
+            console.log("test before response");
+            if (response.ok) {
+                console.log("test response ok");
+                const data = await response.json();
+                let html = '';
+
+                if (data.length > 0) {
+
+                	function formatPercentage(value) {
+                        return new Intl.NumberFormat('ko-KR', { style: 'percent', minimumFractionDigits: 0 }).format(value);
+                    }
+                	
+                    data.forEach(closet => {
+                    	const discountPercentage = (closet.cl_price - closet.cl_dc_price) / closet.cl_price;
+                        const formattedDiscountPercentage = formatPercentage(discountPercentage);
+                        
+                        html += '<div class="product" data-id="' + closet.cl_idx + '">';
+                        html += '<div class="product-header">';
+                        html += '<div class="cart-icon">';
+                        if (loginUser) {
+                            html += '<button class="lnr lnr-cart" id="closetToWishlist" onclick="closetToWishList(\'' + closet.cl_idx + '\', \'' + loginUser.userId + '\')"></button>';
+                        } else {
+                            html += '<button class="lnr lnr-cart" id="closetToWishlist" disabled></button>';
+                        }
+                        html += '</div>';
+                        html += '<div class="size-display">' + closet.cl_size + '</div>';
+                        html += '<div class="rating-number">평점: <span id="rating-value-' + closet.review_star + '">0</span></div>';
+                        html += '</div>';
+                        html += '<a href="' + closet.cl_url + '"><img src="' + closet.cl_imgurl + '" alt="' + closet.cl_name + '"></a>';
+                        html += '<p class="name">' + closet.cl_name + '</p>';
+                        html += '<div class="price">';
+                        if (closet.cl_price == 0) {
+                            html += '<span class="discount_price">' + closet.cl_dc_price + '원</span><br>';
+                            html += '<span class="original_price">할인 없음</span>';
+                        } else {
+                            html += '<span class="discount_price">' + closet.cl_dc_price + '원</span><br>';
+                            html += '<span class="original_price">' + closet.cl_price + '원</span>';
+                            html += '<span class="discount_percentage">' + formattedDiscountPercentage + ' SALE</span>';
+                        }
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                } else {
+                    html = '<div class="no-products">상품이 없습니다.</div>';
+                }
+
+                document.getElementById('productContainer').innerHTML = html;
+            } else {
+                console.error('Failed to fetch data:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    function closetToWishList(cl_idx, user_id) {
+        $.ajax({
+            url: './closetToWish',
+            data: {
+                cl_idx: cl_idx,
+                user_id: user_id
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function(result) {
+                if (result.success) {
+                    // Handle success case
+                }
+            }
+        });
+    }
+
+    document.querySelectorAll('.rating input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const ratingValue = this.value;
+            const productId = this.name.split('-')[1];
+
+            fetch('/submitRating', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                    rating: ratingValue
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Rating submitted successfully');
+                    document.getElementById('rating-value-' + productId).innerText = data.newRating;
+                } else {
+                    alert('Failed to submit rating');
                 }
             });
-        }
-
-        // Rating submission functionality
-        document.querySelectorAll('.rating input[type="radio"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                const ratingValue = this.value;
-                const productId = this.name.split('-')[1];
-
-                fetch('/submitRating', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        productId: productId,
-                        rating: ratingValue
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Rating submitted successfully');
-                        // 업데이트된 평점을 표시
-                        document.getElementById('rating-value-' + productId).innerText = data.newRating;
-                    } else {
-                        alert('Failed to submit rating');
-                    }
-                });
-            });
         });
+    });
+    
+    function filterBySize() {
+    	var user_hei = document.querySelector('input[name="user_hei"]').value;
+        var user_wei = document.querySelector('input[name="user_wei"]').value;
+        
+        predictBodySize(user_hei, user_wei)
+    	//추후 추가예정
+    }
+    
+    function predictBodySize(user_hei, user_wei) {
+    	console.log(user_hei)
+    	console.log(user_wei)
+	    $.ajax({
+	        url: 'http://localhost:5000/predict',
+	        data: JSON.stringify({
+	            weight: user_wei,
+	            height: user_hei
+	        }),
+	        type: 'POST',
+	        contentType: 'application/json',
+	        dataType: 'json',
+	        success: function(response) {
 
+                    var clCate = '<%= clothList.get(0).getCl_cate() %>'; 
+
+                    if (clCate === "t") {
+                        $('input[name="user_top"]').val(response.top);
+                        $('input[name="user_ch"]').val(response.chest);
+                        $('input[name="user_sh"]').val(response.shoulder);
+                        $('input[name="user_arm"]').val(response.arm);
+                    } else {
+                        $('input[name="user_bot"]').val(response.bottom);
+                        $('input[name="user_waist"]').val(response.waist);
+                        $('input[name="user_thighs"]').val(response.thigh);
+                        $('input[name="user_hem"]').val(response.hem);
+                    }
+
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("AJAX error:", status, error);
+	        }
+	    });
+	}
+    
+    
     </script>
 </body>
 </html>

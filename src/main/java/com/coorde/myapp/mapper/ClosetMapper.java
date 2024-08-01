@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.coorde.myapp.entity.Closet;
+import com.coorde.myapp.entity.User;
 
 @Mapper
 public interface ClosetMapper {
@@ -21,9 +22,9 @@ public interface ClosetMapper {
 	
 	int updateCloset(List<Closet> closets);
 
-	List<String> getTopColors(String user_id);
+	List<String> getTopColors(User loginUser);
 	
-	List<String> getTopCategories(String user_id);
+	List<String> getTopCategories(User loginUser);
 	
 	List<Closet> getFilteredClothes(Map<String, Object> params);
 
@@ -42,6 +43,8 @@ public interface ClosetMapper {
     int insertStar(Map<String, Object> reviewInfo);
 
     int updateStar(Map<String, Object> reviewInfo);
+
+	List<Closet> getClosetListWithFilters(Map<String, Object> params);
 
 	
 
