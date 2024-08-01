@@ -187,8 +187,8 @@ button {
 
 .product-checkbox {
 	position: absolute;
-	top: 42px;
-	left: 10px;
+	top: 45px;
+	left: 12px;
 	transform: scale(2.5);
 }
 
