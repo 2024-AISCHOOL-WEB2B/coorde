@@ -41,7 +41,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-left: 580px;
+            margin-left: 300px;
             font-family: "Yellowtail", cursive;
         }
 
