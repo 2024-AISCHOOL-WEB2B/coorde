@@ -176,6 +176,7 @@
 
                         showMessages(currentUser);
                         updateStats();
+                        updateRecentMessages(); // 최근 메시지 업데이트
                     } else {
                         alert(result.message);
                     }
@@ -246,6 +247,8 @@
                     }
                 });
             }
+            
+            const totalMessages = totalAnswered + totalUnanswered;
 
             document.getElementById('total-answered').textContent = totalAnswered + totalUnanswered;
             document.getElementById('answered').textContent = totalAnswered;
