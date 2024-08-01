@@ -127,10 +127,8 @@
                     const responseButton = document.createElement('button');
                     responseButton.textContent = '답변 제출';
                     responseButton.classList.add('responseButton');
+                    responseButton.setAttribute('data-index', index);
                     
-                    // 이벤트 리스너를 사용하여 index 전달
-                    responseButton.addEventListener('click', () => submitResponse(index));
-
                     messageDiv.appendChild(responseTextarea);
                     messageDiv.appendChild(responseButton);
                 }
@@ -139,14 +137,12 @@
         }
        
         function submitResponse(index) {
-            console.log(`Submitting response for index: ` + index);
+        	console.log(`Submitting response for index: ${index}`);
             const chat = document.getElementById('chat');
-            console.log(chat);
-            const textarea = chat.querySelector(`.responseTextarea[data-index='` + index + `']`);
-            console.log(textarea);
+            const textarea = chat.querySelector(`.responseTextarea[data-index='${index}']`);
             
             if (!textarea) {
-                console.error(`Textarea with data-index='\${index}' not found.`);
+                console.error(`Textarea with data-index='${index}' not found.`);
                 return;
             }
 
@@ -156,9 +152,9 @@
             const messageTitle = messages[currentUser][index].text;
             const userId = currentUser;
 
-            console.log(`User ID: ` + userId);
-            console.log(`FAQ Title: ` + messageTitle);
-            console.log(`FAQ Answer: ` + responseText);
+            console.log(`User ID: ${userId}`);
+            console.log(`FAQ Title: ${messageTitle}`);
+            console.log(`FAQ Answer: ${responseText}`);
 
             $.ajax({
                 url: './submitAnswer',
@@ -259,6 +255,13 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateRecentMessages();
             updateStats();
+        });
+        
+        document.getElementById('chat').addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('responseButton')) {
+                const index = e.target.getAttribute('data-index');
+                submitResponse(index);
+            }
         });
     </script>
 </body>
