@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Coordy</title>
+<title>OOTB ID/PW찾기</title>
 <!-- Meta -->
 <meta charset="utf-8">
 <meta name="viewport"

@@ -9,7 +9,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
+	<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
     <meta name="author" content="Phoenixcoded" />
 
 	<link
@@ -19,17 +21,75 @@
 
     <!-- vendor css -->
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+#passwordModal .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+#passwordModal .modal-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#passwordModal .modalbackcolor {
+    background: whitesmoke;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+#passwordModal .form-group {
+    text-align: center;  /* 폼 그룹 전체는 중앙 정렬 유지 */
+}
+
+#passwordModal .form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#passwordModal .form-group input[type="password"] {
+    width: 90%;  /* 너비를 조금 줄임 */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-left: 10px;  /* 왼쪽 마진을 10px로 설정 */
+    text-align: left;  /* 텍스트를 왼쪽 정렬 */
+}
+
+#passwordModal .actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#passwordModal .actions button {
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 0 10px;
+}
+
+#passwordModal .actions button:hover {
+    text-decoration: underline;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
 
 
 body {
@@ -191,15 +251,12 @@ body {
         <form id="editForm" action="/myapp/updateUser" method="post">
 	        <div class="form-group">
 			    <label for="name">NAME</label>
-			    <input type="text" id="name" name="user_name" value="${loginUser.user_name}" 
-			           pattern="[A-Za-z ]+" title="문자와 공백만 입력 가능합니다" required>
+			    <input type="text" id="name" name="user_name" value="${loginUser.user_name}" required>
 			</div>
 	        <div class="form-group">
 			    <label for="phone">PHONE</label>
-			    <input type="tel" id="phone" name="user_phone" value="${loginUser.user_phone}"
-			           pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" 
-			           title="전화번호는 000-0000-0000 형식으로 입력해주세요"
-			           required>
+			    <input type="tel" id="phone" name="user_phone" value="${loginUser.user_phone}" required>
+			    <span id="phoneCheckResult"></span>
 			</div>
 	        <div class="form-group">
 			    <label for="email">EMAIL</label>
@@ -281,6 +338,23 @@ body {
 			</form>		
         </div>
     </div>
+    <!-- 비밀번호 확인 모달 -->
+	<div id="passwordModal" class="modal">
+	    <div class="modal-content">
+	        <span class="close" onclick="closeModal('passwordModal')">&times;</span>
+	        <h2 class="modal-title">비밀번호 확인</h2><br>
+	        <div class="modalbackcolor">
+	            <div class="form-group">
+	                <label for="confirmPasswordInput">비밀번호</label>
+	                <input type="password" id="confirmPasswordInput" name="confirmPasswordInput" class="center-text">
+	            </div>
+	        </div>
+	        <div class="actions">
+	            <button type="button" onclick="submitWithPassword()">확인</button>
+	            <button type="button" onclick="closeModal('passwordModal')">취소</button>
+	        </div>
+	    </div>
+	</div>
 
     <a href=""></a>
 
@@ -362,28 +436,185 @@ body {
 		}
         
        	function confirmAndSubmit() {
-       	    var password = prompt("비밀번호를 입력하세요:");
+       	    openModal('passwordModal');
+       	}
+
+       	function submitWithPassword() {
+       	    var password = document.getElementById('confirmPasswordInput').value;
        	    if (password != null && password != "") {
        	        document.getElementById('confirmPassword').value = password;
        	        
+       	        var formData = $('#editForm').serialize();
+       	        console.log("Form data:", formData);  // 요청 데이터 로깅
+
        	        $.ajax({
        	            url: '/myapp/updateUser',
        	            type: 'POST',
-       	            data: $('#editForm').serialize(),
+       	            data: formData,
+       	            dataType: 'json',
        	            success: function(response) {
+       	                console.log("Response:", response);  // 응답 로깅
        	                if(response.status === "success") {
-       	                    alert("프로필이 성공적으로 업데이트되었습니다.");
-       	                    window.location.href = '/myapp/goEdit'; // 페이지를 새로고침하는 대신 편집 페이지로 리다이렉트
+       	                    alert(response.message);
+       	                    // 페이지의 필드들을 업데이트
+       	                    updatePageFields(response.updatedUser);
        	                } else {
        	                    alert("업데이트 실패: " + response.message);
        	                }
        	            },
-       	            error: function() {
+       	            error: function(xhr, status, error) {
+       	                console.error("AJAX Error:", status, error);
+       	                console.log("Response Text:", xhr.responseText);
        	                alert("서버 오류가 발생했습니다.");
        	            }
        	        });
        	    }
+       	    closeModal('passwordModal');
        	}
+
+       	function updatePageFields(updatedUser) {
+       	    $('#name').val(updatedUser.user_name);
+       	    $('#phone').val(updatedUser.user_phone);
+       	    $('#email').val(updatedUser.user_email);
+       	    $('#height').val(updatedUser.user_hei);
+       	    $('#weight').val(updatedUser.user_wei);
+       	    $('#address').val(updatedUser.user_addr);
+       	    // 필요한 다른 필드들도 여기에 추가
+       	}
+       	
+       	function openModal(modalId) {
+       	    document.getElementById(modalId).style.display = 'block';
+       	}
+
+       	function closeModal(modalId) {
+       	    document.getElementById(modalId).style.display = 'none';
+       	    if (modalId === 'passwordModal') {
+       	        document.getElementById('confirmPasswordInput').value = ''; // 입력 필드 초기화
+       	    }
+       	}
+
+       	// ESC 키로 모달 닫기
+       	window.addEventListener('keydown', function(event) {
+       	    if (event.key === 'Escape') {
+       	        closeModal('passwordModal');
+       	    }
+       	});
+       	
+       	function validateName(callback) {
+       	    var userName = $('#name').val().trim();
+       	    
+       	    if (/^[a-zA-Z\s]+$/.test(userName)) {
+       	        // 영어 (알파벳 및 공백 포함)
+       	        var nameRegex = /^[a-zA-Z\s]+$/;
+       	        if (!nameRegex.test(userName)) {
+       	            alert('이름은 알파벳과 공백만 입력 가능합니다.');
+       	            $('#name').addClass('error').focus();
+       	            callback(false);
+       	            return;
+       	        }
+       	    } else if (/^[가-힣]+$/.test(userName)) {
+       	        // 한글 (공백 포함하지 않음)
+       	        var nameRegex = /^[가-힣]+$/;
+       	        if (!nameRegex.test(userName)) {
+       	            alert('한글일때는 공백 입력이 불가능합니다.');
+       	            $('#name').addClass('error').focus();
+       	            callback(false);
+       	            return;
+       	        }
+       	    } else {
+       	        // 그 외의 문자가 포함된 경우
+       	        alert('이름은 영어 또는 한글로 입력해주세요.');
+       	        $('#name').addClass('error').focus();
+       	        callback(false);
+       	        return;
+       	    }
+       	    
+       	    $('#name').removeClass('error');
+       	    callback(true);
+       	}
+
+       	// 폼 제출 이벤트에 이 함수를 연결
+       	$('#editForm').submit(function(e) {
+       	    e.preventDefault();
+       	    validateName(function(isValid) {
+       	        if (isValid) {
+       	            // 여기서 confirmAndSubmit 함수를 호출하거나 폼을 제출합니다.
+       	            confirmAndSubmit();
+       	        }
+       	    });
+       	});
+       	
+     // 전화번호 입력 필드의 입력 이벤트 핸들러입니다.
+       	$('#phone').on('input', function(e) {
+       	    var input = $(this);
+       	    var value = input.val().replace(/[^0-9]/g, ''); // 숫자만 남깁니다.
+
+       	    // 11자리로 제한
+       	    if (value.length > 11) {
+       	        value = value.slice(0, 11);
+       	    }
+
+       	    input.val(value); // 변환된 값을 다시 입력 필드에 설정합니다.
+
+       	    // 전화번호 유효성 검사 및 중복 체크를 수행합니다.
+       	    if (value.length === 11) {
+       	        if (!value.startsWith('010')) {
+       	            $('#submitBtn').prop('disabled', true);
+       	        } else {
+       	            $.ajax({
+       	                url: '/myapp/checkPhone',
+       	                type: 'POST',
+       	                data: { userPhone: value },
+       	                success: function(response) {
+       	                    if (response.status === 'unavailable') {
+       	                        $('#submitBtn').prop('disabled', true);
+       	                    } else if (response.status === 'available') {
+       	                        $('#submitBtn').prop('disabled', false);
+       	                    }
+       	                }
+       	            });
+       	        }
+       	    } else {
+       	        $('#phoneCheckResult').text('');
+       	        $('#submitBtn').prop('disabled', false);
+       	    }
+       	});
+
+       	function validatePhone(callback) {
+       	    var phone = $('#phone').val();
+       	    var phoneRegex = /^010\d{8}$/;
+       	    if (!phoneRegex.test(phone)) {
+       	        alert('올바른 전화번호 형식이 아닙니다. 010으로 시작하는 11자리 숫자여야 합니다.');
+       	        $('#phone').focus();
+       	        callback(false);
+       	        return;
+       	    }
+       	    callback(true);
+       	}
+
+       	// 폼 제출 이벤트에 이 함수를 연결
+       	$('#editForm').submit(function(e) {
+       	    e.preventDefault();
+       	    validatePhone(function(isValid) {
+       	        if (isValid) {
+       	            confirmAndSubmit();
+       	        }
+       	    });
+       	});
+       	
+       	$(document).ready(function() {
+       	    $.ajax({
+       	        url: '/myapp/getCurrentUser',
+       	        type: 'GET',
+       	        dataType: 'json',
+       	        success: function(response) {
+       	            updatePageFields(response);
+       	        },
+       	        error: function(xhr, status, error) {
+       	            console.error("Error fetching current user data:", error);
+       	        }
+       	    });
+       	});
     
     </script>
 </body>

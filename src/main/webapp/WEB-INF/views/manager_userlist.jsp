@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
-    <title>회원 관리 페이지</title>
+    <title>OOTB 회원 관리</title>
     <style>
         * {
             margin: 0;

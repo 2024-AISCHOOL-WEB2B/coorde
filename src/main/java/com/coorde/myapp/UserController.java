@@ -31,6 +31,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -105,9 +106,27 @@ public class UserController {
         int count = userMapper.checkDuplicate("user_id", userId);
         return count > 0 ? "unavailable" : "available";
     }
-
     
-   
+    @PostMapping("/checkPhone")
+    @ResponseBody
+    public Map<String, String> checkPhone(@RequestParam("userPhone") String userPhone, HttpSession session) {
+        Map<String, String> response = new HashMap<>();
+        User loginUser = (User) session.getAttribute("loginUser");
+        
+        // userPhone은 이미 하이픈이 제거된 상태입니다
+        if (!userPhone.equals(loginUser.getUser_phone())) {
+            int count = userMapper.checkDuplicate("user_phone", userPhone);
+            if (count > 0) {
+                response.put("status", "unavailable");
+            } else {
+                response.put("status", "available");
+            }
+        } else {
+            response.put("status", "available");
+        }
+        return response;
+    }
+    
     
     @RequestMapping(value = "/idFind", method = RequestMethod.POST)
     @ResponseBody
@@ -127,13 +146,23 @@ public class UserController {
         return response;
     }
     
+    @GetMapping("/getCurrentUser")
+    @ResponseBody
+    public User getCurrentUser(HttpSession session) {
+        return (User) session.getAttribute("loginUser");
+    }
+    
     @PostMapping("/updateUser")
     @ResponseBody
-    public Map<String, Object> updateUser(@ModelAttribute User user, 
+    public synchronized Map<String, Object> updateUser(@ModelAttribute User user, 
                                           @RequestParam("confirmPassword") String confirmPassword,
                                           HttpSession session) {
-        Map<String, Object> response = new HashMap<>();
+        
+    	Map<String, Object> response = new HashMap<>();
         User loginUser = (User) session.getAttribute("loginUser");
+        
+        System.out.println("Received user data: " + user);  // 받은 데이터 로깅
+        System.out.println("Confirm password: " + confirmPassword);  // 비밀번호 로깅
         
         // 입력받은 비밀번호와 세션의 비밀번호 비교
         if (!loginUser.getUser_pw().equals(confirmPassword)) {
@@ -142,10 +171,10 @@ public class UserController {
             return response;
         }
 
-        // 이름에 특수문자나 숫자가 포함되어 있는지 확인
-        if (!user.getUser_name().matches("^[a-zA-Z\\s]+$")) {
+        // 이름 유효성 검사
+        if (!user.getUser_name().matches("^[a-zA-Z\\s]+$|^[가-힣]+$")) {
             response.put("status", "error");
-            response.put("message", "이름에는 문자와 공백만 입력 가능합니다.");
+            response.put("message", "이름은 영어(공백 포함) 또는 한글(공백 미포함)로만 입력 가능합니다.");
             return response;
         }
         
@@ -157,10 +186,10 @@ public class UserController {
             return response;
         }
 
-        // 전화번호 형식 검증
-        if (!user.getUser_phone().matches("\\d{3}-\\d{4}-\\d{4}")) {
+        // 전화번호 유효성 검사
+        if (!user.getUser_phone().matches("^010\\d{8}$")) {
             response.put("status", "error");
-            response.put("message", "전화번호는 000-0000-0000 형식으로 입력해주세요.");
+            response.put("message", "올바른 전화번호 형식이 아닙니다.");
             return response;
         }
         
@@ -190,7 +219,8 @@ public class UserController {
 
         int result = userMapper.updateUser(user);
         if (result > 0) {
-            session.setAttribute("loginUser", user);
+            User updatedUser = userMapper.findUserById(user.getUser_id());  // 업데이트된 사용자 정보를 다시 조회
+            session.setAttribute("loginUser", updatedUser);  // 새로 조회한 정보로 세션 업데이트
             response.put("status", "success");
             response.put("message", "프로필이 성공적으로 업데이트되었습니다.");
         } else {

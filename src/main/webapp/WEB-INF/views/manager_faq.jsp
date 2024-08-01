@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Coordy</title>
+<title>OOTB 회원 문의</title>
 <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">

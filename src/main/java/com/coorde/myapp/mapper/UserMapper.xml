@@ -85,5 +85,9 @@
 	    SET faq_answer = #{faq_answer}
 	    WHERE user_id = #{user_id} and faq_title = #{faq_title}
 	</update>
+	
+	<select id="findUserById" parameterType="String" resultType="com.coorde.myapp.entity.User">
+	    SELECT * FROM user_tb WHERE user_id = #{userId}
+	</select>
 
 </mapper>

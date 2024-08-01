@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Coordy</title>
+<title>OOTB MANAGER</title>
 <!-- Meta -->
 <meta charset="utf-8">
 <meta name="viewport"

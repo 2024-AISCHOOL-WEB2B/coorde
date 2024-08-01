@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Coorde</title>
+<title>OOTB 의류 관리</title>
 <!-- Meta -->
 <meta charset="utf-8">
 <meta name="viewport"
