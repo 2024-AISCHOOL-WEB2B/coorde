@@ -601,33 +601,85 @@ input {
             console.error('Data is not an array:', data);
             return;
         }
+        console.log('Received data:', data);
 
-        // Function to remove duplicates based on a unique property (e.g., cl_idx or cl_name)
-        const removeDuplicates = (array) => {
-            const uniqueItems = new Map();
-            array.forEach(item => {
-                // Use cl_idx to check duplicates. If you prefer cl_name, replace item.cl_idx with item.cl_name.
-                if (!uniqueItems.has(item.cl_idx)) {
-                    uniqueItems.set(item.cl_idx, item);
-                }
-            });
-            return Array.from(uniqueItems.values());
-        };
+        // Retrieve user measurements from the DOM
+        const userTopInput = document.querySelector('input[name="user_top"]');
+        const userBottomInput = document.querySelector('input[name="user_bot"]');
 
-        // Remove duplicates from the list
-        let filteredDisplayList = removeDuplicates(data);
-
-        // Check if sorting is applied
-        if (currentSort === '' && currentField === '') {
-            // No sorting, shuffle the list
-            filteredDisplayList = shuffleArray(filteredDisplayList);
-        } else {
-            // Sorting applied, use the list as is
-            filteredDisplayList = new Array(...filteredDisplayList);
+        // Check if the inputs exist and log appropriately
+        if (!userTopInput) {
+            console.error('User Top Input Not Found');
+        }
+        if (!userBottomInput) {
+            console.error('User Bottom Input Not Found');
         }
 
+        const userTop = userTopInput ? parseFloat(userTopInput.value) || 0 : 0;
+        const userBottom = userBottomInput ? parseFloat(userBottomInput.value) || 0 : 0;
+
+        console.log('User Top Measurement:', userTop);
+        console.log('User Bottom Measurement:', userBottom);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const cl_cate = urlParams.get('cl_cate');
+        if (!cl_cate) {
+            console.error('cl_cate is not defined.');
+            return;
+        }
+        console.log('Category (cl_cate):', cl_cate);
+
+        // Function to find the smallest item with the valid size
+        function findSmallestValidItemsByGroup(items, userMeasurement, sizeKey) {
+            const groupedItems = items.reduce((groups, item) => {
+                const groupKey = item.cl_name;
+                if (!groups[groupKey]) {
+                    groups[groupKey] = [];
+                }
+                groups[groupKey].push(item);
+                return groups;
+            }, {});
+
+            const smallestValidItems = [];
+            for (const groupName in groupedItems) {
+                let smallestValidItem = null;
+                let smallestSize = Infinity;
+
+                groupedItems[groupName].forEach(item => {
+                    const itemSize = parseFloat(item[sizeKey]) || 0;
+                    console.log(`Item size (${sizeKey}):`, itemSize);
+
+                    if (itemSize > userMeasurement && itemSize < smallestSize) {
+                        smallestSize = itemSize;
+                        smallestValidItem = item;
+                    }
+                });
+
+                if (smallestValidItem) {
+                    smallestValidItems.push(smallestValidItem);
+                }
+            }
+
+            return smallestValidItems;
+        }
+
+        // Filter items based on category
+        let filteredItems;
+        if (cl_cate === 't') {
+            console.log('Filtering for category "t" with userTop:', userTop);
+            filteredItems = findSmallestValidItemsByGroup(data, userTop, 'cl_top'); // Assuming 'cl_top' is the key for top size
+        } else if (cl_cate === 'b') {
+            console.log('Filtering for category "b" with userBottom:', userBottom);
+            filteredItems = findSmallestValidItemsByGroup(data, userBottom, 'cl_bot'); // Assuming 'cl_bot' is the key for bottom size
+        } else {
+            console.error('Invalid cl_cate value:', cl_cate);
+            return;
+        }
+
+        console.log('Filtered Items:', filteredItems);
+
         // Update the product container with the processed list
-        updateProductContainer(filteredDisplayList);
+        updateProductContainer(filteredItems);
     }
 
     function shuffleArray(array) {

@@ -149,16 +149,16 @@ public class ClosetController {
 	            double closetArm = closet.getCl_arm();
 
 	            // Regular fit check
-	            if (userTop > 0 && Math.abs(closetTop - userTop) > 3) isRegularFit = false;
-	            if (userChest > 0 && Math.abs(closetChest - userChest) > 3) isRegularFit = false;
-	            if (userShoulder > 0 && Math.abs(closetShoulder - userShoulder) > 3) isRegularFit = false;
-	            if (userArm > 0 && Math.abs(closetArm - userArm) > 3) isRegularFit = false;
+	            if (userTop > 0 && Math.abs(closetTop - (userTop+30)) > 5) isRegularFit = false;
+	            if (userChest > 0 && Math.abs(closetChest - (userChest+20)) > 5) isRegularFit = false;
+	            if (userShoulder > 0 && Math.abs(closetShoulder - (userShoulder+13)) > 5) isRegularFit = false;
+	            if (userArm > 0 && Math.abs(closetArm - (userArm+1)) > 5) isRegularFit = false;
 
 	            // Over fit check
-	            if (userTop > 0 && (Math.abs(closetTop - userTop) <= 3 || Math.abs(closetTop - userTop) > 8)) isOverFit = false;
-	            if (userChest > 0 && (Math.abs(closetChest - userChest) <= 3 || Math.abs(closetChest - userChest) > 8)) isOverFit = false;
-	            if (userShoulder > 0 && (Math.abs(closetShoulder - userShoulder) <= 3 || Math.abs(closetShoulder - userShoulder) > 8)) isOverFit = false;
-	            if (userArm > 0 && (Math.abs(closetArm - userArm) <= 3 || Math.abs(closetArm - userArm) > 8)) isOverFit = false;
+	            if (userTop > 0 && (Math.abs(closetTop - (userTop+30)) <= 3 || Math.abs(closetTop - (userTop+30)) > 7)) isOverFit = false;
+	            if (userChest > 0 && (Math.abs(closetChest - (userChest+20)) <= 3 || Math.abs(closetChest - (userChest+20)) > 7)) isOverFit = false;
+	            if (userShoulder > 0 && (Math.abs(closetShoulder - (userShoulder+13)) <= 3 || Math.abs(closetShoulder - (userShoulder+13)) > 7)) isOverFit = false;
+	            if (userArm > 0 && (Math.abs(closetArm - (userArm+1)) <= 3 || Math.abs(closetArm - (userArm+1)) > 7)) isOverFit = false;
 
 	        } else { // For bottom category
 	            double closetBottom = closet.getCl_bot();
@@ -167,16 +167,16 @@ public class ClosetController {
 	            double closetHem = closet.getCl_hem();
 
 	            // Regular fit check
-	            if (userBottom > 0 && Math.abs(closetBottom - userBottom) > 5) isRegularFit = false;
-	            if (userWaist > 0 && Math.abs(closetWaist - userWaist) > 5) isRegularFit = false;
-	            if (userThighs > 0 && Math.abs(closetThighs - userThighs) > 5) isRegularFit = false;
-	            if (userHem > 0 && Math.abs(closetHem - userHem) > 5) isRegularFit = false;
+	            if (userBottom > 0 && Math.abs(closetBottom - (userBottom+5)) > 3) isRegularFit = false;
+	            if (userWaist > 0 && Math.abs(closetWaist - (userWaist+12)) > 3) isRegularFit = false;
+	            if (userThighs > 0 && Math.abs(closetThighs - (userThighs+15)) > 3) isRegularFit = false;
+	            if (userHem > 0 && Math.abs(closetHem - (userHem+20)) > 3) isRegularFit = false;
 
 	            // Over fit check
-	            if (userBottom > 0 && (Math.abs(closetBottom - userBottom) <= 5 || Math.abs(closetBottom - userBottom) > 10)) isOverFit = false;
-	            if (userWaist > 0 && (Math.abs(closetWaist - userWaist) <= 5 || Math.abs(closetWaist - userWaist) > 10)) isOverFit = false;
-	            if (userThighs > 0 && (Math.abs(closetThighs - userThighs) <= 5 || Math.abs(closetThighs - userThighs) > 10)) isOverFit = false;
-	            if (userHem > 0 && (Math.abs(closetHem - userHem) <= 5 || Math.abs(closetHem - userHem) > 10)) isOverFit = false;
+	            if (userBottom > 0 && (Math.abs(closetBottom - (userBottom+5)) <= 3 || Math.abs(closetBottom - (userBottom+5)) > 7)) isOverFit = false;
+	            if (userWaist > 0 && (Math.abs(closetWaist - (userWaist+12)) <= 3 || Math.abs(closetWaist - (userWaist+12)) > 7)) isOverFit = false;
+	            if (userThighs > 0 && (Math.abs(closetThighs - (userThighs+15)) <= 3 || Math.abs(closetThighs - (userThighs+15)) > 7)) isOverFit = false;
+	            if (userHem > 0 && (Math.abs(closetHem - (userHem+20)) <= 3 || Math.abs(closetHem - (userHem+20)) > 7)) isOverFit = false;
 	        }
 
 	        if (isRegularFit) {
