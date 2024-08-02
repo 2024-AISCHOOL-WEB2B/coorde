@@ -378,7 +378,6 @@ input {
 							<button onclick="resetFilter('category')">카테고리</button>
 							<%if(clothList.get(0).getCl_cate().equals("t")) { %>
 
-							<button onclick="filterProductsByCategory('반소매 티셔츠', 'th')">반소매 티셔츠</button>
 							<button onclick="filterProductsByCategory('셔츠', 'tt')">셔츠</button>
 							<button
 								onclick="filterProductsByCategory('스포츠 상의', 'ts')">스포츠
