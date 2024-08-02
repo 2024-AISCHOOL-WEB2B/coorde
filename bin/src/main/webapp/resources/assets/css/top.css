@@ -1,0 +1,257 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wrap {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.container {
+    width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.logo img {
+    margin-left: 20px;
+    margin-bottom: 40px;
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.right {
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    top: 30px;
+    right: 20px;
+}
+
+.right a {
+    display: block;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.TorB {
+    border-bottom: 1px solid #ccc;
+    height: 50px;
+    font-size: 20px;
+    position: relative;
+    margin-top: -20px; /* 기존 margin-top 값에서 20px 위로 이동 */
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    z-index: 9999;
+    top: 15px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    top: -26px;
+}
+
+/* 드롭다운 버튼의 사이즈를 조정하려면 */
+.dropbtn {
+    color: black;
+    font-size: 20px; /* 글자 크기를 조정합니다. */
+    border: none;
+    cursor: pointer;
+    width: 120px; /* 너비를 원하는 크기로 조정합니다. */
+    height: 60px; /* 높이를 원하는 크기로 조정합니다. */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 140px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%; /* 이 값을 원하는 너비로 변경합니다. */
+    height: 50px; /* 이 값을 원하는 높이로 변경합니다. */
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.dropdown-content button:hover {
+    background-color: #f1f1f1;
+}
+
+.filter {
+    width: 150px;
+    margin-right: 20px;
+    flex-direction: column;
+    display: flex;
+}
+
+.filter label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.filter input[type="radio"] {
+    margin-right: 10px;
+}
+
+.filter label:nth-child(2) input[type="radio"] {
+    margin-left: 7.5px;
+}
+
+.fit {
+    margin-bottom: 30px;
+    margin-left: 15px;
+    font-size: 20px;
+}
+
+.filter input[type="text"] {
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #000;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.main-content {
+    display: flex;
+    margin-top: 40px;
+}
+
+.submit-btn {
+    align-self: center;
+    width: 70px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: white;
+    border-style: none;
+    cursor: pointer;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 70%;
+    margin-left: 30px;
+}
+
+.product {
+    width: calc(33.33% - 10px);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    z-index: 1;
+}
+
+.product:hover .cart-icon, .product:hover .size-display {
+    display: block;
+}
+
+.cart-icon {
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.size-display {
+    display: none;
+    position: absolute;
+    bottom: 420px;
+    left: 90%;
+    transform: translateX(-50%);
+    color: red;
+    padding: 5px;
+    font-size: 14px;
+    z-index: 2;
+    font-weight: bold;
+}
+
+.price {
+    font-size: 16px;
+}
+
+.discount_price {
+    color: red;
+    font-weight: bold;
+}
+
+.original_price {
+    color: gray;
+    text-decoration: line-through;
+}
+
+.discount_percentage {
+    color: red;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #000;
+}
+
+.pagination a:hover {
+    text-decoration: underline;
+}

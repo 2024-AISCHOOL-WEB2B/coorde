@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+            
+        }
+
+        .wrap {
+            width: 100%;
+            overflow: hidden;
+        }
+        .contents {
+            width: 1280px;
+            margin: 50px auto;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            text-align: center;
+        }
+
+        .brand {
+            font-size: 100px;
+            font-weight: bold;
+            font-family: "Yellowtail", cursive;
+        }
+
+        .tagline {
+            font-size: 20px;
+            font-style: italic;
+            font-family: "Dancing Script", cursive;
+        }
+
+        .banner-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filters {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 170px;
+            margin-left: 52px;
+        }
+
+        .filters label {
+            margin-right: 10px;
+        }
+
+        .filters input {
+            border: none;
+            border-bottom: 1px solid #000;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        .main-banner {
+            flex-grow: 1;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .main-banner img {
+            max-width: 100%;
+            height: auto;
+            margin-right: 128px;
+        }
+
+        .right {
+            font-size: 16px;
+            margin-right: 29px;
+            margin-bottom: 220px;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .category {
+            text-align: center;
+            margin: 0 5px;
+            padding: 0;
+        }
+
+        .category img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .category span {
+            display: block;
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+        }
+
+        .product-info {
+            padding: 10px 0;
+        }
+
+        .product-info span {
+            display: block;
+            font-size: 14px;
+        }
+
+        .price {
+            color: red;
+            font-weight: bold;
+        }
+
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .product-item {
+            flex: 0 1 calc(16.6667% - 10px);
+            box-sizing: border-box;
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        

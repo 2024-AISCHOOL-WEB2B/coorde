@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coorde.myapp.mapper.UserMapper">
+
+    <insert id="signUp" parameterType="com.coorde.myapp.entity.User" keyProperty="user_id" useGeneratedKeys="true">
+        insert into user_tb(user_id, user_pw, user_name, user_birth, user_phone, user_hei, user_wei, user_addr, user_email, user_arm, user_sh, user_top, user_ch, user_waist, user_thighs, user_bot, user_hem) 
+        values(#{user_id},#{user_pw},#{user_name},#{user_birth},#{user_phone},#{user_hei},#{user_wei},#{user_addr},#{user_email}, #{user_arm}, #{user_sh}, #{user_top}, #{user_ch}, #{user_waist}, #{user_thighs}, #{user_bot}, #{user_hem})
+    </insert>
+
+    <select id="userlogin" parameterType="com.coorde.myapp.entity.User" resultType="com.coorde.myapp.entity.User">
+        SELECT * FROM user_tb WHERE user_id = #{user_id} AND user_pw = #{user_pw}
+    </select>
+    
+    <select id="idFind" parameterType="com.coorde.myapp.entity.User" resultType="String">
+        SELECT user_id FROM user_tb WHERE user_name = #{user_name} AND user_birth = #{user_birth} AND user_phone = #{user_phone}
+    </select>
+    
+    <select id="pwFind" parameterType="com.coorde.myapp.entity.User" resultType="String">
+        SELECT user_pw FROM user_tb WHERE user_id = #{user_id} AND user_name = #{user_name} AND user_birth = #{user_birth} AND user_phone = #{user_phone}
+    </select>
+    
+    <!-- 매니저 유저리스트에서 유저 정보 디비에서 가져오기 -->
+    <select id="getAllUsers" resultType="com.coorde.myapp.entity.User">
+	    SELECT * FROM user_tb
+	</select>
+	
+	<!-- 매니저 유저 리스트에서의 삭제 -->
+	<delete id="deleteUsers" parameterType="list">
+	    DELETE FROM user_tb WHERE user_id IN
+	    <foreach collection="list" item="userId" open="(" separator="," close=")">
+	        #{userId}
+	    </foreach>
+	</delete>
+	
+	<!-- 회원 정보 수정에서 탈퇴 -->
+	<delete id="deleteUser">
+        DELETE FROM user_tb 
+        WHERE user_id = #{userId} 
+          AND user_pw = #{password}
+    </delete>
+    
+    <!-- 회원 정보 수정 -->
+    <update id="updateUser" parameterType="com.coorde.myapp.entity.User">
+	    UPDATE user_tb
+	    SET user_name = #{user_name},
+	        user_phone = #{user_phone},
+	        user_hei = #{user_hei},
+	        user_wei = #{user_wei},
+	        user_email = #{user_email},
+	        user_addr = #{user_addr}
+	    WHERE user_id = #{user_id}
+	</update>
+	
+	<!-- 획인 -->
+	<select id="checkDuplicate" resultType="int">
+	    SELECT COUNT(*) FROM user_tb WHERE ${field} = #{value}
+	</select>
+	
+	<update id="updateUserMeasurements">
+	    UPDATE user_tb
+	    <set>
+	        <foreach item="value" index="key" collection="updates" separator=",">
+	            ${key} = ${key} + #{value}
+	        </foreach>
+	    </set>
+	    WHERE user_id = #{userId}
+	</update>
+	
+		
+	<select id="goUserFaq" parameterType="com.coorde.myapp.entity.User" resultType="com.coorde.myapp.entity.User">
+	    SELECT * FROM faq_tb where user_id = #{user_id}
+	</select>
+	
+    <insert id="submitFaq" parameterType="com.coorde.myapp.entity.User">
+	    insert into faq_tb(user_id, faq_cate, faq_title, faq_detail) 
+        values(#{user_id}, #{faq_cate}, #{faq_title}, #{faq_detail})
+	</insert>
+		
+	<select id="goManagerFaq" resultType="com.coorde.myapp.entity.User">
+	    SELECT * FROM faq_tb
+	</select>
+	
+    <update id="submitAnswer" parameterType="com.coorde.myapp.entity.User">
+	    UPDATE faq_tb
+	    SET faq_answer = #{faq_answer}
+	    WHERE user_id = #{user_id} and faq_title = #{faq_title}
+	</update>
+	
+	<select id="findUserById" parameterType="String" resultType="com.coorde.myapp.entity.User">
+	    SELECT * FROM user_tb WHERE user_id = #{userId}
+	</select>
+
+</mapper>

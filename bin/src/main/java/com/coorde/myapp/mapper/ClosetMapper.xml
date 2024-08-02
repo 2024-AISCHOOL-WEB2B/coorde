@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coorde.myapp.mapper.ClosetMapper">
+
+    <select id="getClosetList" parameterType="String" resultType="com.coorde.myapp.entity.Closet">
+        SELECT * 
+		FROM closet_tb A 
+		JOIN cl_size_tb B 
+		ON A.cl_idx = B.cl_idx where A.cl_cate = #{cl_cate}
+		ORDER BY RAND()
+    </select>
+    
+    <select id="getClosetListWithFilters" parameterType="map" resultType="com.coorde.myapp.entity.Closet">
+	    SELECT 
+	        A.*,
+	        B.*, 
+	       IFNULL(AVG(R.review_star), 0) AS review_star
+	    FROM 
+	        closet_tb A
+	    JOIN 
+	        cl_size_tb B ON A.cl_idx = B.cl_idx
+	    LEFT JOIN 
+	        review_tb R ON A.cl_idx = R.cl_idx
+	    WHERE 
+	        A.cl_cate = #{cl_cate}
+	    <if test="color != null and color != ''">
+	        AND A.cl_color = #{color}
+	    </if>
+	    <if test="category != null and category != ''">
+	        AND A.cl_cate_detail = #{category}
+	    </if>
+	    GROUP BY 
+	        A.cl_idx, B.cl_size
+	    <choose>
+	        <when test="sort != null and sort != ''">
+	            ORDER BY 
+	            <choose>
+	                <when test="sort == '낮은 가격순'">
+	                    A.cl_dc_price ${field}
+	                </when>
+	                <when test="sort == '높은 가격순'">
+	                    A.cl_dc_price ${field}
+	                </when>
+	                <when test="sort == '별점순'">
+	                    review_star desc
+	                </when>
+	            </choose>
+	        </when>
+	        <otherwise>
+	            ORDER BY RAND()
+	        </otherwise>
+	    </choose>
+	</select>
+
+    
+    <select id="getAllCloset" resultType="com.coorde.myapp.entity.Closet">
+        SELECT * FROM closet_tb ORDER BY RAND()
+    </select>
+    
+    <delete id="deleteCloset" parameterType="list">
+        DELETE FROM closet_tb WHERE cl_idx IN
+        <foreach collection="list" item="closetidx" open="(" separator="," close=")">
+            #{closetIdx}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteClosetAndSize" parameterType="list">
+        DELETE c, s
+        FROM closet_tb c
+        LEFT JOIN cl_size_tb s ON c.cl_idx = s.cl_idx
+        WHERE c.cl_idx IN
+        <foreach collection="list" item="closetIdx" open="(" separator="," close=")">
+            #{closetIdx}
+        </foreach>
+    </delete>
+    
+    <select id="getTopColors" parameterType="string" resultType="string">
+        SELECT cl_color
+        FROM wish_tb
+        JOIN closet_tb ON wish_tb.cl_idx = closet_tb.cl_idx
+        WHERE user_id = #{user_id}
+        GROUP BY cl_color
+        ORDER BY COUNT(*) DESC
+        LIMIT 3;
+    </select>
+    
+    <select id="getTopCategories" parameterType="string" resultType="string">
+        SELECT cl_cate_detail
+        FROM wish_tb
+        JOIN closet_tb ON wish_tb.cl_idx = closet_tb.cl_idx
+        WHERE user_id = #{user_id}
+        GROUP BY cl_cate_detail
+        ORDER BY COUNT(*) DESC
+        LIMIT 3;
+    </select>
+    
+    <select id="getFilteredClothes" parameterType="map" resultType="com.coorde.myapp.entity.Closet">
+	    SELECT * 
+	    FROM closet_tb A
+	    JOIN cl_size_tb B 
+		ON A.cl_idx = B.cl_idx where A.cl_cate = #{cl_cate}
+	    and A.cl_color IN
+	    <foreach item="color" collection="topColors" open="(" separator="," close=")">
+	        #{color}
+	    </foreach>
+	    AND A.cl_cate_detail IN
+	    <foreach item="category" collection="topCategories" open="(" separator="," close=")">
+	        #{category}
+	    </foreach>
+	    ORDER BY RAND()
+	</select>
+    
+    <select id="checkWish" parameterType="map" resultType="int">
+        select count(*)     
+        from wish_tb 
+        where user_id = #{user_id} and cl_idx = #{cl_idx}
+    </select>
+    
+    <insert id="insertToWish" parameterType="map">
+        insert into wish_tb(cl_idx, user_id)
+        values(#{cl_idx}, #{user_id})
+    </insert>
+    
+    <delete id="deleteToWish" parameterType="map">
+        delete from wish_tb
+        where user_id = #{user_id} and cl_idx = #{cl_idx}
+    </delete>
+
+    <select id="getWishListWithClosetInfo" resultType="com.coorde.myapp.entity.Closet">
+        SELECT c.cl_idx, c.cl_name, c.cl_cate, c.cl_cate_detail, c.cl_color, c.cl_imgurl, c.cl_url, c.cl_price, c.cl_dc_price
+        FROM wish_tb w
+        INNER JOIN closet_tb c ON w.cl_idx = c.cl_idx
+        WHERE w.user_id = #{userId}
+    </select>
+    
+    <delete id="deleteWishlistItems">
+        DELETE FROM wish_tb
+        WHERE cl_idx IN
+        <foreach collection="clIdxList" item="clIdx" open="(" separator="," close=")">
+            #{clIdx}
+        </foreach>
+        AND user_id = #{userId}
+    </delete>
+    
+    <select id="checkStar" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM review_tb
+        WHERE user_id = #{user_id} AND cl_idx = #{cl_idx}
+    </select>  
+    
+    <insert id="insertStar" parameterType="map">
+        INSERT INTO review_tb (cl_idx, user_id, review_star)
+        VALUES (#{cl_idx}, #{user_id}, #{review_star})
+    </insert>
+    
+    <update id="updateStar" parameterType="map">
+        UPDATE review_tb 
+        SET review_star = #{review_star}
+        WHERE user_id = #{user_id} AND cl_idx = #{cl_idx}
+    </update>
+
+  <update id="updateCloset" parameterType="list">
+    <foreach collection="list" item="closet" separator=";">
+        UPDATE closet_tb
+        SET cl_price = #{closet.cl_price},
+            cl_dc_price = #{closet.cl_dc_price},
+            cl_color = #{closet.cl_color},
+            cl_cate_detail = #{closet.cl_cate_detail}
+        WHERE cl_idx = #{closet.cl_idx}
+    </foreach>
+</update>
+</mapper>

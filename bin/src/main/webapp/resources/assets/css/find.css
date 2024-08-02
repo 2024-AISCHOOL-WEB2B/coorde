@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+    
+}
+
+
+.logo{
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.FIND{
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 1280px;
+    margin: 50px auto;
+    overflow: hidden;
+}
+
+.top-nav {
+    display: flex;
+    font-size: 20px;
+    margin-right: 20px;
+    flex-direction: column; /* 수직 정렬 */
+    align-items: flex-end; /* 오른쪽 정렬 */
+    gap: 15px;
+}
+/* 마지막 링크의 아래쪽 여백을 제거 */
+.top-nav a:last-child {
+    margin-bottom: 0;
+}
+
+.top-nav a {
+    text-decoration: none;
+    color: black;
+}
+
+.forms-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.form-box {
+    width: 45%;
+    text-align: center;
+}
+
+.form-box:nth-child(1){
+    margin-top: 5%;
+}
+
+.form-box label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.form-box input {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-left: 25px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.submit-btn {
+    width: 100px;
+    padding: 10px;
+    background: none;
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 15px;
+    margin-left: 60px;
+    
+}
+button{
+    border: none;
+    background-color: white;
+}
+
+.lnr.lnr-magnifier  {
+    font-size: 20px;
+    background: none; /* 배경 제거 */
+    border: none; /* 테두리 제거 */
+    color: black; /* 색상 설정 */
+    background-color: white;
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.pass-auth-container {
+    text-align: center;
+}
+
+.pass-header {
+    margin-bottom: 20px;
+}
+
+.pass-logo {
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+.pass-operators {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.operator img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+}
+
+.pass-consents {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.pass-consents label {
+    display: block;
+    margin: 5px 0;
+}
+
+.pass-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.pass-btn {
+    width: 45%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    cursor: pointer;
+}
+
+.pass-btn:hover {
+    background-color: #ddd;
+}

@@ -1,0 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    border: none;
+    background: none;
+    font-size: 20px; /* 크기 조정 */
+    cursor: pointer;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.USERLIST {
+    font-size: 20px;
+    text-align: center;
+    flex-grow: 1;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.wrap {
+    width: 100%;
+    overflow: hidden;
+}
+
+.container {
+    width: 1280px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.right a,
+.right button {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.control-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-container input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.search-container button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    background-color: #f0f0f0;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.button-container {
+    display: flex;
+    gap: 35px;
+}
+
+.button-container-under {
+    display: flex;
+    gap: 35px;
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+thead th {
+    background-color: #f0f0f0;
+    padding: 10px;
+    position: relative;
+}
+
+/* 나이 텍스트에 cursor: pointer; 적용 */
+.clickable {
+    cursor: pointer;
+}
+
+.sort-arrow {
+    cursor: pointer;
+    margin-left: 20px;
+    font-size: 12px;
+}
+
+tbody td {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    text-align: center; /* 모든 텍스트를 가운데 정렬 */
+}
+
+tbody input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center; /* 입력 텍스트를 가운데 정렬 */
+}
+
+/* 핸드폰 열과 주소 열의 input 요소에 블러 효과 적용 */
+.col-phone input,
+.col-detail input {
+    filter: blur(2px);
+}
+
+
+
+/* 열 너비를 조절하기 위한 클래스 */
+.col-index {
+    width: 5%; /* 최소 너비로 설정 */
+}
+
+.col_id{
+    width:10%
+}
+
+.col-name {
+    width: 10%; /* 다른 열들의 너비를 조정하여 최소 열의 너비를 보완 */
+}
+
+.col-age {
+    width: 10%;
+}
+
+.col-email {
+    width: 20%;
+}
+
+.col-phone {
+    width: 15%;
+}
+
+.col-detail {
+    width: 25%;
+}
+
+.col-select {
+    width: 5%; /* 최소 너비로 설정 */
+}

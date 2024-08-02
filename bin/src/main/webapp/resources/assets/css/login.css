@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Yellowtail&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+        
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 70px;
+            font-weight: bold;
+            margin-bottom: 70px;
+            font-family: "Yellowtail", cursive;
+        }
+
+        .form-group {
+            margin: 10px 0 30px;
+        }
+
+        .form-group input {
+            border: none;
+            border-bottom: 1px solid black;
+            padding: 5px;
+            width: 200px;
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 40px;
+        }
+
+        .social-login div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .social-login img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+  
+        .social-login button{width: 80px;
+            width: 100px;
+            text-decoration: none;
+            color : black;
+            padding: 10px 20px; /* 버튼 여백 설정 (선택 사항) */
+            font-size: 16px; /* 버튼 텍스트 크기 설정 (선택 사항) */
+            cursor: pointer; /* 마우스를 올렸을 때 커서가 포인터로 변경 */
+            background-color: white;
+            border: none;
+        }
+
+        .action-button {
+            width: 40px;
+            text-decoration: none;
+            color : black;
+            padding: 10px 20px; /* 버튼 여백 설정 (선택 사항) */
+            font-size: 16px; /* 버튼 텍스트 크기 설정 (선택 사항) */
+            cursor: pointer; /* 마우스를 올렸을 때 커서가 포인터로 변경 */
+        }
