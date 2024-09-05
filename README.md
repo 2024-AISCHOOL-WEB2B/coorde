@@ -68,8 +68,85 @@ Outfit On The Body - 몸에 맞는 의류 추천 서비스
 ![faqpage](/src/main/webapp/resources/assets/images/browser/faqpage.png)
 
 ### 트러블 슈팅
-JSP 파일에서 자바스크립트의 리터럴(`)을 사용하여 변수 값을 삽입하려고 할 때, ${}구문이 JSP의 EL식으로 해석되어 오류 발생 원인으로 JSP 내장 표현식으로 처리하려 하기 때문에 발생함을 파악 해결방법으로 JSP에서 자바스크립트의 리터럴을 사용하는 경우 ${} 앞에 \(역슬래시)를 추가해 JSP가 이를 자바스크립트 구문으로 인식하도록 적용
+1. JSP 파일에서 자바스크립트의 리터럴(`)을 사용하여 변수 값을 삽입하려고 할 때, ${}구문이 JSP의 EL식으로 해석되어 오류 발생 원인으로 JSP 내장 표현식으로 처리하려 하기 때문에 발생함을 파악 해결방법으로 JSP에서 자바스크립트의 리터럴을 사용하는 경우 ${} 앞에 \(역슬래시)를 추가해 JSP가 이를 자바스크립트 구문으로 인식하도록 적용
 ![error](/src/main/webapp/resources/assets/images/browser/error.png)
+
+
+2. 모달을 여는 부분인 showModal 과 닫는 부분인 closeModal의 함수 중복 호출 문제 발생함을 파악
+
+```
+function showModal(productElement) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log('showModal called');
+    const modal = document.getElementById('myModal');
+    const productName = productElement.querySelector('.product-name').textContent;
+    const productPrice = productElement.querySelector('.discounted-price').textContent;
+    const productImgSrc = productElement.querySelector('img').src;
+    const productCategory = productElement.getAttribute('data-category');
+
+    document.getElementById('modal-product-name').textContent = productName;
+    document.getElementById('modal-product-price').textContent = productPrice;
+    document.getElementById('modal-img').src = productImgSrc;
+
+    // 모달 내용 동적 생성
+    const tbody = modal.querySelector('tbody');
+    tbody.innerHTML = generateModalContent(productCategory);
+
+    modal.style.display = 'block';
+
+    setTimeout(() => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    }, 100);
+}
+
+```
+```
+function closeModal() {
+    event.stopPropagation(); // 이벤트 전파 중지
+    document.getElementById('myModal').style.display = 'none';
+}
+```
+중복된 showModal과 closeModal 함수 정의를 하나로 통합해 이벤트 리스너를 중복으로 추가하지 않도록 하여 문제 해결
+```
+function showModal(productElement) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log('showModal called');
+    const modal = document.getElementById('myModal');
+    const productName = productElement.querySelector('.product-name').textContent;
+    const productPrice = productElement.querySelector('.discounted-price').textContent;
+    const productImgSrc = productElement.querySelector('img').src;
+    const productCategory = productElement.getAttribute('data-category');
+
+    document.getElementById('modal-product-name').textContent = productName;
+    document.getElementById('modal-product-price').textContent = productPrice;
+    document.getElementById('modal-img').src = productImgSrc;
+
+    // 모달 내용 동적 생성
+    const tbody = modal.querySelector('tbody');
+    tbody.innerHTML = generateModalContent(productCategory);
+
+    modal.style.display = 'block';
+
+    // 이벤트 리스너를 한번만 추가하도록 수정
+    modal.onclick = function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    };
+}
+
+function closeModal() {
+    document.getElementById('myModal').style.display = 'none';
+}
+
+```
+
 
 ## Main Tools
 <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"><img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=OpenJDK&logoColor=white"><img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"><img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white"><img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"><img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=Flask&logoColor=white"><img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"><img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"><img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white">
