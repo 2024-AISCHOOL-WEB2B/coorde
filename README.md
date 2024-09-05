@@ -38,6 +38,14 @@ Outfit On The Body - 몸에 맞는 의류 추천 서비스
 - WS/WAS : Tomcat
 - 아이디어 회의 : Notion
 
+
+## 프로젝트 아키텍쳐
+### 시스템 아키텍처
+![Arch](/src/main/webapp/resources/assets/images/browser/Arch.png)
+
+### 메뉴 구성
+![구성도](/src/main/webapp/resources/assets/images/browser/구성도.png)
+
 ## 주요 기능
 - 의류 추천 및 필터링
   
@@ -54,7 +62,7 @@ Outfit On The Body - 몸에 맞는 의류 추천 서비스
 - 매니저 유저리스트 검색, 삭제 및 필터링
 - 매니저 문의사항 질문확인, 답변하기
 - 로그인, 회원가입, 회원탈퇴
-  
+
 ![mainpage](/src/main/webapp/resources/assets/images/browser/mainpage.png)
 ![mypage](/src/main/webapp/resources/assets/images/browser/mypage.png)
 ![faqpage](/src/main/webapp/resources/assets/images/browser/faqpage.png)
