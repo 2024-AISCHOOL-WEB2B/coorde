@@ -1,6 +1,6 @@
 ![OOTB_Logo](/src/main/webapp/resources/assets/images/browser/LOGO.png)
 ## OOTB project
-Outfit On The Body - 몸에 맞는 의류 추천 서비스
+Outfit On The Body - 통계적 기법을 이용한 몸에 맞는 의류 추천 서비스
 
 ## 팀원 소개
 - 김창선 - PM, Back-end
